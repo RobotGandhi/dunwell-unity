@@ -11,6 +11,8 @@ public class menu : MonoBehaviour
     public Image fade_panel;
     float f = 0.0f;
     bool start_game = false;
+    
+    // This is my mexican accent
 
     private void Start()
     {
