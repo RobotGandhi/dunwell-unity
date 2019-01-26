@@ -31,7 +31,6 @@ public class map_manager : MonoBehaviour
 
         // MAP ELEMENTS
         GOAL = 11,
-        ICE = 12,
 
         NONE = -1
     };
@@ -49,7 +48,6 @@ public class map_manager : MonoBehaviour
     static int HI = (int)TileValues.HEALTH;
     static int SK = (int)TileValues.SKELETON;
     static int GO = (int)TileValues.GOAL;
-    static int IC = (int)TileValues.ICE;
 
     bool ground_trigger = false;
 
@@ -57,9 +55,9 @@ public class map_manager : MonoBehaviour
     {
         { NN, PT, PT, PT, PT, PT, NN },
         { BL, GR, GR, GR, GR, WI, BR },
-        { LW, GR, GR, IC, GR, GO, RW },
-        { LW, GR, GR, IC, IC, SI, RW },
-        { LW, GR, GR, IC, SK, GR, RW },
+        { LW, GR, GR, GR, GR, GO, RW },
+        { LW, GR, GR, GR, GR, SI, RW },
+        { LW, GR, GR, GR, SK, GR, RW },
         { LW, GR, GR, GR, GR, GR, RW },
         { LW, TW, TW, TW, TW, TW, RW }
     };
@@ -250,16 +248,6 @@ public class map_manager : MonoBehaviour
                         go2.transform.SetParent(map_holder.transform);
 
                         break;
-
-                    case (int)TileValues.ICE:
-                        GameObject ice_ground = new GameObject();
-                        ice_ground.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        ice_ground.AddComponent<SpriteRenderer>();
-                        ice_ground.GetComponent<SpriteRenderer>().sprite = ice_sprite;
-                        ice_ground.transform.position = new Vector3(x * ground_sprite.bounds.size.x, y * ground_sprite.bounds.size.y, 0);
-                        ice_ground.transform.SetParent(map_holder.transform);
-                        ice_ground.GetComponent<SpriteRenderer>().sortingOrder = y;
-                        break;
                 }
 
                 ground_trigger = !ground_trigger;
@@ -293,15 +281,6 @@ public class map_manager : MonoBehaviour
     {
         if (tile_value == (int)TileValues.SKELETON)
             return true;
-        return false;
-    }
-
-    public static bool IsIce(int tile_value)
-    {
-        if(tile_value == (int)TileValues.ICE)
-        {
-            return true;
-        }
         return false;
     }
 

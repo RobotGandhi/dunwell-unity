@@ -9,7 +9,6 @@ public class player : touch_listener
     {
         IDLE,
         MOVING,
-        ON_ICE,
         INTRO,
         DEAD,
         OUTRO
@@ -60,8 +59,8 @@ public class player : touch_listener
     void Start()
     {
         // Direction to vector list
-        direction_to_vector.Add(new Vector3(0, 1)); // up
-        direction_to_vector.Add(new Vector3(1, 0)); // right
+        direction_to_vector.Add(new Vector3(0, 1));  // up
+        direction_to_vector.Add(new Vector3(1, 0));  // right
         direction_to_vector.Add(new Vector3(0, -1)); // down
         direction_to_vector.Add(new Vector3(-1, 0)); // left
 
@@ -87,11 +86,14 @@ public class player : touch_listener
         weapon_offset = ground_size * 0.35f;
         shield_offset = ground_size * 0.55f;
         health_offset = ground_size * 0.5f;
+
+        //
+        tiled_import.LoadTiledMap("D:\\temp\\map.txt");
     }
 
     void Update()
     {
-        if (player_state == PlayerStates.MOVING || player_state == PlayerStates.ON_ICE)
+        if (player_state == PlayerStates.MOVING)
         {
             if (transform.position != tile_position * ground_size)
             {
@@ -169,24 +171,6 @@ public class player : touch_listener
         {
             SetPlayerState(PlayerStates.IDLE);
         }
-        else
-        {
-            // Do we keep sliding along the ice_slide_direction?
-            // Yes if there's an ice tile next
-            Vector2 new_slide_position = tile_position + direction_to_vector[(int)ice_slide_direction];
-            int tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
-            int next_tile_value = g_master.current_map.tile_map[(int)new_slide_position.y, (int)new_slide_position.x];
-
-            if (map_manager.IsIce(tile_value) && (map_manager.IsWalkable(next_tile_value) || map_manager.IsIce(next_tile_value)))
-            {
-                // Keep sliding
-                MovePlayer(ice_slide_direction, "none");
-            }
-            else
-            {
-                SetPlayerState(PlayerStates.IDLE);
-            }
-        }
     }
 
     void SetPlayerState(PlayerStates state)
@@ -203,7 +187,7 @@ public class player : touch_listener
         else if(player_state == PlayerStates.MOVING)
         {
             // Do move stuff
-            //anim_controller.SetTrigger("move_trigger");
+            anim_controller.SetTrigger("move_trigger");
             anim_controller.SetBool("moving", true);
             anim_controller.SetBool("idle", false);
             anim_controller.SetInteger("move_direction", (int)move_direction);
@@ -300,7 +284,7 @@ public class player : touch_listener
                     {
                         if (current_item.GetComponent<item>().item_type == item.ItemType.WEAPON)
                         {
-                            StartCoroutine("HideSword");
+                            StartCoroutine("HideSwordForAnimation");
                             anim_controller.SetTrigger("attack_sword");
                         }
                         else if (current_item.GetComponent<item>().item_type == item.ItemType.HEALTH)
@@ -327,12 +311,6 @@ public class player : touch_listener
         {
             DoMovePlayer(direction, new_tile_position);
             StartCoroutine("OutroCoroutine");
-        }
-        else if (map_manager.IsIce(new_tile_value))
-        {
-            DoMovePlayer(direction, new_tile_position, walk_sfx);
-            SetPlayerState(PlayerStates.ON_ICE);
-            ice_slide_direction = direction;
         }
     }
 
@@ -457,7 +435,7 @@ public class player : touch_listener
         StartCoroutine("IntroCoroutine");
     }
 
-    private IEnumerator HideSword()
+    private IEnumerator HideSwordForAnimation()
     {
         current_item.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.333f/2.0f);
@@ -471,7 +449,7 @@ public class player : touch_listener
 
         SpriteRenderer _spre = GetComponent<SpriteRenderer>();
 
-        while(transform.position != tile_position * ground_size)
+        while (transform.position != tile_position * ground_size)
         {
             transform.position = Vector3.MoveTowards(transform.position, tile_position * ground_sprite.bounds.size.x, fall_speed * Time.deltaTime);
             _spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * ground_size) / intro_distance);
@@ -485,13 +463,31 @@ public class player : touch_listener
     }
 
     private IEnumerator OutroCoroutine()
-    {
+    {   
         while(player_state != PlayerStates.IDLE)
         {
             yield return new WaitForEndOfFrame();
         }
         player_state = PlayerStates.OUTRO;
 
+        spre.sortingOrder = -(int)tile_position.y;
+
+        g_master.NewMap();
+        
+        while(spre.color.a > 0)
+        {   
+            spre.color = Vector4.MoveTowards(spre.color, new Vector4(1, 1, 1, 0), 1.0f * Time.deltaTime);
+            transform.position += Vector3.down * fall_speed * Time.deltaTime;
+            if (current_item != null) current_item.GetComponent<SpriteRenderer>().color = spre.color;
+            yield return new WaitForEndOfFrame();
+        }
+        
+        while(fade_panel.color.a < 0.95f)
+        {
+            fade_panel.color = Color.Lerp(fade_panel.color, Color.black, 7.5f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        fade_panel.color = Color.black;
 
         if (current_item != null)
         {
@@ -499,23 +495,6 @@ public class player : touch_listener
             current_item = null;
             anim_controller.SetBool("holding_item", false);
         }
-        spre.sortingOrder = -(int)tile_position.y;
-
-        g_master.NewMap();
-    
-        while(spre.color.a > 0)
-        {
-            spre.color = Vector4.MoveTowards(spre.color, new Vector4(1, 1, 1, 0), 1.0f * Time.deltaTime);
-            transform.position += Vector3.down * fall_speed * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        while(fade_panel.color.a < 0.95f)
-        {
-            fade_panel.color = Color.Lerp(fade_panel.color, Color.black, 7.5f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        fade_panel.color = Color.black;
 
     }
 }
