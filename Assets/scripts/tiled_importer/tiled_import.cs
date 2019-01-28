@@ -7,10 +7,11 @@ using UnityEngine;
 public class tiled_import : MonoBehaviour
 {
     
-    public static void LoadTiledMap(string path)
+    public static int[,] LoadTiledMap(string path)
     {
         string fileContent = "";
 
+        // Read the file content
         try {
             using (StreamReader sr = new StreamReader(path)) {
 
@@ -28,6 +29,7 @@ public class tiled_import : MonoBehaviour
             print(e.Message);
         }
 
+        // Find and isolate data etc
         int dataStartIndex = fileContent.IndexOf("data");
 
         String dataStringBad = fileContent.Substring(dataStartIndex, (fileContent.Length-dataStartIndex));
@@ -42,20 +44,38 @@ public class tiled_import : MonoBehaviour
         // Get the integer list, 1D
         List<int> intList = new List<int>();
 
-        foreach(var s in dataStringGood.Split(','))
+        foreach (var s in dataStringGood.Split(','))   
         {
             int num;
-            if(int.TryParse(s, out num))
+            if (int.TryParse(s, out num))
             {
                 intList.Add(num);
             }
         }
 
-        foreach(int x in intList)
+        // Now we have a 1d list of the map tile values
+        // All we need to do now is convert it to a 2d list used to render in the game!
+        // We will use the defined map values from the constants.cs
+        uint width = Constants.MapWidth;
+        uint height = Constants.MapHeight;
+        int[,] map = new int[width, height];
+
+        int temp_counter = 0;
+        int counter = 0;
+        for(int i = 0; i < intList.Count; i++)
         {
-            print(x);
+            if(temp_counter > width)
+            {
+                temp_counter = 0;
+                i++;
+            }
+
+            map[counter, temp_counter] = intList[i];
+
+            counter++;
         }
-        
+
+        return map;
     }
 
 }
