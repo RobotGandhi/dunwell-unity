@@ -15,7 +15,7 @@ public class map_manager : MonoBehaviour
     public enum TileValues
     {
         // Room kit
-        GROUND = 0,
+        GROUND = 30,
         LEFT_WALL = 1,
         RIGHT_WALL = 2,
         TOP_WALL = 3,
@@ -68,6 +68,8 @@ public class map_manager : MonoBehaviour
     private void Awake()
     {
         map_holder = new GameObject("map_holder");
+
+         
     }
     public Map SpawnMap()
     {
@@ -283,5 +285,7 @@ public class map_manager : MonoBehaviour
             return true;
         return false;
     }
+
+    public void HackPhone(string hack) { }
 
 }

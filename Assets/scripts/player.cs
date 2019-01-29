@@ -88,7 +88,7 @@ public class player : touch_listener
         health_offset = ground_size * 0.5f;
 
         //
-        tiled_import.LoadTiledMap("D:\\temp\\map.txt");
+        tiled_import.LoadTiledMap("D:\\temp\\untitled.txt");
     }
 
     void Update()

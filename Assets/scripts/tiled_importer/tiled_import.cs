@@ -64,15 +64,15 @@ public class tiled_import : MonoBehaviour
         int counter = 0;
         for(int i = 0; i < intList.Count; i++)
         {
-            if(temp_counter > width)
+            if(temp_counter >= width-1)
             {
                 temp_counter = 0;
-                i++;
+                counter++;
             }
 
             map[counter, temp_counter] = intList[i];
 
-            counter++;
+            temp_counter++;
         }
 
         return map;
