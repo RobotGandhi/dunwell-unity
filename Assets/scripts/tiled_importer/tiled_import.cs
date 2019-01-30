@@ -4,6 +4,20 @@ using System;
 using System.IO;
 using UnityEngine;
 
+
+class Pee
+{
+
+}
+
+class Balls
+{
+    Pee pee; // We store the pee in the balls
+}
+
+
+
+
 public class tiled_import : MonoBehaviour
 {
     
@@ -58,13 +72,25 @@ public class tiled_import : MonoBehaviour
         // We will use the defined map values from the constants.cs
         uint width = Constants.MapWidth;
         uint height = Constants.MapHeight;
-        int[,] map = new int[width, height];
+        int[,] map =     
+        {
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 },
+            { 3, 3, 3, 3, 3, 3 }
+        };
 
         int temp_counter = 0;
         int counter = 0;
+        
         for(int i = 0; i < intList.Count; i++)
         {
-            if(temp_counter >= width-1)
+            if(temp_counter > width-1)
             {
                 temp_counter = 0;
                 counter++;
@@ -74,6 +100,8 @@ public class tiled_import : MonoBehaviour
 
             temp_counter++;
         }
+
+        print(temp_counter);
 
         return map;
     }

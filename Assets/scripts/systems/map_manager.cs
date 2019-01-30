@@ -9,9 +9,6 @@ public class map_manager : MonoBehaviour
 
     public GameObject skeleton_prefab;
 
-    public static int map_width = 7;
-    public static int map_height = 7;
-
     public enum TileValues
     {
         // Room kit
@@ -68,22 +65,21 @@ public class map_manager : MonoBehaviour
     private void Awake()
     {
         map_holder = new GameObject("map_holder");
-
-         
     }
     public Map SpawnMap()
     {
         Map map = new Map();
-        map.tile_map = map1;
+        //map.tile_map = map1;
+        map.tile_map = tiled_import.LoadTiledMap("D:\\temp\\untitled.lua");
 
         // Clear stuff
-        foreach(Transform go in map_holder.transform) {
+        foreach (Transform go in map_holder.transform) {
             Destroy(go.gameObject);
         }
 
-        for (int x = 0; x < map_width; x++)
+        for (int x = 0; x < Constants.MapWidth; x++)
         {
-            for (int y = 0; y < map_height; y++)
+            for (int y = 0; y < Constants.MapHeight; y++)
             {
                 int tile_value = map.tile_map[y, x];
                 switch (tile_value)

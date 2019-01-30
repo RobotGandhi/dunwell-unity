@@ -68,8 +68,8 @@ public class game_master : MonoBehaviour
 
     private IEnumerator GameStart()
     {
-        Vector3 cameraGoalPos = new Vector3((map_manager.map_width / 2) * m_manager.ground_sprite.bounds.size.x, (map_manager.map_height / 2) * m_manager.ground_sprite.bounds.size.y, -10);
-        Camera.main.transform.position = new Vector3(cameraGoalPos.x, cameraGoalPos.y + m_manager.ground_sprite.bounds.size.y * map_manager.map_height*2, -10);
+        Vector3 cameraGoalPos = new Vector3((Constants.MapWidth / 2) * m_manager.ground_sprite.bounds.size.x, (Constants.MapHeight / 2) * m_manager.ground_sprite.bounds.size.y, -10);
+        Camera.main.transform.position = new Vector3(cameraGoalPos.x, cameraGoalPos.y + m_manager.ground_sprite.bounds.size.y * Constants.MapHeight*2, -10);
         
         // Center camera on map!
         while(Camera.main.transform.position != cameraGoalPos)
@@ -132,7 +132,7 @@ public class game_master : MonoBehaviour
 
     private IEnumerator LevelEnd()
     {
-        Vector3 cameraGoalPos = new Vector3((map_manager.map_width / 2) * m_manager.ground_sprite.bounds.size.x, m_manager.ground_sprite.bounds.size.y * map_manager.map_height * -2, -10);
+        Vector3 cameraGoalPos = new Vector3((Constants.MapWidth / 2) * m_manager.ground_sprite.bounds.size.x, m_manager.ground_sprite.bounds.size.y * Constants.MapHeight * -2, -10);
         while(Camera.main.transform.position != cameraGoalPos)
         {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, cameraGoalPos, player.fall_speed*1.1f * Time.deltaTime);

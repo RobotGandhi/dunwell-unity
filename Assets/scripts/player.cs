@@ -86,9 +86,6 @@ public class player : touch_listener
         weapon_offset = ground_size * 0.35f;
         shield_offset = ground_size * 0.55f;
         health_offset = ground_size * 0.5f;
-
-        //
-        tiled_import.LoadTiledMap("D:\\temp\\untitled.txt");
     }
 
     void Update()
