@@ -13,7 +13,7 @@ public class map_manager : MonoBehaviour
     {
         // Room kit
         GROUND = 30,
-        LEFT_WALL = 1,
+        LEFT_WALL = 31,
         RIGHT_WALL = 2,
         TOP_WALL = 3,
         PIT = 4,

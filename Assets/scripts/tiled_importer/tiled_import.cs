@@ -101,8 +101,6 @@ public class tiled_import : MonoBehaviour
             temp_counter++;
         }
 
-        print(temp_counter);
-
         return map;
     }
 
