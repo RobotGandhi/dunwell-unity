@@ -282,6 +282,17 @@ public class map_manager : MonoBehaviour
         return false;
     }
 
-    public void HackPhone(string hack) { }
+    /*
+     * Used in the importer to check if tile_value1 should be replaced by tile_value2
+    */
+    public static bool ShouldReplace(int tile_value1, int tile_value2)
+    {
+        // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
+        if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2)))
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

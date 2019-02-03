@@ -43,64 +43,84 @@ public class tiled_import : MonoBehaviour
             print(e.Message);
         }
 
-        // Find and isolate data etc
-        int dataStartIndex = fileContent.IndexOf("data");
+        // Trim down to only the neccesary parts of the string 
+        int temp = fileContent.IndexOf("layers");
+        fileContent = fileContent.Substring(temp, fileContent.Length-temp);
 
-        String dataStringBad = fileContent.Substring(dataStartIndex, (fileContent.Length-dataStartIndex));
-        int dataStringBracketIndex = dataStringBad.IndexOf("}");
+        // Tile Data List
+        List<int[,]> tileDataList = new List<int[,]>();
 
-        String dataStringAlmostGood = dataStringBad.Substring(0, dataStringBracketIndex);
-
-        dataStringBracketIndex = dataStringAlmostGood.IndexOf("{");
-        String dataStringGood = dataStringAlmostGood.Substring(dataStringBracketIndex+1, dataStringAlmostGood.Length - dataStringBracketIndex-1);
-
-
-        // Get the integer list, 1D
-        List<int> intList = new List<int>();
-
-        foreach (var s in dataStringGood.Split(','))   
-        {
-            int num;
-            if (int.TryParse(s, out num))
-            {
-                intList.Add(num);
-            }
-        }
-
-        // Now we have a 1d list of the map tile values
-        // All we need to do now is convert it to a 2d list used to render in the game!
-        // We will use the defined map values from the constants.cs
+        // Constants
         uint width = Constants.MapWidth;
         uint height = Constants.MapHeight;
-        int[,] map =     
-        {
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 },
-            { 3, 3, 3, 3, 3, 3 }
-        };
 
-        int temp_counter = 0;
-        int counter = 0;
-        
-        for(int i = 0; i < intList.Count; i++)
+        // Go layer by layer and extract data
+        int i = 0;
+        foreach(char c in fileContent)
         {
-            if(temp_counter > width-1)
+            // Found tile data
+            if(fileContent[i] == 'd' && fileContent[i+1] == 'a' && fileContent[i+2] == 't')
             {
-                temp_counter = 0;
-                counter++;
+                int endIndex = fileContent.IndexOf("}", i)+1;
+                string dataString = fileContent.Substring(i, endIndex - i);
+
+                List<int> intList = new List<int>();
+                
+                // Get the integer list, 1D
+                foreach (var s in dataString.Split(','))
+                {
+                    int num;
+                    if (int.TryParse(s, out num))
+                    {
+                        intList.Add(num);
+                    }
+                }
+
+                int[,] data = new int[Constants.MapHeight, Constants.MapWidth];
+
+                // Convert to a 2d tiled map representable in the game
+                int temp_counter = 0;
+                int counter = 0;
+
+                for (int j = 0; j < intList.Count; j++)
+                {
+                    if (temp_counter > width - 1)
+                    {
+                        temp_counter = 0;
+                        counter++;
+                    }
+
+                    data[counter, temp_counter] = intList[j];
+
+                    temp_counter++;
+                }
+
+                // Insert into our list
+                tileDataList.Add(data);
             }
 
-            map[counter, temp_counter] = intList[i];
-
-            temp_counter++;
+            i++;
         }
 
+        int[,] map = tileDataList[0];
+        // Make sure the map is correctly layered before we return it
+        for (int z = 1; z < tileDataList.Count; z++)
+        {
+            int[,] layerdData = tileDataList[z];
+            for(int y = 0; y < height; y++)
+            {
+                for(int x = 0; x < width; x++)
+                {
+                    int tileValue = layerdData[y, x];
+                    if (map_manager.ShouldReplace(map[y, x], layerdData[y, x]))
+                    {
+                        map[y, x] = tileValue;
+                    }
+                }
+            }
+        }
+
+        // Done
         return map;
     }
 
