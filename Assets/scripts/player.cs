@@ -50,7 +50,6 @@ public class player : touch_listener
 
     public int HP = 3;
     public Image[] hp_objects;
-    public Image fade_panel;
 
     public static float fall_speed = 25;
 
@@ -425,8 +424,9 @@ public class player : touch_listener
     {
         SetPlayerState(PlayerStates.INTRO);
         this.tile_position = tile_position;
+        // Position for intro
         transform.position = new Vector3(tile_position.x, tile_position.y + 6) * ground_sprite.bounds.size.x;
-        GetComponent<SpriteRenderer>().color = Color.clear;
+        GetComponent<SpriteRenderer>().color = Color.white;
         GetComponent<SpriteRenderer>().sortingOrder = (int)tile_position.y+6;
 
         StartCoroutine("IntroCoroutine");
@@ -455,8 +455,6 @@ public class player : touch_listener
 
         Camera.main.GetComponent<CameraShake>().ShakeCamera(2.0f, 0.1f);
         SetPlayerState(PlayerStates.IDLE);
-
-        yield return null;
     }
 
     private IEnumerator OutroCoroutine()
@@ -468,8 +466,6 @@ public class player : touch_listener
         player_state = PlayerStates.OUTRO;
 
         spre.sortingOrder = -(int)tile_position.y;
-
-        g_master.NewMap();
         
         while(spre.color.a > 0)
         {   
@@ -478,13 +474,6 @@ public class player : touch_listener
             if (current_item != null) current_item.GetComponent<SpriteRenderer>().color = spre.color;
             yield return new WaitForEndOfFrame();
         }
-        
-        while(fade_panel.color.a < 0.95f)
-        {
-            fade_panel.color = Color.Lerp(fade_panel.color, Color.black, 7.5f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        fade_panel.color = Color.black;
 
         if (current_item != null)
         {
@@ -492,6 +481,8 @@ public class player : touch_listener
             current_item = null;
             anim_controller.SetBool("holding_item", false);
         }
+
+        g_master.NewMap();
 
     }
 }

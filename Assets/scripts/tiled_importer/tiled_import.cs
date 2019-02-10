@@ -23,7 +23,6 @@ public class tiled_import : MonoBehaviour
                 }
 
             }
-
         } catch (Exception e) {
             print("The file could not be read:");
             print(e.Message);

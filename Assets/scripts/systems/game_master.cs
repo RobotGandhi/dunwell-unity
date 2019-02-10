@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Map
 {
-    public List<int[,]> tile_map;
+    public int[,] tile_map;
     public Dictionary<Vector2, GameObject> item_map;
     public Dictionary<Vector2, enemy> enemy_map;
     public Dictionary<Vector2, GameObject> ice_map;
 
     public Map() 
     {
-        tile_map = new List<int[,]>();
         item_map = new Dictionary<Vector2, GameObject>();
         enemy_map = new Dictionary<Vector2, enemy>();
         ice_map = new Dictionary<Vector2, GameObject>();
@@ -27,6 +26,8 @@ public class game_master : MonoBehaviour
     private int step_count;
 
     public Text step_count_text;
+
+    public Image fade_panel;
 
     [Header("Game Over")]
     public Image panel;
@@ -69,15 +70,17 @@ public class game_master : MonoBehaviour
 
     private IEnumerator GameStart()
     {
-        Vector3 cameraGoalPos = new Vector3((Constants.MapWidth / 2) * m_manager.ground_sprite.bounds.size.x, (Constants.MapHeight / 2) * m_manager.ground_sprite.bounds.size.y, -10);
-        Camera.main.transform.position = new Vector3(cameraGoalPos.x, cameraGoalPos.y + m_manager.ground_sprite.bounds.size.y * Constants.MapHeight*2, -10);
-        
-        // Center camera on map!
-        while(Camera.main.transform.position != cameraGoalPos)
+        // Center camera
+        Vector3 cameraGoalPos = new Vector3(Constants.CameraX * m_manager.ground_sprite.bounds.size.x, (Constants.MapHeight / 2) * m_manager.ground_sprite.bounds.size.y, -10);
+        Camera.main.transform.position = cameraGoalPos;
+
+        // Fade out panel
+        while(fade_panel.color.a >= 0.05f)
         {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, cameraGoalPos, player.fall_speed * Time.deltaTime);
+            fade_panel.color = Vector4.MoveTowards(fade_panel.color, Color.clear, 1.5f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
+        fade_panel.color = Color.clear;
 
         // Play player intro
         FindObjectOfType<player>().PlayIntroAt(new Vector2(1, 1));
@@ -85,7 +88,6 @@ public class game_master : MonoBehaviour
 
     private IEnumerator GameOver()
     {
-        yield return null;
         while(panel.color.a < 0.5f)
         {
             panel.color = Vector4.MoveTowards(panel.color, new Vector4(0, 0, 0, 0.5f), 2f * Time.deltaTime);
@@ -115,6 +117,28 @@ public class game_master : MonoBehaviour
         StartCoroutine("LevelEnd");
     }
 
+    private IEnumerator LevelEnd()
+    {
+        while(fade_panel.color.a <= 0.95f)
+        {
+            fade_panel.color = Vector4.MoveTowards(fade_panel.color, Color.black, 1.5f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        fade_panel.color = Color.black;
+
+        yield return new WaitForSeconds(2.0f);
+
+        current_map = GetComponent<map_manager>().SpawnMap();
+        StartCoroutine("GameStart");
+
+        while(fade_panel.color.a >= 0.05f)
+        {
+            fade_panel.color = Vector4.MoveTowards(fade_panel.color, Color.clear, 1.5f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        fade_panel.color = Color.clear;     
+    }
+
     private IEnumerator FlashStepText()
     {
         step_count_text.rectTransform.localScale = Vector3.zero;
@@ -129,18 +153,5 @@ public class game_master : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         step_count_text.rectTransform.localScale = Vector3.zero;
-    }
-
-    private IEnumerator LevelEnd()
-    {
-        Vector3 cameraGoalPos = new Vector3((Constants.MapWidth / 2) * m_manager.ground_sprite.bounds.size.x, m_manager.ground_sprite.bounds.size.y * Constants.MapHeight * -2, -10);
-        while(Camera.main.transform.position != cameraGoalPos)
-        {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, cameraGoalPos, player.fall_speed*1.1f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-
-        current_map = GetComponent<map_manager>().SpawnMap();
-        StartCoroutine("GameStart");
     }
 }
