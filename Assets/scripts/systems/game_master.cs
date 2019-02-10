@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class Map
 {
-    public int[,] tile_map;
+    public List<int[,]> tile_map;
     public Dictionary<Vector2, GameObject> item_map;
     public Dictionary<Vector2, enemy> enemy_map;
     public Dictionary<Vector2, GameObject> ice_map;
 
     public Map() 
     {
+        tile_map = new List<int[,]>();
         item_map = new Dictionary<Vector2, GameObject>();
         enemy_map = new Dictionary<Vector2, enemy>();
         ice_map = new Dictionary<Vector2, GameObject>();

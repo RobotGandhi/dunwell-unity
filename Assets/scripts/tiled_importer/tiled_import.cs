@@ -4,24 +4,10 @@ using System;
 using System.IO;
 using UnityEngine;
 
-
-class Pee
-{
-
-}
-
-class Balls
-{
-    Pee pee; // We store the pee in the balls
-}
-
-
-
-
 public class tiled_import : MonoBehaviour
 {
     
-    public static int[,] LoadTiledMap(string path)
+    public static List<int[,]> LoadTiledMap(string path)
     {
         string fileContent = "";
 
@@ -102,26 +88,8 @@ public class tiled_import : MonoBehaviour
             i++;
         }
 
-        int[,] map = tileDataList[0];
-        // Make sure the map is correctly layered before we return it
-        for (int z = 1; z < tileDataList.Count; z++)
-        {
-            int[,] layerdData = tileDataList[z];
-            for(int y = 0; y < height; y++)
-            {
-                for(int x = 0; x < width; x++)
-                {
-                    int tileValue = layerdData[y, x];
-                    if (map_manager.ShouldReplace(map[y, x], layerdData[y, x]))
-                    {
-                        map[y, x] = tileValue;
-                    }
-                }
-            }
-        }
-
         // Done
-        return map;
+        return tileDataList;
     }
 
 }
