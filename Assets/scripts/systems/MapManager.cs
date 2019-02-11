@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class map_manager : MonoBehaviour
+public class MapManager : MonoBehaviour
 {
     public Sprite ground_sprite, ground_sprite2, left_wall_sprite, right_wall_sprite, top_wall_sprite, pit_sprite, bot_left_wall_sprite, bot_right_wall_sprite, goal_sprite1, goal_sprite2, ice_sprite;
     public Sprite weapon_sprite, shield_sprite, health_sprite;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class menu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     
     private void Update()

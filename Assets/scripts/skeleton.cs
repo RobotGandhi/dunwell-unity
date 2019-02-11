@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class skeleton : enemy
+public class Skeleton : Enemy
 {
 
     public Sprite damaged_sprite, dead_sprite;

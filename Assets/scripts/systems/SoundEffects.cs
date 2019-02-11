@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sfx_system : MonoBehaviour
+public class SoundEffects : MonoBehaviour
 {
     private AudioClip[] all_sfx;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class player : touch_listener
+public class Player : TouchListener
 {
     enum PlayerStates
     {
@@ -27,18 +27,21 @@ public class player : touch_listener
     public Sprite ground_sprite;
     public GameObject enemy_remains_prefab;
 
-    map_manager m_manager;
-    game_master g_master;
-    touch_system t_system;
+    MapManager m_manager;
+    GameMaster g_master;
+    TouchSystem t_system;
+    SoundEffects sfx;
+
     private Vector3 tile_position = new Vector3(1, 1, 0);
     private float ground_size;
     const float move_speed = 7.5f;
+
     PlayerStates player_state;
     PlayerMoveDirection move_direction;
     PlayerMoveDirection ice_slide_direction;
+
     Animator anim_controller;
     SpriteRenderer spre;
-    sfx_system sfx;
 
     bool idle_trigger = false;
     bool move_finger_down = false;
@@ -63,13 +66,15 @@ public class player : touch_listener
         direction_to_vector.Add(new Vector3(0, -1)); // down
         direction_to_vector.Add(new Vector3(-1, 0)); // left
 
-        t_system = FindObjectOfType<touch_system>(); // There should only be ONE!
+        t_system = FindObjectOfType<TouchSystem>(); // There should only be ONE!
         t_system.AddTouchListener(this);
 
-        g_master = FindObjectOfType<game_master>();
+        g_master = FindObjectOfType<GameMaster>();
 
-        m_manager = FindObjectOfType<map_manager>();
+        m_manager = FindObjectOfType<MapManager>();
         ground_size = m_manager.ground_sprite.bounds.size.x;
+
+        sfx = FindObjectOfType<SoundEffects>();
 
         // Get the animator
         anim_controller = GetComponent<Animator>();
@@ -78,7 +83,6 @@ public class player : touch_listener
         anim_controller.SetBool("moving", false);
 
         spre = GetComponent<SpriteRenderer>();
-        sfx = FindObjectOfType<sfx_system>();
 
         // Item
         current_item = null;
@@ -119,15 +123,15 @@ public class player : touch_listener
             current_item.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
 
             // Position
-            switch (current_item.GetComponent<item>().item_type)
+            switch (current_item.GetComponent<Item>().item_type)
             {
-                case item.ItemType.WEAPON:
+                case Item.ItemType.WEAPON:
                     current_item.position = transform.position + Vector3.up * weapon_offset;
                     break;
-                case item.ItemType.SHIELD:
+                case Item.ItemType.SHIELD:
                     current_item.position = transform.position + Vector3.up * shield_offset;
                     break;
-                case item.ItemType.HEALTH:
+                case Item.ItemType.HEALTH:
                     current_item.position = transform.position + Vector3.up * health_offset;
                     break;
             }
@@ -196,15 +200,15 @@ public class player : touch_listener
         Vector2 new_tile_position = tile_position + direction_to_vector[(int)direction];
         int new_tile_value = g_master.current_map.tile_map[(int)new_tile_position.y, (int)new_tile_position.x];
 
-        if (map_manager.IsWalkable(new_tile_value))
+        if (MapManager.IsWalkable(new_tile_value))
         {
             DoMovePlayer(direction, new_tile_position);
         }
-        else if (map_manager.IsItem(new_tile_value))
+        else if (MapManager.IsItem(new_tile_value))
         {
             GameObject temp = g_master.current_map.item_map[new Vector2(new_tile_position.x, new_tile_position.y)];
 
-            if (temp.GetComponent<item>().item_state == item.ItemState.ON_MAP)
+            if (temp.GetComponent<Item>().item_state == Item.ItemState.ON_MAP)
             {
                 // Destroy current item
                 if (current_item != null)

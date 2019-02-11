@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class combat : MonoBehaviour 
+public class Combat : MonoBehaviour 
 {
     
     public enum CombatResult

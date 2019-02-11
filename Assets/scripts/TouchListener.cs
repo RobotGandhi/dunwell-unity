@@ -4,7 +4,7 @@ using UnityEngine;
 
 /* Base class for everyone that wants to listen to touch events */
 
-public class touch_listener : MonoBehaviour
+public class TouchListener : MonoBehaviour
 {
     public virtual void HorizontalSwipe(int direction) { }
     public virtual void VerticalSwipe(int direction) { }

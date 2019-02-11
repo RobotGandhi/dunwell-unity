@@ -19,7 +19,7 @@ public class Map
     }
 }
 
-public class game_master : MonoBehaviour
+public class GameMaster : MonoBehaviour
 {
     map_manager m_manager;
     public Map current_map;

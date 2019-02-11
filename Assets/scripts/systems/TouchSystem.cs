@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class touch_system : MonoBehaviour
+public class TouchSystem : MonoBehaviour
 {
     const float swipeThreshshold = 50;
     private bool canSwipe = true;
