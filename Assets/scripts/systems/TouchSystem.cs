@@ -6,7 +6,7 @@ public class TouchSystem : MonoBehaviour
 {
     const float swipeThreshshold = 50;
     private bool canSwipe = true;
-    private List<touch_listener> touchListenerList = new List<touch_listener>();
+    private List<TouchListener> touchListenerList = new List<TouchListener>();
 
     bool listenForDoubleTap = false;
 
@@ -18,7 +18,7 @@ public class TouchSystem : MonoBehaviour
 
             if(touch.phase == TouchPhase.Began && listenForDoubleTap)
             {
-                foreach (touch_listener x in touchListenerList)
+                foreach (TouchListener x in touchListenerList)
                 {
                     x.DoubleTap();
                 }
@@ -30,14 +30,14 @@ public class TouchSystem : MonoBehaviour
                 {
                     if (Mathf.Abs(touch.deltaPosition.x) > swipeThreshshold)
                     {
-                        foreach(touch_listener x in touchListenerList) {
+                        foreach(TouchListener x in touchListenerList) {
                             x.HorizontalSwipe((int)Mathf.Clamp(touch.deltaPosition.x, -1, 1));
                         }
                         canSwipe = false;
                     }
                     else if (Mathf.Abs(touch.deltaPosition.y) > swipeThreshshold)
                     {
-                        foreach (touch_listener x in touchListenerList) {
+                        foreach (TouchListener x in touchListenerList) {
                             x.VerticalSwipe((int)Mathf.Clamp(touch.deltaPosition.y, -1, 1));
                         }
                         canSwipe = false;
@@ -46,7 +46,7 @@ public class TouchSystem : MonoBehaviour
             }
             else if(touch.phase == TouchPhase.Ended)
             {
-                foreach(touch_listener x in touchListenerList) {
+                foreach(TouchListener x in touchListenerList) {
                     x.FingerUp();
                 }
                 if(canSwipe)
@@ -60,7 +60,7 @@ public class TouchSystem : MonoBehaviour
         }
     }
 
-    public void AddTouchListener(touch_listener _obj)
+    public void AddTouchListener(TouchListener _obj)
     {
         touchListenerList.Add(_obj);
     }

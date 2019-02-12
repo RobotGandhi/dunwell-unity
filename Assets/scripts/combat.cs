@@ -13,11 +13,11 @@ public class Combat : MonoBehaviour
         SHIELD_DEFEND
     }
 
-    public static CombatResult PerformCombat(player _player, enemy _enemy)
+    public static CombatResult PerformCombat(Player _player, Enemy _enemy)
     {
         // Does the player have a shield?
-        bool hasShield = (_player.current_item != null ? (_player.current_item.GetComponent<item>().item_type == item.ItemType.SHIELD ? true : false) : false);
-        bool hasWeapon = (_player.current_item != null ? (_player.current_item.GetComponent<item>().item_type == item.ItemType.WEAPON ? true : false) : false);
+        bool hasShield = (_player.current_item != null ? (_player.current_item.GetComponent<Item>().item_type == Item.ItemType.SHIELD ? true : false) : false);
+        bool hasWeapon = (_player.current_item != null ? (_player.current_item.GetComponent<Item>().item_type == Item.ItemType.WEAPON ? true : false) : false);
 
         if (!hasShield)
         {

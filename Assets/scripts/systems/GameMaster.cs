@@ -8,20 +8,20 @@ public class Map
 {
     public int[,] tile_map;
     public Dictionary<Vector2, GameObject> item_map;
-    public Dictionary<Vector2, enemy> enemy_map;
+    public Dictionary<Vector2, Enemy> enemy_map;
     public Dictionary<Vector2, GameObject> ice_map;
 
     public Map() 
     {
         item_map = new Dictionary<Vector2, GameObject>();
-        enemy_map = new Dictionary<Vector2, enemy>();
+        enemy_map = new Dictionary<Vector2, Enemy>();
         ice_map = new Dictionary<Vector2, GameObject>();
     }
 }
 
 public class GameMaster : MonoBehaviour
 {
-    map_manager m_manager;
+    MapManager m_manager;
     public Map current_map;
     private int step_count;
 
@@ -40,7 +40,7 @@ public class GameMaster : MonoBehaviour
         Application.targetFrameRate = 60;
 
         // Get map going
-        m_manager = GetComponent<map_manager>();
+        m_manager = GetComponent<MapManager>();
         current_map = m_manager.SpawnMap();
     }
 
@@ -61,6 +61,10 @@ public class GameMaster : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("menu");
+        }
     }
 
     public void PlayerDie()
@@ -71,7 +75,7 @@ public class GameMaster : MonoBehaviour
     private IEnumerator GameStart()
     {
         // Center camera
-        Vector3 cameraGoalPos = new Vector3(Constants.CameraX * m_manager.ground_sprite.bounds.size.x, (Constants.MapHeight / 2) * m_manager.ground_sprite.bounds.size.y, -10);
+        Vector3 cameraGoalPos = new Vector3(Constants.CameraX * MapManager.GroundTileSize, (Constants.MapHeight / 2) * MapManager.GroundTileSize, -10);
         Camera.main.transform.position = cameraGoalPos;
 
         // Fade out panel
@@ -83,7 +87,7 @@ public class GameMaster : MonoBehaviour
         fade_panel.color = Color.clear;
 
         // Play player intro
-        FindObjectOfType<player>().PlayIntroAt(new Vector2(1, 1));
+        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 1));
     }
 
     private IEnumerator GameOver()
@@ -128,7 +132,7 @@ public class GameMaster : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
-        current_map = GetComponent<map_manager>().SpawnMap();
+        current_map = GetComponent<MapManager>().SpawnMap();
         StartCoroutine("GameStart");
 
         while(fade_panel.color.a >= 0.05f)

@@ -4,10 +4,10 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class tiled_import : MonoBehaviour
+public class TiledImporter : MonoBehaviour
 {
     
-    public static List<int[,]> LoadTiledMap(string path)
+    public static int[,] LoadTiledMap(string path)
     {
         string fileContent = "";
 
@@ -87,8 +87,11 @@ public class tiled_import : MonoBehaviour
             i++;
         }
 
+        // Go through and make sure we only take the important parts of each layer
+        int[,] map = new int[Constants.MapHeight, Constants.MapWidth];
+
         // Done
-        return tileDataList;
+        return map;
     }
 
 }
