@@ -6,13 +6,15 @@ public class ResourceLoader : MonoBehaviour
 {
 
     public static Dictionary<string, Sprite> sprite_map = new Dictionary<string, Sprite>();
-    static bool has_loaded_sprites = false;
+    public static Dictionary<string, TextAsset> level_text_map = new Dictionary<string, TextAsset>();
+    static bool has_loaded_resources = false;
+
 
     void Start()
     {
         // Load sprites
-        if(!has_loaded_sprites)
-            LoadSprites();
+        if (!has_loaded_resources)
+            StartCoroutine(LoadSpritesCoroutine());
     }
 
     private void LoadSprites()
@@ -20,12 +22,27 @@ public class ResourceLoader : MonoBehaviour
         Sprite[] all_sprites = Resources.LoadAll<Sprite>("graphics");
         foreach(Sprite x in all_sprites)
         {
-            print(x.name);
             sprite_map.Add(x.name, x);
         }
+    }
 
-        print("just loaded sprites!");
-        has_loaded_sprites = true;
+    private void LoadLevels()
+    {
+        TextAsset[] all_level_files = Resources.LoadAll<TextAsset>("levels");
+        foreach(TextAsset x in all_level_files)
+        {
+            level_text_map.Add(x.name, x);
+        }
+    }
+
+    private IEnumerator LoadSpritesCoroutine()
+    {
+        LoadSprites();
+        LoadLevels();
+        
+        yield return null;
+
+        has_loaded_resources = true;
     }
 
     /* Returns loaded sprite with given parameter name */
@@ -34,4 +51,8 @@ public class ResourceLoader : MonoBehaviour
         return sprite_map[name];
     }
 
+    public static TextAsset GetLevelTextFile(string name)
+    {
+        return level_text_map[name];
+    }
 }
