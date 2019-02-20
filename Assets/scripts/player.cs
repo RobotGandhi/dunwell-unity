@@ -70,8 +70,6 @@ public class Player : TouchListener
         weapon_offset = MapManager.GroundTileSize * 0.35f;
         shield_offset = MapManager.GroundTileSize * 0.55f;
         health_offset = MapManager.GroundTileSize * 0.5f;
-
-        print(ResourceLoader.GetLevelTextFile("level1").text);
     }
 
     void Update()

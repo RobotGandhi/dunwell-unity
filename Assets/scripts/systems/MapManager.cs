@@ -292,6 +292,10 @@ public class MapManager : MonoBehaviour
     */
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
+        if(tile_value2 == 0)
+        {
+            return true;
+        }
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
         if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2)))
         {
