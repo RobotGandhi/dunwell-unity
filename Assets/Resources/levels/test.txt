@@ -1,0 +1,70 @@
+return {
+  version = "1.2",
+  luaversion = "5.1",
+  tiledversion = "1.2.1",
+  orientation = "orthogonal",
+  renderorder = "right-down",
+  width = 6,
+  height = 9,
+  tilewidth = 32,
+  tileheight = 32,
+  nextlayerid = 2,
+  nextobjectid = 1,
+  properties = {},
+  tilesets = {
+    {
+      name = "dick",
+      firstgid = 1,
+      filename = "../../../../../Program Files (x86)/Tiled/examples/dick.tsx",
+      tilewidth = 32,
+      tileheight = 32,
+      spacing = 0,
+      margin = 0,
+      columns = 6,
+      image = "../../../../../Program Files (x86)/Tiled/examples/sewer_tileset.png",
+      imagewidth = 192,
+      imageheight = 217,
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 32,
+        height = 32
+      },
+      properties = {},
+      terrains = {},
+      tilecount = 36,
+      tiles = {}
+    }
+  },
+  layers = {
+    {
+      type = "tilelayer",
+      id = 1,
+      name = "Tile Layer 1",
+      x = 0,
+      y = 0,
+      width = 6,
+      height = 9,
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      encoding = "lua",
+      data = {
+        7, 7, 7, 7, 7, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 19, 19, 19, 19, 7,
+        7, 7, 7, 7, 7, 7
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
     public enum TileValues
     {
         // Room kit
-        GROUND = 30,
+        GROUND = 19,
         LEFT_WALL = 31,
         RIGHT_WALL = 2,
         TOP_WALL = 3,
@@ -75,7 +75,8 @@ public class MapManager : MonoBehaviour
         GroundTileSize = ResourceLoader.GetSprite("floor0").bounds.size.x;
 
         Map map = new Map();
-        map.tile_map = map1;
+        //map.tile_map = map1;
+        map.tile_map = TiledImporter.LoadTiledMap("test");
 
         // Clear stuff
         foreach (Transform go in map_holder.transform) {

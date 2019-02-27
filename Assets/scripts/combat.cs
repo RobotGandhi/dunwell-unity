@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Combat : MonoBehaviour 
 {
-    
-    public enum CombatResult
-    {
-        CLASH,
-        PLAYER_DIED,
-        ENEMY_DIED,
-        SHIELD_DEFEND
-    }
-
+   
+    /*
     public static CombatResult PerformCombat(Player _player, Enemy _enemy)
     {
         // Does the player have a shield?
@@ -45,5 +38,6 @@ public class Combat : MonoBehaviour
             return CombatResult.SHIELD_DEFEND;
         return CombatResult.CLASH;
     }
+    */
 
 }

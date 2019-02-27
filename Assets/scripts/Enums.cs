@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Enums 
 {
+    public enum CombatResult
+    {
+        CLASH,
+        PLAYER_DIED,
+        ENEMY_DIED,
+        SHIELD_DEFEND
+    }
 
     public enum PlayerStates
     {

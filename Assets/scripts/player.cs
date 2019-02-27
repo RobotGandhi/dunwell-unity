@@ -8,24 +8,24 @@ public class Player : TouchListener
     List<Vector3> direction_to_vector = new List<Vector3>();
 
     public Sprite ground_sprite;
-    public GameObject enemy_remains_prefab;
 
     MapManager m_manager;
     GameMaster g_master;
     TouchSystem t_system;
     SoundEffects sfx;
+    [System.NonSerialized]
+    public PlayerCombat player_combat;
+    [System.NonSerialized]
+    public PlayerAnimation player_animation;
 
     private Vector3 tile_position = new Vector3(1, 1, 0);
     const float move_speed = 7.5f;
 
     Enums.PlayerStates player_state;
     Enums.PlayerMoveDirection move_direction;
-    Enums.PlayerMoveDirection ice_slide_direction;
 
-    Animator anim_controller;
     SpriteRenderer spre;
 
-    bool idle_trigger = false;
     bool move_finger_down = false;
 
     public Transform current_item;
@@ -48,7 +48,7 @@ public class Player : TouchListener
         direction_to_vector.Add(new Vector3(0, -1)); // down
         direction_to_vector.Add(new Vector3(-1, 0)); // left
 
-        t_system = FindObjectOfType<TouchSystem>(); // There should only be ONE!
+        t_system = FindObjectOfType<TouchSystem>(); 
         t_system.AddTouchListener(this);
 
         g_master = FindObjectOfType<GameMaster>();
@@ -57,12 +57,6 @@ public class Player : TouchListener
 
         sfx = FindObjectOfType<SoundEffects>();
 
-        // Get the animator
-        anim_controller = GetComponent<Animator>();
-        anim_controller.SetBool("idle", true);
-        anim_controller.SetBool("holding_item", false);
-        anim_controller.SetBool("moving", false);
-
         spre = GetComponent<SpriteRenderer>();
 
         // Item
@@ -70,34 +64,24 @@ public class Player : TouchListener
         weapon_offset = MapManager.GroundTileSize * 0.35f;
         shield_offset = MapManager.GroundTileSize * 0.55f;
         health_offset = MapManager.GroundTileSize * 0.5f;
-
-        print(ResourceLoader.GetLevelTextFile("level1").text);
     }
 
     void Update()
     {
+        // Moving the player if he's supposed to be "moving"
         if (player_state == Enums.PlayerStates.MOVING)
         {
+            // move towards desired tile position
             if (transform.position != tile_position * MapManager.GroundTileSize)
             {
                 transform.position = Vector3.MoveTowards(transform.position, tile_position * MapManager.GroundTileSize, move_speed * Time.deltaTime);
             }
             else
             {
+                // We reached desired tile position
                 ReachedNewTile();
             }
         }
-
-        // Check if a finger is down
-        if(Input.touchCount > 0)
-        {
-            if (idle_trigger && move_finger_down)
-            {
-                MovePlayer(move_direction);
-            }
-        }
-
-        idle_trigger = false;
 
         /* Item */
         if(current_item != null)
@@ -163,17 +147,12 @@ public class Player : TouchListener
         if(player_state == Enums.PlayerStates.IDLE)
         {
             // Do idle stuff
-            anim_controller.SetBool("moving", false);
-            anim_controller.SetBool("idle", true);
-            idle_trigger = true;
+            player_animation.StartIdle();
         }
         else if(player_state == Enums.PlayerStates.MOVING)
         {
             // Do move stuff
-            anim_controller.SetTrigger("move_trigger");
-            anim_controller.SetBool("moving", true);
-            anim_controller.SetBool("idle", false);
-            anim_controller.SetInteger("move_direction", (int)move_direction);
+            player_animation.StartMoving(move_direction);
         }
     }
 
@@ -200,7 +179,7 @@ public class Player : TouchListener
                 }
                 current_item = temp.transform;
                 current_item.GetComponent<Item>().SetState(Item.ItemState.PICKED_UP);
-                anim_controller.SetBool("holding_item", true);
+                player_animation.ItemChange();
                 // SFX
                 switch (current_item.GetComponent<Item>().item_type)
                 {
@@ -224,66 +203,11 @@ public class Player : TouchListener
         {
             if (g_master.current_map.enemy_map.ContainsKey(new_tile_position))
             {
-                Combat.CombatResult result = Combat.PerformCombat(this, g_master.current_map.enemy_map[new_tile_position].GetComponent<Enemy>());
+                // Call on player_combat to perform the combat for us
+                player_combat.EngageEnemy(g_master.current_map.enemy_map[new_tile_position], new_tile_position);
 
-                anim_controller.SetInteger("move_direction", (int)direction);
-
+                player_animation.SetMoveDirection(direction);
                 g_master.Step();
-
-                switch (result)
-                {
-                    case Combat.CombatResult.CLASH:
-                        sfx.PlaySFX("enemy_hurt");
-                        break;
-                    case Combat.CombatResult.PLAYER_DIED:
-                        Die();
-                        break;
-                    case Combat.CombatResult.ENEMY_DIED:
-                        // Spawn enemy remains
-                        GameObject temp = (Instantiate(enemy_remains_prefab, g_master.current_map.enemy_map[new_tile_position].transform.position, Quaternion.identity)) as GameObject;
-                        temp.GetComponent<SpriteRenderer>().sortingOrder++;
-                        temp.transform.SetParent(m_manager.map_holder.transform);
-                        // Remove from world
-                        Destroy(g_master.current_map.enemy_map[new_tile_position].gameObject);
-                        g_master.current_map.enemy_map.Remove(new_tile_position);
-                        // Play SFX
-                        sfx.PlaySFX("enemy_dead_bones");
-                        break;
-                    case Combat.CombatResult.SHIELD_DEFEND:
-                        anim_controller.SetBool("holding_item", false);
-                        // SFX
-                        sfx.PlaySFX("enemy_hurt");
-                        sfx.PlaySFX("armor_break");
-                        // Remove shield
-                        current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-                        current_item = null;
-                        break;
-                }
-
-                // Animation
-                if (result != Combat.CombatResult.PLAYER_DIED)
-                {
-                    if (current_item != null)
-                    {
-                        if (current_item.GetComponent<Item>().item_type == Item.ItemType.WEAPON)
-                        {
-                            StartCoroutine("HideSwordForAnimation");
-                            anim_controller.SetTrigger("attack_sword");
-                        }
-                        else if (current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
-                        {
-                            anim_controller.SetTrigger("attack_item");
-                        }
-                        else
-                        {
-                            anim_controller.SetTrigger("attack");
-                        }
-                    }
-                    else
-                    {
-                        anim_controller.SetTrigger("attack");
-                    }
-                }
             }
             else
             {
@@ -305,7 +229,7 @@ public class Player : TouchListener
             current_item = null;
         }
         sfx.PlaySFX("player_die");
-        anim_controller.SetTrigger("die");
+        player_animation.Die();
         SetPlayerState(Enums.PlayerStates.DEAD);
         g_master.PlayerDie();
     }
@@ -384,7 +308,7 @@ public class Player : TouchListener
                 HP++;
                 current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
                 current_item = null;
-                anim_controller.SetBool("holding_item", false);
+                player_animation.ItemChange();
                 sfx.PlaySFX("eating_health_up");
 
                 g_master.Step();
@@ -431,12 +355,11 @@ public class Player : TouchListener
         Vector2 intro_start = new Vector3(tile_position.x, tile_position.y + 4) * ground_sprite.bounds.size.x;
         float intro_distance = Vector3.Distance(intro_start, tile_position * MapManager.GroundTileSize);
 
-        SpriteRenderer _spre = GetComponent<SpriteRenderer>();
 
         while (transform.position != tile_position * MapManager.GroundTileSize)
         {
             transform.position = Vector3.MoveTowards(transform.position, tile_position * ground_sprite.bounds.size.x, fall_speed * Time.deltaTime);
-            _spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * MapManager.GroundTileSize) / intro_distance);
+            spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * MapManager.GroundTileSize) / intro_distance);
             yield return new WaitForEndOfFrame();
         }
 
@@ -466,7 +389,7 @@ public class Player : TouchListener
         {
             current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
             current_item = null;
-            anim_controller.SetBool("holding_item", false);
+            player_animation.ItemChange();
         }
 
         g_master.NewMap();
