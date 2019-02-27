@@ -7,6 +7,10 @@ using UnityEngine;
 public class TiledImporter : MonoBehaviour
 {
     
+<<<<<<< HEAD
+=======
+    // Uses ResourceLoader to get level 
+>>>>>>> 076f5f7c86f17b7eba354d75b7ba9b32bb3687ea
     public static int[,] LoadTiledMap(string level_name)
     {
         string fileContent = ResourceLoader.GetLevelTextFile(level_name).text;
@@ -95,8 +99,33 @@ public class TiledImporter : MonoBehaviour
         }
 
         // Go through and make sure we only take the important parts of each layer
+<<<<<<< HEAD
         int[,] map = new int[Constants.MapHeight, Constants.MapWidth];
         map = tileDataList[0];
+=======
+        int[,] map = tileDataList[0];
+
+        if(tileDataList.Count > 1)
+        {
+            for(int j = 1; j < tileDataList.Count; j++)
+            {
+                int[,] old_layer = tileDataList[j - 1];
+                int[,] new_layer = tileDataList[j];   
+                for(int x = 0; x < width; x++)
+                {
+                    for(int y = 0; y < height; y++)
+                    {
+                        int tile_value_new = new_layer[y, x];
+                        int tile_value_old = old_layer[y, x];
+                        if(MapManager.ShouldReplace(tile_value_new, tile_value_old))
+                        {
+                            map[y, x] = tile_value_new;
+                        }
+                    }
+                }
+            }
+        }
+>>>>>>> 076f5f7c86f17b7eba354d75b7ba9b32bb3687ea
 
         // Done
         return map;
