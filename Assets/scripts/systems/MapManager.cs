@@ -11,11 +11,14 @@ public class MapManager : MonoBehaviour
 
     public GameObject skeleton_prefab;
 
+    [Header("File name of the level to load!")]
+    public string level_name;
+
     public enum TileValues
     {
         // Room kit
-        GROUND = 19,
-        LEFT_WALL = 31,
+        GROUND = 30,
+        LEFT_WALL = 1,
         RIGHT_WALL = 2,
         TOP_WALL = 3,
         PIT = 4,
@@ -26,7 +29,7 @@ public class MapManager : MonoBehaviour
         SHIELD = 8,
         HEALTH = 9,
         // Enemy
-        SKELETON = 10,
+        SKELETON = 31,
 
         // MAP ELEMENTS
         GOAL = 11,
@@ -76,7 +79,7 @@ public class MapManager : MonoBehaviour
 
         Map map = new Map();
         //map.tile_map = map1;
-        map.tile_map = TiledImporter.LoadTiledMap("test");
+        map.tile_map = TiledImporter.LoadTiledMap(level_name);
 
         // Clear stuff
         foreach (Transform go in map_holder.transform) {

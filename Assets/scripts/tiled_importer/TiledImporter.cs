@@ -47,45 +47,19 @@ public class TiledImporter : MonoBehaviour
                 int[,] data = new int[Constants.MapHeight, Constants.MapWidth];
 
                 // Convert to a 2d tiled map representable in the game
-                //int x = 0;
-                //int y = 0;
-
-                /*
-                 * int array2d[][] = new int[10][3];
-                    for(int i=0; i<10;i++)
-                        for(int j=0;j<3;j++)
-                            array2d[i][j] = array1d[(j*10) + i];
-
-
-                array2d[i][j] = array1d[j%3+i*3];
-                */
-
-                int _i = (int)(intList.Count / height);
-                int _j = (int)intList.Count / i;
-                int index = 0;
-                for(int row = 0; row < _i; row++)
-                {
-                    for(int col = 0; col < _j; col++)
-                    {
-                        data[row, col] = intList[index];
-                        index++;
-                    }
-                }
-        
-                /*
-                for (int j = 0; j < intList.Count-1; j++)
+                int x = 0;
+                int y = 0;
+                                
+                for (int j = 0; j < intList.Count; j++)
                 {
                     data[y, x] = intList[j];
-
                     x++;
-
-                    if (x == 5)
+                    if (x > width-1)
                     {
                         x = 0;
                         y++;
                     }
-                }
-                */
+                }  
 
                 // Insert into our list
                 tileDataList.Add(data);
@@ -95,11 +69,9 @@ public class TiledImporter : MonoBehaviour
         }
 
         // Go through and make sure we only take the important parts of each layer
-        int[,] map = new int[Constants.MapHeight, Constants.MapWidth];
-        map = tileDataList[0];
 
         // Done
-        return map;
+        return tileDataList[0];
     }
 
 }

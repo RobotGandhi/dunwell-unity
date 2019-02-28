@@ -436,6 +436,7 @@ MonoBehaviour:
   health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
   skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
+  level_name: test_level
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
@@ -1206,8 +1207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground_sprite: {fileID: 21300000, guid: 6be78e1c30d02c64d82358734e2839df, type: 3}
-  enemy_remains_prefab: {fileID: 4872175682292221776, guid: eea4bfa9353a7a24fabb9b744561960a,
-    type: 3}
   current_item: {fileID: 0}
   HP: 3
   hp_objects:
