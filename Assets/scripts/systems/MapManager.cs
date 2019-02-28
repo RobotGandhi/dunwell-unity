@@ -95,6 +95,7 @@ public class MapManager : MonoBehaviour
             {
                 int tile_value = map.tile_map[y, x];
                 GameObject createdGround = null;
+                GameObject createdItemEnemy = null;
                 switch (tile_value)
                 {
                     case (int)TileValues.GROUND:
@@ -105,7 +106,6 @@ public class MapManager : MonoBehaviour
                         createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
-                        createdGround.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.LEFT_WALL:
                         createdGround = new GameObject();
@@ -114,7 +114,6 @@ public class MapManager : MonoBehaviour
                         createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallLeft");
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
-                        createdGround.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.RIGHT_WALL:
                         createdGround = new GameObject();
@@ -123,7 +122,6 @@ public class MapManager : MonoBehaviour
                         createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallRight");
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
-                        createdGround.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.TOP_WALL:
                         createdGround = new GameObject();
@@ -132,7 +130,6 @@ public class MapManager : MonoBehaviour
                         createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallTop");
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
-                        createdGround.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.PIT:
                         GameObject pit = new GameObject();
@@ -141,7 +138,6 @@ public class MapManager : MonoBehaviour
                         pit.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("pit");
                         pit.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         pit.transform.SetParent(map_holder.transform);
-                        pit.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.BOT_LEFT_WALL:
                         GameObject bot_left_wall = new GameObject();
@@ -150,7 +146,6 @@ public class MapManager : MonoBehaviour
                         bot_left_wall.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("bottomLeftWall");
                         bot_left_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         bot_left_wall.transform.SetParent(map_holder.transform);
-                        bot_left_wall.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.BOT_RIGHT_WALL:
                         GameObject bot_right_wall = new GameObject();
@@ -159,89 +154,85 @@ public class MapManager : MonoBehaviour
                         bot_right_wall.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("bottomRightWall");
                         bot_right_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         bot_right_wall.transform.SetParent(map_holder.transform);
-                        bot_right_wall.GetComponent<SpriteRenderer>().sortingOrder = y;
                         break;
                     case (int)TileValues.WEAPON:
                         // First spawn ground
-                        GameObject weapon_ground = new GameObject();
-                        weapon_ground.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        weapon_ground.AddComponent<SpriteRenderer>();
-                        weapon_ground.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        weapon_ground.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        weapon_ground.transform.SetParent(map_holder.transform);
-                        weapon_ground.GetComponent<SpriteRenderer>().sortingOrder = y;
-                        // Spawn weapon
-                        GameObject weapon = new GameObject();
-                        weapon.name = "weapon";
-                        weapon.AddComponent<SpriteRenderer>();
-                        weapon.GetComponent<SpriteRenderer>().sprite = weapon_sprite;
-                        weapon.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        weapon.transform.SetParent(map_holder.transform);
-                        weapon.GetComponent<SpriteRenderer>().sortingOrder = y + 1;
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+
+                        // Spawn weapon object
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "weapon";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = weapon_sprite;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         // Item stuff
-                        weapon.AddComponent<Item>();
-                        weapon.GetComponent<Item>().item_type = Item.ItemType.WEAPON;
-                        map.item_map.Add(new Vector2(x, y), weapon);
+                        createdItemEnemy.AddComponent<Item>();
+                        createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.WEAPON;
+                        map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                     case (int)TileValues.SHIELD:
                         // First spawn ground
-                        GameObject armor_ground = new GameObject();
-                        armor_ground.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        armor_ground.AddComponent<SpriteRenderer>();
-                        armor_ground.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        armor_ground.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        armor_ground.transform.SetParent(map_holder.transform);
-                        armor_ground.GetComponent<SpriteRenderer>().sortingOrder = y;
-                        // Spawn weapon
-                        GameObject shield = new GameObject();
-                        shield.name = "shield";
-                        shield.AddComponent<SpriteRenderer>();
-                        shield.GetComponent<SpriteRenderer>().sprite = shield_sprite;
-                        shield.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        shield.transform.SetParent(map_holder.transform);
-                        shield.GetComponent<SpriteRenderer>().sortingOrder = y + 1;
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+
+                        // Spawn shield object
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "shield";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = shield_sprite;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         // Item stuff
-                        shield.AddComponent<Item>();
-                        shield.GetComponent<Item>().item_type = Item.ItemType.SHIELD;
-                        map.item_map.Add(new Vector2(x, y), shield);
+                        createdItemEnemy.AddComponent<Item>();
+                        createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.SHIELD;
+                        map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                     case (int)TileValues.HEALTH:                        // First spawn ground
-                        GameObject health_ground = new GameObject();
-                        health_ground.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        health_ground.AddComponent<SpriteRenderer>();
-                        health_ground.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        health_ground.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        health_ground.transform.SetParent(map_holder.transform);
-                        health_ground.GetComponent<SpriteRenderer>().sortingOrder = y;
-                        // Spawn weapon
-                        GameObject health = new GameObject();
-                        health.name = "health";
-                        health.AddComponent<SpriteRenderer>();
-                        health.GetComponent<SpriteRenderer>().sprite = health_sprite;
-                        health.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        health.transform.SetParent(map_holder.transform);
-                        health.GetComponent<SpriteRenderer>().sortingOrder = y + 1;
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+
+                        // Spawn health object
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "health";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = health_sprite;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         // Item stuff
-                        health.AddComponent<Item>();
-                        health.GetComponent<Item>().item_type = Item.ItemType.HEALTH;
-                        map.item_map.Add(new Vector2(x, y), health);
+                        createdItemEnemy.AddComponent<Item>();
+                        createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.HEALTH;
+                        map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                     case (int)TileValues.SKELETON:
-                        GameObject skel_ground = new GameObject();
-                        skel_ground.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        skel_ground.AddComponent<SpriteRenderer>();
-                        skel_ground.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        skel_ground.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        skel_ground.transform.SetParent(map_holder.transform);
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
                         // Spawn skeleton
-                        GameObject skeleton = Instantiate(skeleton_prefab);
-                        skeleton.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
-                        skeleton.GetComponent<SpriteRenderer>().sortingOrder = y;
-                        skeleton.transform.SetParent(map_holder.transform);
-                        map.enemy_map.Add(new Vector2(x, y), skeleton.GetComponent<Enemy>());
+                        createdItemEnemy = Instantiate(skeleton_prefab);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+                        map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
                         break;
                     case (int)TileValues.GOAL:
                         GameObject go1 = new GameObject();
@@ -259,6 +250,18 @@ public class MapManager : MonoBehaviour
                         go2.transform.SetParent(map_holder.transform);
 
                         break;
+                }
+
+                // Layer the ground
+                if(createdGround != null)
+                {
+                    createdGround.GetComponent<SpriteRenderer>().sortingLayerName = "room_tiles";
+                }
+                // Layer the enemy/item
+                if(createdItemEnemy != null)
+                {
+                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
+                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                 }
 
                 ground_trigger = !ground_trigger;
