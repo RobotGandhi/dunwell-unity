@@ -11,8 +11,8 @@ public class Skeleton : Enemy
     void Start()
     {
         spre = GetComponent<SpriteRenderer>();
-        HP = 2;
-        damage = 1;
+        HP = 1;
+        damage = 0;
     }
 
     void Update()

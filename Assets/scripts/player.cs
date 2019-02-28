@@ -9,7 +9,6 @@ public class Player : TouchListener
 
     public Sprite ground_sprite;
 
-    MapManager m_manager;
     GameMaster g_master;
     TouchSystem t_system;
     SoundEffects sfx;
@@ -25,8 +24,6 @@ public class Player : TouchListener
     Enums.PlayerMoveDirection move_direction;
 
     SpriteRenderer spre;
-
-    bool move_finger_down = false;
 
     public Transform current_item;
     private float weapon_offset;
@@ -52,8 +49,6 @@ public class Player : TouchListener
         t_system.AddTouchListener(this);
 
         g_master = FindObjectOfType<GameMaster>();
-
-        m_manager = FindObjectOfType<MapManager>();
 
         sfx = FindObjectOfType<SoundEffects>();
 
@@ -244,8 +239,7 @@ public class Player : TouchListener
         SetPlayerState(Enums.PlayerStates.MOVING);
         // Set players new tile position
         tile_position = new_tile_position;
-        // Assume the movefinger down
-        move_finger_down = true;
+
         // Spre
         spre.sortingOrder = (int)new_tile_position.y+2;
         // SFX
@@ -288,14 +282,6 @@ public class Player : TouchListener
             {
                 MovePlayer(Enums.PlayerMoveDirection.DOWN);
             }
-        }
-    }
-
-    public override void FingerUp()
-    {
-        if(player_state == Enums.PlayerStates.MOVING)
-        {
-            move_finger_down = false;
         }
     }
 

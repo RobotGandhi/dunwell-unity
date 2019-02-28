@@ -10,7 +10,7 @@ public class ResourceLoader : MonoBehaviour
     static bool has_loaded_resources = false;
 
 
-    void Start()
+    void Awake()
     {
         // Load sprites
         if (!has_loaded_resources)
@@ -18,7 +18,7 @@ public class ResourceLoader : MonoBehaviour
     }
 
     private void LoadSprites()
-    {
+    {       
         Sprite[] all_sprites = Resources.LoadAll<Sprite>("graphics");
         foreach(Sprite x in all_sprites)
         {

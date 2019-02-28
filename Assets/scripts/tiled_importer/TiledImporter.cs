@@ -50,9 +50,14 @@ public class TiledImporter : MonoBehaviour
                 int x = 0;
                 int y = 0;
                                 
+                foreach(int num in intList)
+                {
+                    print(num);
+                }
+
                 for (int j = 0; j < intList.Count; j++)
                 {
-                    data[y, x] = intList[j];
+                    data[height-1-y, x] = intList[j];
                     x++;
                     if (x > width-1)
                     {
@@ -60,7 +65,6 @@ public class TiledImporter : MonoBehaviour
                         y++;
                     }
                 }  
-
                 // Insert into our list
                 tileDataList.Add(data);
             }
@@ -68,10 +72,42 @@ public class TiledImporter : MonoBehaviour
             i++;
         }
 
-        // Go through and make sure we only take the important parts of each layer
+        // Layers 
+        int[,] final_map = new int[height, width];
+
+        // Grab everything from the first layer
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                final_map[height-1-y, x] = tileDataList[0][height-1-y, x];
+            }
+        }
+
+        if (tileDataList.Count > 1)
+        {
+            // Go through and make sure we only take the important parts of each layer
+            for (int z = 1; z < tileDataList.Count; z++)
+            {
+                // 0 - ground 
+                // 1 - items etc
+                int[,] map = tileDataList[z];
+                for(int y = 0; y < height; y++)
+                {
+                    for(int x = 0; x < width; x++)
+                    {
+                        if (MapManager.ShouldReplace(final_map[height-1-y,x], map[height-1-y,x]))
+                        {
+                            final_map[height-1-y, x] = map[height-1-y, x];
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Done
-        return tileDataList[0];
+        return final_map;
     }
 
 }
