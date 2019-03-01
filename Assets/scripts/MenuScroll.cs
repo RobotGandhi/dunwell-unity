@@ -13,7 +13,6 @@ public class MenuScroll : MonoBehaviour
     {
         //Subscribe to the ScrollRect event
         scrollRect.onValueChanged.AddListener(scrollRectCallBack);
-        scrollBar.value = 1f;
     }
 
     //Will be called when ScrollRect changes
@@ -21,7 +20,8 @@ public class MenuScroll : MonoBehaviour
     {
         Debug.Log("ScrollRect Changed: " + value);
         
-        image.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, image.sprite.rect.height * (value.y - 1) * -1, 0);
+        //Slides the given image in the opposite direction of ScrollRect, creating a parallax effect.
+        image.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, image.sprite.rect.height * -(value.y - 1), 0);
         Debug.Log(image.gameObject.transform.position);
     }
 
