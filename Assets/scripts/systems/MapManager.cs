@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    //public Sprite ground_sprite, ground_sprite2, left_wall_sprite, right_wall_sprite, top_wall_sprite, pit_sprite, bot_left_wall_sprite, bot_right_wall_sprite, goal_sprite1, goal_sprite2;
-    public Sprite weapon_sprite, shield_sprite, health_sprite;
 
     public static float GroundTileSize;
 
     public GameObject skeleton_prefab;
+    public GameObject spike_prefab;
 
     [Header("File name of the level to load!")]
     public string level_name;
@@ -33,42 +32,12 @@ public class MapManager : MonoBehaviour
 
         // MAP ELEMENTS
         GOAL = 11,
+        SPIKE = 12,
 
         NONE = -1
     };
 
-    /*
-    static int GR = (int)TileValues.GROUND;
-    static int LW = (int)TileValues.LEFT_WALL;
-    static int RW = (int)TileValues.RIGHT_WALL;
-    static int TW = (int)TileValues.TOP_WALL;
-    static int PT = (int)TileValues.PIT;
-    static int NN = (int)TileValues.NONE;
-    static int BL = (int)TileValues.BOT_LEFT_WALL;
-    static int BR = (int)TileValues.BOT_RIGHT_WALL;
-    static int WI = (int)TileValues.WEAPON;
-    static int SI = (int)TileValues.SHIELD;
-    static int HI = (int)TileValues.HEALTH;
-    static int SK = (int)TileValues.SKELETON;
-    static int GO = (int)TileValues.GOAL;
-    */
-
     bool ground_trigger = false;
-
-    /*
-    static int[,] map1 =
-    {
-        { NN, PT, PT, PT, PT, NN },
-        { BL, GR, GR, GR, GR, BR },
-        { BL, GR, GR, GR, GR, BR },
-        { BL, GR, GR, GR, GR, BR },
-        { LW, GR, GR, GR, GR, RW },
-        { LW, GR, GR, GR, GR, RW },
-        { LW, GR, GR, GR, SK, RW },
-        { LW, GR, GR, GR, GO, RW },
-        { LW, TW, TW, TW, TW, RW }
-    };
-    */
 
     public GameObject map_holder;
 
@@ -168,7 +137,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "weapon";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = weapon_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("weapon");
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -190,7 +159,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "shield";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = shield_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("shield");
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -199,7 +168,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.SHIELD;
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
-                    case (int)TileValues.HEALTH:                        // First spawn ground
+                    case (int)TileValues.HEALTH:                        
                         createdGround = new GameObject();
                         createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.AddComponent<SpriteRenderer>();
@@ -211,7 +180,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "health";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = health_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("food");
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -249,6 +218,20 @@ public class MapManager : MonoBehaviour
                         go1.transform.SetParent(map_holder.transform);
                         go2.transform.SetParent(map_holder.transform);
 
+                        break;
+                    case (int)TileValues.SPIKE:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        // Spawn spike
+                        createdItemEnemy = Instantiate(spike_prefab);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+                        map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                 }
 
@@ -304,7 +287,7 @@ public class MapManager : MonoBehaviour
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2)))
+        if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.SPIKE))
         {
             return true;
         }

@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 382935612}
   - component: {fileID: 382935613}
   - component: {fileID: 382935614}
+  - component: {fileID: 382935615}
   m_Layer: 0
   m_Name: managers
   m_TagString: Untagged
@@ -431,12 +432,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cb709ce2fb6d143b86bedefe6a96cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon_sprite: {fileID: 21300000, guid: 68b1add373402fe4b9a73742b667cb48, type: 3}
-  shield_sprite: {fileID: 21300000, guid: c0db66d48ed952e4e9b03dda99b23bba, type: 3}
-  health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
   skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
-  level_name: test_level
+  spike_prefab: {fileID: 9200963178330716947, guid: fd08d944c25eda5468b4dda71407f828,
+    type: 3}
+  level_name: test_level2
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
@@ -448,6 +448,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 024f4101d5c140e4d8bea133741ff3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &382935615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382935608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949fa4d265fe364baadc75482febe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &465296617

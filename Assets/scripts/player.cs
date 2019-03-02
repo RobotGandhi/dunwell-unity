@@ -36,6 +36,8 @@ public class Player : TouchListener
     public static float fall_speed = 25;
 
     bool walk_flag = false;
+    bool die_flag = false;
+    bool standing_on_spike = false;
 
     void Start()
     {
@@ -101,6 +103,13 @@ public class Player : TouchListener
 
         /* HP */
         HPEnableLogic();
+        if (standing_on_spike)
+        {
+            if(FindObjectOfType<SpikeSystem>().unleashed_spike_trigger)
+            {
+                Die();
+            }
+        }
 
         #region WASD
         if (player_state == Enums.PlayerStates.IDLE)
@@ -128,8 +137,12 @@ public class Player : TouchListener
     // Called from update when player reaches desired transform position
     private void ReachedNewTile()
     {
-        // If we're on ice we dont want to simply go to back to idle, we want to slip n' slide
-        if (player_state == Enums.PlayerStates.MOVING)
+        if (die_flag)
+        {
+            die_flag = false;
+            Die();
+        }
+        else if (player_state == Enums.PlayerStates.MOVING)
         {
             SetPlayerState(Enums.PlayerStates.IDLE);
         }
@@ -192,7 +205,7 @@ public class Player : TouchListener
 
             /* Move the player */
             DoMovePlayer(direction, new_tile_position);
-            
+
         }
         else if (MapManager.IsEnemy(new_tile_value))
         {
@@ -209,11 +222,24 @@ public class Player : TouchListener
                 DoMovePlayer(direction, new_tile_position);
             }
         }
-        else if(new_tile_value == (int)MapManager.TileValues.GOAL)
+        else if (new_tile_value == (int)MapManager.TileValues.GOAL)
         {
             DoMovePlayer(direction, new_tile_position);
             StartCoroutine("OutroCoroutine");
         }
+        else if (new_tile_value == (int)MapManager.TileValues.SPIKE)
+        {
+            // Trying to walk onto a spike?
+            DoMovePlayer(direction, new_tile_position);
+            if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
+            {
+                die_flag = true;
+            }
+        }
+
+        // Are we on a spike tile now?
+        int current_tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
+        standing_on_spike = (current_tile_value == (int)MapManager.TileValues.SPIKE);
     }
 
     public void Die()
