@@ -105,14 +105,7 @@ public class Player : TouchListener
 
         /* HP */
         HPEnableLogic();
-        if (standing_on_spike)
-        {
-            if(spike_system.unleashed_spike_trigger)
-            {
-                Die();
-            }
-        }
-
+        
         // Reset spike trigger
         spike_system.unleashed_spike_trigger = false;
 
@@ -236,10 +229,10 @@ public class Player : TouchListener
         {
             // Trying to walk onto a spike?
             DoMovePlayer(direction, new_tile_position);
-            if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
-            {
-                die_flag = true;
-            }
+            //if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
+            //{
+            //    die_flag = true;
+            //}
         }
 
         // Are we on a spike tile now?
@@ -272,7 +265,8 @@ public class Player : TouchListener
         tile_position = new_tile_position;
 
         // Spre
-        spre.sortingOrder = (int)new_tile_position.y+1;
+        spre.sortingOrder = (Constants.MapHeight - (int)new_tile_position.y);
+
         // SFX
         if (walk_sfx == "default")
         {

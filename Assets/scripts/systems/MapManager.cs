@@ -270,7 +270,7 @@ public class MapManager : MonoBehaviour
                 if(createdItemEnemy != null)
                 {
                     createdItemEnemy.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
-                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
+                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
                 }
 
                 ground_trigger = !ground_trigger;
