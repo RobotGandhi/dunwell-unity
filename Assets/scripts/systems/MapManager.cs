@@ -9,6 +9,15 @@ public class MapManager : MonoBehaviour
 
     public GameObject skeleton_prefab;
     public GameObject spike_prefab;
+    [Header("Gate Prefabs")]
+    public GameObject gate_right_red;
+    public GameObject gate_left_red;
+    public GameObject gate_forward_red;
+    public GameObject gate_upward_red;
+    public GameObject gate_right_blue;
+    public GameObject gate_left_blue;
+    public GameObject gate_forward_blue;
+    public GameObject gate_upward_blue;
 
     [Header("File name of the level to load!")]
     public string level_name;
@@ -33,6 +42,15 @@ public class MapManager : MonoBehaviour
         // MAP ELEMENTS
         GOAL = 11,
         SPIKE = 12,
+        // GATES
+        GATE_RIGHT_RED = 13,
+        GATE_LEFT_RED = 14,
+        GATE_FORWARD_RED = 15,
+        GATE_UPWARD_RED = 16,
+        GATE_RIGHT_BLUE = 17,
+        GATE_LEFT_BLUE = 18,
+        GATE_FORWARD_BLUE = 19,
+        GATE_UPWARD_BLUE = 20,
 
         NONE = -1
     };
@@ -68,13 +86,7 @@ public class MapManager : MonoBehaviour
                 switch (tile_value)
                 {
                     case (int)TileValues.GROUND:
-                        createdGround = new GameObject();
-                        string name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.name = name;
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
                         break;
                     case (int)TileValues.LEFT_WALL:
                         createdGround = new GameObject();
@@ -126,12 +138,7 @@ public class MapManager : MonoBehaviour
                         break;
                     case (int)TileValues.WEAPON:
                         // First spawn ground
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
 
                         // Spawn weapon object
                         createdItemEnemy = new GameObject();
@@ -148,12 +155,7 @@ public class MapManager : MonoBehaviour
                         break;
                     case (int)TileValues.SHIELD:
                         // First spawn ground
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
 
                         // Spawn shield object
                         createdItemEnemy = new GameObject();
@@ -168,13 +170,8 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.SHIELD;
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
-                    case (int)TileValues.HEALTH:                        
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                    case (int)TileValues.HEALTH:
+                        createdGround = CreateGround(x, y);
 
                         // Spawn health object
                         createdItemEnemy = new GameObject();
@@ -190,16 +187,10 @@ public class MapManager : MonoBehaviour
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                     case (int)TileValues.SKELETON:
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
                         // Spawn skeleton
                         createdItemEnemy = Instantiate(skeleton_prefab);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
                         break;
@@ -220,18 +211,53 @@ public class MapManager : MonoBehaviour
 
                         break;
                     case (int)TileValues.SPIKE:
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
                         // Spawn spike
                         createdItemEnemy = Instantiate(spike_prefab);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
+                        break;
+                    case (int)TileValues.GATE_LEFT_RED:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = Instantiate(gate_left_red);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+
+                        break;
+                    case (int)TileValues.GATE_RIGHT_RED:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = Instantiate(gate_right_red);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+
+                        break;
+                    case (int)TileValues.GATE_FORWARD_RED:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = Instantiate(gate_forward_red);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+
+                        break;
+                    case (int)TileValues.GATE_UPWARD_RED:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = Instantiate(gate_upward_red);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+
                         break;
                 }
 
@@ -252,6 +278,18 @@ public class MapManager : MonoBehaviour
         }
 
         return map;
+    }
+
+    private GameObject CreateGround(int x, int y)
+    {
+        GameObject createdGround = new GameObject();
+        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+        createdGround.AddComponent<SpriteRenderer>();
+        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+        createdGround.transform.SetParent(map_holder.transform);
+
+        return createdGround;
     }
 
     public static bool IsWalkable(int tile_value)
@@ -281,13 +319,32 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+    public static bool IsGate(int tile_value)
+    {
+        switch (tile_value)
+        {
+            case (int)TileValues.GATE_FORWARD_BLUE:
+            case (int)TileValues.GATE_FORWARD_RED:
+            case (int)TileValues.GATE_LEFT_BLUE:
+            case (int)TileValues.GATE_LEFT_RED:
+            case (int)TileValues.GATE_RIGHT_BLUE:
+            case (int)TileValues.GATE_RIGHT_RED:
+            case (int)TileValues.GATE_UPWARD_BLUE:
+            case (int)TileValues.GATE_UPWARD_RED:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     /*
      * Used in the importer to check if tile_value1 should be replaced by tile_value2
     */
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.SPIKE))
+        if( IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2) ))
         {
             return true;
         }

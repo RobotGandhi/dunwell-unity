@@ -24,36 +24,23 @@ public class SpikeSystem : MonoBehaviour
     public void Step()
     {
         spikeLevel++;
-        switch (spikeLevel)
+        if(spikeLevel == 1)
         {
-            case 0:
-            case 1:
-                // Pass
-                break;
-            case 2:
-                foreach(var _x in spikeAnimControllers)
-                {
-                    _x.enabled = false;
-                    _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike1");
-                }
-                break;
-
-            case 3:
-                unleashed_spike_trigger = true;
-                foreach(var _x in spikeAnimControllers)
-                {
-                    _x.enabled = true;
-                    _x.SetTrigger("up_then_down");
-                }
-                spikeLevel = 0;
-
-                break;
+            foreach (var _x in spikeAnimControllers)
+            {
+                _x.enabled = false;
+                _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike1");
+            }
         }
-    }
-
-    private void LateUpdate()
-    {
-        unleashed_spike_trigger = false;
+        else
+        {
+            spikeLevel = 0;
+            foreach (var _x in spikeAnimControllers)
+            {
+                _x.enabled = false;
+                _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike0");
+            }
+        }
     }
 
 }

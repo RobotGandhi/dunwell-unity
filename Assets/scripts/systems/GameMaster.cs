@@ -10,12 +10,14 @@ public class Map
     public Dictionary<Vector2, GameObject> item_map;
     public Dictionary<Vector2, Enemy> enemy_map;
     public Dictionary<Vector2, GameObject> spike_map;
+    public Dictionary<Vector2, KeyGate> gate_map;
 
     public Map() 
     {
         item_map = new Dictionary<Vector2, GameObject>();
         enemy_map = new Dictionary<Vector2, Enemy>();
         spike_map = new Dictionary<Vector2, GameObject>();
+        gate_map = new Dictionary<Vector2, KeyGate>();
     }
 }
 

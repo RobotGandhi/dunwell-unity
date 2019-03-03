@@ -436,6 +436,22 @@ MonoBehaviour:
     type: 3}
   spike_prefab: {fileID: 9200963178330716947, guid: fd08d944c25eda5468b4dda71407f828,
     type: 3}
+  gate_right_red: {fileID: 162583511264188742, guid: 8f03a55e0be4fad48b7336d022338770,
+    type: 3}
+  gate_left_red: {fileID: 4801248421659553157, guid: 930224e2d3f4ccd4f86fa4a0a14e5a2c,
+    type: 3}
+  gate_forward_red: {fileID: 2087346144234436560, guid: f77ecd020691f0e4ea7319e973ec36aa,
+    type: 3}
+  gate_upward_red: {fileID: 5219454817527245172, guid: ff6efcef36e3ca84fa43ba0afcbd3e70,
+    type: 3}
+  gate_right_blue: {fileID: 6613192749702947684, guid: 075b359198580254c9fbef4d18ac7928,
+    type: 3}
+  gate_left_blue: {fileID: 5390155580299194743, guid: bccb487ed66afb548b6ef1c52f18f3b8,
+    type: 3}
+  gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
+    type: 3}
+  gate_upward_blue: {fileID: 5196017181699019324, guid: cfbc6c434a240f1459be85dd6f131f44,
+    type: 3}
   level_name: test_level2
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614

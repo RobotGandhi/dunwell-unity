@@ -11,6 +11,7 @@ public class Player : TouchListener
 
     GameMaster g_master;
     TouchSystem t_system;
+    SpikeSystem spike_system;
     SoundEffects sfx;
     [System.NonSerialized]
     public PlayerCombat player_combat;
@@ -53,6 +54,7 @@ public class Player : TouchListener
         g_master = FindObjectOfType<GameMaster>();
 
         sfx = FindObjectOfType<SoundEffects>();
+        spike_system = FindObjectOfType<SpikeSystem>();
 
         spre = GetComponent<SpriteRenderer>();
 
@@ -105,11 +107,14 @@ public class Player : TouchListener
         HPEnableLogic();
         if (standing_on_spike)
         {
-            if(FindObjectOfType<SpikeSystem>().unleashed_spike_trigger)
+            if(spike_system.unleashed_spike_trigger)
             {
                 Die();
             }
         }
+
+        // Reset spike trigger
+        spike_system.unleashed_spike_trigger = false;
 
         #region WASD
         if (player_state == Enums.PlayerStates.IDLE)
@@ -267,7 +272,7 @@ public class Player : TouchListener
         tile_position = new_tile_position;
 
         // Spre
-        spre.sortingOrder = (int)new_tile_position.y+2;
+        spre.sortingOrder = (int)new_tile_position.y+1;
         // SFX
         if (walk_sfx == "default")
         {
