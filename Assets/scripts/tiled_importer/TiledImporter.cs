@@ -49,6 +49,11 @@ public class TiledImporter : MonoBehaviour
                 // Convert to a 2d tiled map representable in the game
                 int x = 0;
                 int y = 0;
+                                
+                foreach(int num in intList)
+                {
+                    print(num);
+                }
 
                 for (int j = 0; j < intList.Count; j++)
                 {
