@@ -436,7 +436,7 @@ MonoBehaviour:
   health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
   skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
-  level_name: test_level
+  level_name: test_level3
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
