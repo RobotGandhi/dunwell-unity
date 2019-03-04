@@ -19,8 +19,8 @@ public class TiledImporter : MonoBehaviour
         List<int[,]> tileDataList = new List<int[,]>();
 
         // Constants
-        int width = Constants.MapWidth;
-        int height = Constants.MapHeight;
+        uint width = Constants.MapWidth;
+        uint height = Constants.MapHeight;
 
         // Go layer by layer and extract data
         int i = 0;
