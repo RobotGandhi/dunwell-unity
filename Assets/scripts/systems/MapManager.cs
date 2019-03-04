@@ -215,7 +215,6 @@ public class MapManager : MonoBehaviour
                         // Spawn spike
                         createdItemEnemy = Instantiate(spike_prefab);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
@@ -270,7 +269,14 @@ public class MapManager : MonoBehaviour
                 if(createdItemEnemy != null)
                 {
                     createdItemEnemy.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
-                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
+                    if (createdItemEnemy.GetComponent<KeyGate>() != null)
+                    {
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
+                    }
+                    else
+                    {
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y-1;
+                    }
                 }
 
                 ground_trigger = !ground_trigger;
