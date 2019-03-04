@@ -357,7 +357,6 @@ GameObject:
   - component: {fileID: 382935612}
   - component: {fileID: 382935613}
   - component: {fileID: 382935614}
-  - component: {fileID: 382935615}
   m_Layer: 0
   m_Name: managers
   m_TagString: Untagged
@@ -432,31 +431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cb709ce2fb6d143b86bedefe6a96cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon_sprite: {fileID: 21300000, guid: 68b1add373402fe4b9a73742b667cb48, type: 3}
+  shield_sprite: {fileID: 21300000, guid: c0db66d48ed952e4e9b03dda99b23bba, type: 3}
+  health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
   skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
-<<<<<<< HEAD
-  level_name: test_level3
-=======
-  spike_prefab: {fileID: 9200963178330716947, guid: fd08d944c25eda5468b4dda71407f828,
-    type: 3}
-  gate_right_red: {fileID: 162583511264188742, guid: 8f03a55e0be4fad48b7336d022338770,
-    type: 3}
-  gate_left_red: {fileID: 4801248421659553157, guid: 930224e2d3f4ccd4f86fa4a0a14e5a2c,
-    type: 3}
-  gate_forward_red: {fileID: 2087346144234436560, guid: f77ecd020691f0e4ea7319e973ec36aa,
-    type: 3}
-  gate_upward_red: {fileID: 5219454817527245172, guid: ff6efcef36e3ca84fa43ba0afcbd3e70,
-    type: 3}
-  gate_right_blue: {fileID: 6613192749702947684, guid: 075b359198580254c9fbef4d18ac7928,
-    type: 3}
-  gate_left_blue: {fileID: 5390155580299194743, guid: bccb487ed66afb548b6ef1c52f18f3b8,
-    type: 3}
-  gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
-    type: 3}
-  gate_upward_blue: {fileID: 5196017181699019324, guid: cfbc6c434a240f1459be85dd6f131f44,
-    type: 3}
-  level_name: test_level2
->>>>>>> 791d4aff47fc8996c7feea6428db88593a8343b2
+  level_name: test_level
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
@@ -468,18 +448,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 024f4101d5c140e4d8bea133741ff3d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &382935615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382935608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d949fa4d265fe364baadc75482febe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &465296617
