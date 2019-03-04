@@ -37,8 +37,7 @@ public class PlayerCombat : MonoBehaviour
                 GameObject remains_object = new GameObject("enemy_remains");
                 remains_object.AddComponent<SpriteRenderer>().sprite = remains_sprite;
                 remains_object.transform.position = enemy.transform.position;
-                remains_object.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
-                remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder-1;
+                remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
                 remains_object.transform.SetParent(map_manager.map_holder.transform);
                 // Remove enemy from world
                 Destroy(enemy.gameObject);
