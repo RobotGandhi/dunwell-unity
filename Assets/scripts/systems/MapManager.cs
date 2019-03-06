@@ -58,38 +58,7 @@ public class MapManager : MonoBehaviour
         NONE = -1
     };
 
-    /*
-    static int GR = (int)TileValues.GROUND;
-    static int LW = (int)TileValues.LEFT_WALL;
-    static int RW = (int)TileValues.RIGHT_WALL;
-    static int TW = (int)TileValues.TOP_WALL;
-    static int PT = (int)TileValues.PIT;
-    static int NN = (int)TileValues.NONE;
-    static int BL = (int)TileValues.BOT_LEFT_WALL;
-    static int BR = (int)TileValues.BOT_RIGHT_WALL;
-    static int WI = (int)TileValues.WEAPON;
-    static int SI = (int)TileValues.SHIELD;
-    static int HI = (int)TileValues.HEALTH;
-    static int SK = (int)TileValues.SKELETON;
-    static int GO = (int)TileValues.GOAL;
-    */
-
     bool ground_trigger = false;
-
-    /*
-    static int[,] map1 =
-    {
-        { NN, PT, PT, PT, PT, NN },
-        { BL, GR, GR, GR, GR, BR },
-        { BL, GR, GR, GR, GR, BR },
-        { BL, GR, GR, GR, GR, BR },
-        { LW, GR, GR, GR, GR, RW },
-        { LW, GR, GR, GR, GR, RW },
-        { LW, GR, GR, GR, SK, RW },
-        { LW, GR, GR, GR, GO, RW },
-        { LW, TW, TW, TW, TW, RW }
-    };
-    */
 
     public GameObject map_holder;
 

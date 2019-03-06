@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 382935612}
   - component: {fileID: 382935613}
   - component: {fileID: 382935614}
+  - component: {fileID: 382935615}
   m_Layer: 0
   m_Name: managers
   m_TagString: Untagged
@@ -436,6 +437,23 @@ MonoBehaviour:
   health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
   skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
+  spike_prefab: {fileID: 0}
+  gate_right_red: {fileID: 7343805009714044665, guid: 697f80a445e45fd4c888af5d5186eeca,
+    type: 3}
+  gate_left_red: {fileID: 5084250570097624754, guid: fa8b082a1ffcf804e8eeb4d9d2818d37,
+    type: 3}
+  gate_forward_red: {fileID: 5292982462204291846, guid: a419d2ee2dccd614fa6c8a5be0de9d65,
+    type: 3}
+  gate_upward_red: {fileID: 3564782236424590062, guid: c9cc7667ce35aee4e9192071cfcf8b27,
+    type: 3}
+  gate_right_blue: {fileID: 7408399758795621357, guid: 9960eba66e2300442b6aeb912c826eae,
+    type: 3}
+  gate_left_blue: {fileID: 5985636922226574846, guid: 3cb829d6202ea46479c5a2687a4dd59a,
+    type: 3}
+  gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
+    type: 3}
+  gate_upward_blue: {fileID: 3568640546220004042, guid: c4fa47d3204a582489191273b8d8fc74,
+    type: 3}
   level_name: test_level3
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
@@ -448,6 +466,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 024f4101d5c140e4d8bea133741ff3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &382935615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382935608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70eb585da56dd34cb5d35fa640a2001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &465296617
