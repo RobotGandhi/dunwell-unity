@@ -11,6 +11,17 @@ public class MapManager : MonoBehaviour
 
     public GameObject skeleton_prefab;
 
+    public GameObject spike_prefab;
+    [Header("Gate Prefabs")]
+    public GameObject gate_right_red;
+    public GameObject gate_left_red;
+    public GameObject gate_forward_red;
+    public GameObject gate_upward_red;
+    public GameObject gate_right_blue;
+    public GameObject gate_left_blue;
+    public GameObject gate_forward_blue;
+    public GameObject gate_upward_blue;
+
     [Header("File name of the level to load!")]
     public string level_name;
 
@@ -33,6 +44,16 @@ public class MapManager : MonoBehaviour
 
         // MAP ELEMENTS
         GOAL = 11,
+        SPIKE = 12,
+        // GATES
+        GATE_RIGHT_RED = 13,
+        GATE_LEFT_RED = 14,
+        GATE_FORWARD_RED = 15,
+        GATE_UPWARD_RED = 16,
+        GATE_RIGHT_BLUE = 17,
+        GATE_LEFT_BLUE = 18,
+        GATE_FORWARD_BLUE = 19,
+        GATE_UPWARD_BLUE = 20,
 
         NONE = -1
     };
@@ -250,7 +271,6 @@ public class MapManager : MonoBehaviour
                         go2.transform.SetParent(map_holder.transform);
 
                         break;
-<<<<<<< HEAD
                     case (int)TileValues.SPIKE:
                         createdGround = CreateGround(x, y);
                         // Spawn spike
@@ -299,8 +319,6 @@ public class MapManager : MonoBehaviour
                         map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
 
                         break;
-=======
->>>>>>> 040daac34a2bbf1260250c811b5de865eae52183
                 }
 
                 // Layer the ground
@@ -312,7 +330,6 @@ public class MapManager : MonoBehaviour
                 if(createdItemEnemy != null)
                 {
                     createdItemEnemy.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
-<<<<<<< HEAD
                     if (createdItemEnemy.GetComponent<KeyGate>() != null)
                     {
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
@@ -321,9 +338,6 @@ public class MapManager : MonoBehaviour
                     {
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y-1;
                     }
-=======
-                    createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
->>>>>>> 040daac34a2bbf1260250c811b5de865eae52183
                 }
 
                 ground_trigger = !ground_trigger;
@@ -331,6 +345,18 @@ public class MapManager : MonoBehaviour
         }
 
         return map;
+    }
+
+    private GameObject CreateGround(int x, int y)
+    {
+        GameObject createdGround = new GameObject();
+        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+        createdGround.AddComponent<SpriteRenderer>();
+        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+        createdGround.transform.SetParent(map_holder.transform);
+
+        return createdGround;
     }
 
     public static bool IsWalkable(int tile_value)
@@ -360,17 +386,35 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+    public static bool IsGate(int tile_value)
+    {
+        switch (tile_value)
+        {
+            case (int)TileValues.GATE_FORWARD_BLUE:
+            case (int)TileValues.GATE_FORWARD_RED:
+            case (int)TileValues.GATE_LEFT_BLUE:
+            case (int)TileValues.GATE_LEFT_RED:
+            case (int)TileValues.GATE_RIGHT_BLUE:
+            case (int)TileValues.GATE_RIGHT_RED:
+            case (int)TileValues.GATE_UPWARD_BLUE:
+            case (int)TileValues.GATE_UPWARD_RED:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     /*
      * Used in the importer to check if tile_value1 should be replaced by tile_value2
     */
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if(IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2)))
+        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
-            return true;
+                return true;
         }
         return false;
     }
-
 }

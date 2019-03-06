@@ -9,18 +9,21 @@ public class Map
     public int[,] tile_map;
     public Dictionary<Vector2, GameObject> item_map;
     public Dictionary<Vector2, Enemy> enemy_map;
-    public Dictionary<Vector2, GameObject> ice_map;
+    public Dictionary<Vector2, GameObject> spike_map;
+    public Dictionary<Vector2, KeyGate> gate_map;
 
     public Map() 
     {
         item_map = new Dictionary<Vector2, GameObject>();
         enemy_map = new Dictionary<Vector2, Enemy>();
-        ice_map = new Dictionary<Vector2, GameObject>();
+        spike_map = new Dictionary<Vector2, GameObject>();
+        gate_map = new Dictionary<Vector2, KeyGate>();
     }
 }
 
 public class GameMaster : MonoBehaviour
 {
+    SpikeSystem spike_system;
     MapManager m_manager;
     public Map current_map;
     private int step_count;
@@ -39,9 +42,13 @@ public class GameMaster : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
+        // Get spike system
+        spike_system = FindObjectOfType<SpikeSystem>();
+
         // Get map going
         m_manager = GetComponent<MapManager>();
         current_map = m_manager.SpawnMap();
+        spike_system.NewLevel(current_map);
     }
 
     void Start()
@@ -112,6 +119,9 @@ public class GameMaster : MonoBehaviour
         step_count++;
         step_count_text.text = step_count.ToString();
 
+        // Message spikes
+        spike_system.Step();
+
         StopCoroutine("FlashStepText");
         StartCoroutine("FlashStepText");
     }
@@ -120,7 +130,7 @@ public class GameMaster : MonoBehaviour
     {
         StartCoroutine("LevelEnd");
     }
-
+    
     private IEnumerator LevelEnd()
     {
         while(fade_panel.color.a <= 0.95f)
@@ -133,6 +143,7 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
 
         current_map = GetComponent<MapManager>().SpawnMap();
+        spike_system.NewLevel(current_map);
         StartCoroutine("GameStart");
 
         while(fade_panel.color.a >= 0.05f)

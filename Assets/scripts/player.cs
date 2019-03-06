@@ -9,6 +9,7 @@ public class Player : TouchListener
 
     public Sprite ground_sprite;
 
+    SpikeSystem spike_system;
     GameMaster g_master;
     TouchSystem t_system;
     SoundEffects sfx;
@@ -36,6 +37,8 @@ public class Player : TouchListener
     public static float fall_speed = 25;
 
     bool walk_flag = false;
+    bool standing_on_spike = false;
+    bool die_flag = false;
 
     void Start()
     {
@@ -49,8 +52,8 @@ public class Player : TouchListener
         t_system.AddTouchListener(this);
 
         g_master = FindObjectOfType<GameMaster>();
-
         sfx = FindObjectOfType<SoundEffects>();
+        spike_system = FindObjectOfType<SpikeSystem>();
 
         spre = GetComponent<SpriteRenderer>();
 
@@ -128,8 +131,12 @@ public class Player : TouchListener
     // Called from update when player reaches desired transform position
     private void ReachedNewTile()
     {
-        // If we're on ice we dont want to simply go to back to idle, we want to slip n' slide
-        if (player_state == Enums.PlayerStates.MOVING)
+        if (die_flag)
+        {
+            die_flag = false;
+            Die();
+        }
+        else if (player_state == Enums.PlayerStates.MOVING)
         {
             SetPlayerState(Enums.PlayerStates.IDLE);
         }
@@ -214,7 +221,6 @@ public class Player : TouchListener
             DoMovePlayer(direction, new_tile_position);
             StartCoroutine("OutroCoroutine");
         }
-<<<<<<< HEAD
         else if (new_tile_value == (int)MapManager.TileValues.SPIKE)
         {
             // Trying to walk onto a spike?
@@ -232,8 +238,6 @@ public class Player : TouchListener
         // Are we on a spike tile now?
         int current_tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
         standing_on_spike = (current_tile_value == (int)MapManager.TileValues.SPIKE);
-=======
->>>>>>> 040daac34a2bbf1260250c811b5de865eae52183
     }
 
     public void Die()
@@ -261,7 +265,8 @@ public class Player : TouchListener
         tile_position = new_tile_position;
 
         // Spre
-        spre.sortingOrder = (int)new_tile_position.y+2;
+        spre.sortingOrder = (Constants.MapHeight - (int)new_tile_position.y);
+
         // SFX
         if (walk_sfx == "default")
         {
