@@ -62,18 +62,15 @@ public class PlayerAnimation : MonoBehaviour
         {
             if (player.current_item != null)
             {
-                if (player.current_item.GetComponent<Item>().item_type == Item.ItemType.WEAPON)
+                Item.ItemType itemType = player.current_item.GetComponent<Item>().item_type;
+                if (itemType == Item.ItemType.WEAPON)
                 {
                     player.StartCoroutine("HideSwordForAnimation");
                     anim_controller.SetTrigger("attack_sword");
                 }
-                else if (player.current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
+                else if (itemType == Item.ItemType.HEALTH || itemType == Item.ItemType.SHIELD)
                 {
                     anim_controller.SetTrigger("attack_item");
-                }
-                else
-                {
-                    anim_controller.SetTrigger("attack");
                 }
             }
             else

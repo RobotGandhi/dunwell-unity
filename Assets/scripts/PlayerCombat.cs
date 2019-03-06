@@ -33,10 +33,7 @@ public class PlayerCombat : MonoBehaviour
                 break;
             case Enums.CombatResult.ENEMY_DIED:
                 // Spawn enemy remains
-                Sprite remains_sprite = ResourceLoader.GetSprite("skeleton_remains");
-                GameObject remains_object = new GameObject("enemy_remains");
-                remains_object.AddComponent<SpriteRenderer>().sprite = remains_sprite;
-                remains_object.transform.position = enemy.transform.position;
+                GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
                 remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
                 remains_object.transform.SetParent(map_manager.map_holder.transform);
                 // Remove enemy from world
@@ -55,6 +52,7 @@ public class PlayerCombat : MonoBehaviour
                 // Remove shield
                 player.current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
                 player.current_item = null;
+                player.player_animation.ItemChange();
                 break;
             default:
                 break;

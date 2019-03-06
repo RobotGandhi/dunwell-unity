@@ -66,8 +66,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1379705063
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 137d8615db012c3408665d9d568a4168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,5 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f41dc9ad3da9540ae9704790f845b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 2
+  damage: 1
+  remainsPrefab: {fileID: 4872175682292221776, guid: eea4bfa9353a7a24fabb9b744561960a,
+    type: 3}
   damaged_sprite: {fileID: 21300000, guid: af1ff0e03c5ff264890bcded88aea385, type: 3}
   dead_sprite: {fileID: 21300000, guid: 1ef1f79b2c1f66044af92371cf1a8471, type: 3}
