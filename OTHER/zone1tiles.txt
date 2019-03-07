@@ -1,0 +1,48 @@
+24 - presure plate 
+25 - presure plate(down)
+26 - sword
+27 - shield
+28 - meat
+29 - blue key
+30 - red key
+31 - spikes
+44 - blue wall side 
+45 - blue wall face forward
+46 - red wall side
+47 - red wall forward
+63 - block
+40 - bat
+41 - red bat
+62 - hole
+
+58 - enemy
+
+ROOM TILES
+1 - top left wall
+2 - top wall
+3 - top right wall 
+8 - normal ground
+9 - bottom-bottom left wall
+11 - bottom-bottom right wall
+6 - bottom left wall
+7 - bottom right wall
+10 - pit 
+4 - right wall
+5 - left wall
+17 - right wall mossy
+19 - left wall mossy
+18 - top wall mossy
+
+12 - ground cracked variant 1
+13 - ground cracked variant 2
+14 - ground cracked variant 3
+15 - ground cracked variant 4
+16 - ground cracked variant 5
+
+20 - ground mossy variant 1
+21 - ground mossy variant 2
+22 - ground mossy variant 3
+23 - ground mossy variant 4
+24 - ground mossy variant 5
+
+SÄTT MINUS ETT PÅ ALLA 

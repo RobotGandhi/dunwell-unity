@@ -28,17 +28,21 @@ public class MapManager : MonoBehaviour
     public enum TileValues
     {
         // Room kit
-        GROUND = 30,
-        LEFT_WALL = 1,
-        RIGHT_WALL = 2,
-        TOP_WALL = 3,
-        PIT = 4,
-        BOT_LEFT_WALL = 5,
-        BOT_RIGHT_WALL = 6,
+        GROUND = 8,
+        LEFT_WALL = 5,
+        RIGHT_WALL = 4,
+        TOP_WALL = 2,
+        TOP_LEFT_WALL = 1,
+        TOP_RIGHT_WALL = 3,
+        PIT = 10,
+        BOT_LEFT_WALL = 6,
+        BOT_RIGHT_WALL = 7,
+        BOT_BOT_LEFT_WALL = 9,
+        BOT_BOT_RIGHT_WALL = 11,
         // Items
         WEAPON = 7,
-        SHIELD = 8,
-        HEALTH = 9,
+        SHIELD = 100,
+        HEALTH = 101,
         // Enemy
         SKELETON = 31,
 
