@@ -18,11 +18,8 @@ public class MenuScroll : MonoBehaviour
     //Will be called when ScrollRect changes
     void scrollRectCallBack(Vector2 value)
     {
-        Debug.Log("ScrollRect Changed: " + value);
-        
         //Slides the given image in the opposite direction of ScrollRect, creating a parallax effect.
         image.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, image.sprite.rect.height * -(value.y - 1), 0);
-        Debug.Log(image.gameObject.transform.position);
     }
 
     void OnDisable()
