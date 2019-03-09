@@ -432,29 +432,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cb709ce2fb6d143b86bedefe6a96cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon_sprite: {fileID: 21300000, guid: 68b1add373402fe4b9a73742b667cb48, type: 3}
-  shield_sprite: {fileID: 21300000, guid: c0db66d48ed952e4e9b03dda99b23bba, type: 3}
-  health_sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
-  skeleton_prefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
+  TopLeftWall: {fileID: 21300000, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  TopWall: {fileID: 21300004, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  TopRightWall: {fileID: 21300006, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  Ground: {fileID: 21300008, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  BotBotLeftWall: {fileID: 21300040, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  BotBotRightWall: {fileID: 21300044, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  BotLeftWall: {fileID: 21300010, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  BotRightWall: {fileID: 21300012, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  Pit: {fileID: 21300042, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  RightWall: {fileID: 21300014, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  LeftWall: {fileID: 21300002, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundCracked1: {fileID: 21300046, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundCracked2: {fileID: 21300048, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundCracked3: {fileID: 21300050, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundCracked4: {fileID: 21300052, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundCracked5: {fileID: 21300054, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  WoodSpike: {fileID: 21300038, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  BlockSprite: {fileID: 21300036, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  WeaponSprite: {fileID: 21300026, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  ShieldSprite: {fileID: 21300024, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  HealthSprite: {fileID: 21300022, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GoalSprite1: {fileID: 21300056, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  spike_prefab_single: {fileID: 731976972675676832, guid: c6ba29f37d4db3646be5930d3ea749bc,
     type: 3}
-  spike_prefab: {fileID: 0}
-  gate_right_red: {fileID: 7343805009714044665, guid: 697f80a445e45fd4c888af5d5186eeca,
+  DeskGoblinPrefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
-  gate_left_red: {fileID: 5084250570097624754, guid: fa8b082a1ffcf804e8eeb4d9d2818d37,
+  gate_side_red: {fileID: 5292982462204291846, guid: 2df2e31dd4efb2b4faa61bb270d6d560,
     type: 3}
   gate_forward_red: {fileID: 5292982462204291846, guid: a419d2ee2dccd614fa6c8a5be0de9d65,
     type: 3}
-  gate_upward_red: {fileID: 3564782236424590062, guid: c9cc7667ce35aee4e9192071cfcf8b27,
-    type: 3}
-  gate_right_blue: {fileID: 7408399758795621357, guid: 9960eba66e2300442b6aeb912c826eae,
-    type: 3}
-  gate_left_blue: {fileID: 5985636922226574846, guid: 3cb829d6202ea46479c5a2687a4dd59a,
+  gate_side_blue: {fileID: 5292982462204291846, guid: 85208f757b554b9489d783853d724849,
     type: 3}
   gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
     type: 3}
-  gate_upward_blue: {fileID: 3568640546220004042, guid: c4fa47d3204a582489191273b8d8fc74,
-    type: 3}
-  level_name: test_level3
+  level_name: W1L1
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
@@ -537,7 +549,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
+  m_Sprite: {fileID: 21300038, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -685,7 +697,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
+  m_Sprite: {fileID: 21300038, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1053,7 +1065,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 83593988e8ec4af4597da7ddc7640c67, type: 3}
+  m_Sprite: {fileID: 21300038, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1366,7 +1378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2023587108
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4e425ad2d0c8e2e4f99ad31dc50b5fc6, type: 3}
+  m_Sprite: {fileID: 21300030, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,5 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d41a941699f30a4ea2dbf7d47c4cc9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  open_sprite: {fileID: 21300000, guid: b2bcfe449de6ef64a9ca82a6ccfeb09f, type: 3}
   door_color: blue

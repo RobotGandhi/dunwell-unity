@@ -32,10 +32,13 @@ public class PlayerCombat : MonoBehaviour
                 sfx.PlaySFX("enemy_hurt");
                 break;
             case Enums.CombatResult.ENEMY_DIED:
-                // Spawn enemy remains
-                GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
-                remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
-                remains_object.transform.SetParent(map_manager.map_holder.transform);
+                // Spawn enemy remains?
+                if (enemy.remainsPrefab != null)
+                {
+                    GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
+                    remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
+                    remains_object.transform.SetParent(map_manager.map_holder.transform);
+                }
                 // Remove enemy from world
                 Destroy(enemy.gameObject);
                 game_master.current_map.enemy_map.Remove(enemy_tile_position);

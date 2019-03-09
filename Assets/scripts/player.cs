@@ -216,7 +216,7 @@ public class Player : TouchListener
                 DoMovePlayer(direction, new_tile_position);
             }
         }
-        else if(new_tile_value == (int)MapManager.TileValues.GOAL)
+        else if(new_tile_value == (int)MapManager.TileValues.GOAL1)
         {
             DoMovePlayer(direction, new_tile_position);
             StartCoroutine("OutroCoroutine");

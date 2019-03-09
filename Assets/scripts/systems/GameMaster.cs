@@ -94,7 +94,7 @@ public class GameMaster : MonoBehaviour
         fade_panel.color = Color.clear;
 
         // Play player intro
-        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 4));
+        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 1));
     }
 
     private IEnumerator GameOver()

@@ -5,22 +5,29 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     //public Sprite ground_sprite, ground_sprite2, left_wall_sprite, right_wall_sprite, top_wall_sprite, pit_sprite, bot_left_wall_sprite, bot_right_wall_sprite, goal_sprite1, goal_sprite2;
-    public Sprite weapon_sprite, shield_sprite, health_sprite;
+    public Sprite TopLeftWall, TopWall, TopRightWall, Ground, BotBotLeftWall, BotBotRightWall, BotLeftWall, BotRightWall, Pit, RightWall, LeftWall, GroundCracked1, GroundCracked2, GroundCracked3, GroundCracked4, GroundCracked5;
+    public Sprite WoodSpike, BlockSprite;
+
+    [Header("Item Sprites")]
+    public Sprite WeaponSprite;
+    public Sprite ShieldSprite;
+    public Sprite HealthSprite;
+
+    [Header("Other")]
+    public Sprite GoalSprite1;
+
+    [Header("Hazards")]
+    public GameObject spike_prefab_single;
 
     public static float GroundTileSize;
 
-    public GameObject skeleton_prefab;
+    public GameObject DeskGoblinPrefab;
 
-    public GameObject spike_prefab;
     [Header("Gate Prefabs")]
-    public GameObject gate_right_red;
-    public GameObject gate_left_red;
+    public GameObject gate_side_red;
     public GameObject gate_forward_red;
-    public GameObject gate_upward_red;
-    public GameObject gate_right_blue;
-    public GameObject gate_left_blue;
+    public GameObject gate_side_blue;
     public GameObject gate_forward_blue;
-    public GameObject gate_upward_blue;
 
     [Header("File name of the level to load!")]
     public string level_name;
@@ -39,25 +46,30 @@ public class MapManager : MonoBehaviour
         BOT_RIGHT_WALL = 7,
         BOT_BOT_LEFT_WALL = 9,
         BOT_BOT_RIGHT_WALL = 11,
+        GROUND_CRACKED1 = 12,
+        GROUND_CRACKED2 = 13,
+        GROUND_CRACKED3 = 14,
+        GROUND_CRACKED4 = 15,
+        GROUND_CRACKED5 = 16,
+
+        BLOCK = 64,
+
         // Items
-        WEAPON = 7,
-        SHIELD = 100,
-        HEALTH = 101,
+        WEAPON = 27,
+        SHIELD = 28,
+        HEALTH = 29,
         // Enemy
-        SKELETON = 31,
+        DESKGOBLIN = 58,
 
         // MAP ELEMENTS
-        GOAL = 11,
-        SPIKE = 12,
+        GOAL1 = 54,
+        WOOD_SPIKE = 33,
+        SPIKE = 123,
         // GATES
-        GATE_RIGHT_RED = 13,
-        GATE_LEFT_RED = 14,
-        GATE_FORWARD_RED = 15,
-        GATE_UPWARD_RED = 16,
-        GATE_RIGHT_BLUE = 17,
-        GATE_LEFT_BLUE = 18,
-        GATE_FORWARD_BLUE = 19,
-        GATE_UPWARD_BLUE = 20,
+        GATE_FORWARD_RED = 48,
+        GATE_FORWARD_BLUE = 46,
+        GATE_SIDE_RED = 47,
+        GATE_SIDE_BLUE = 45,
 
         NONE = -1
     };
@@ -68,12 +80,12 @@ public class MapManager : MonoBehaviour
 
     void Awake()
     {
-        GroundTileSize = ResourceLoader.GetSprite("floor0").bounds.size.x;
+        GroundTileSize = Ground.bounds.size.x;
     }
 
     public Map SpawnMap()
     {
-        GroundTileSize = ResourceLoader.GetSprite("floor0").bounds.size.x;
+        GroundTileSize = Ground.bounds.size.x;
 
         Map map = new Map();
         //map.tile_map = map1;
@@ -97,7 +109,47 @@ public class MapManager : MonoBehaviour
                         string name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.name = name;
                         createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+                        createdGround.GetComponent<SpriteRenderer>().sprite = Ground;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_CRACKED1:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundCracked1;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_CRACKED2:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundCracked2;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_CRACKED3:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundCracked3;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_CRACKED4:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundCracked4;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_CRACKED5:
+                        createdGround = new GameObject();
+                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundCracked5;
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
@@ -105,7 +157,7 @@ public class MapManager : MonoBehaviour
                         createdGround = new GameObject();
                         createdGround.name = "left_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallLeft");
+                        createdGround.GetComponent<SpriteRenderer>().sprite = LeftWall;
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
@@ -113,7 +165,7 @@ public class MapManager : MonoBehaviour
                         createdGround = new GameObject();
                         createdGround.name = "right_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallRight");
+                        createdGround.GetComponent<SpriteRenderer>().sprite = RightWall;
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
@@ -121,7 +173,7 @@ public class MapManager : MonoBehaviour
                         createdGround = new GameObject();
                         createdGround.name = "top_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("wallTop");
+                        createdGround.GetComponent<SpriteRenderer>().sprite = TopWall;
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
@@ -129,7 +181,7 @@ public class MapManager : MonoBehaviour
                         GameObject pit = new GameObject();
                         pit.name = "pit(" + x.ToString() + ", " + y.ToString() + ")";
                         pit.AddComponent<SpriteRenderer>();
-                        pit.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("pit");
+                        pit.GetComponent<SpriteRenderer>().sprite = Pit;
                         pit.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         pit.transform.SetParent(map_holder.transform);
                         break;
@@ -137,7 +189,7 @@ public class MapManager : MonoBehaviour
                         GameObject bot_left_wall = new GameObject();
                         bot_left_wall.name = "bot_left_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         bot_left_wall.AddComponent<SpriteRenderer>();
-                        bot_left_wall.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("bottomLeftWall");
+                        bot_left_wall.GetComponent<SpriteRenderer>().sprite = BotLeftWall;
                         bot_left_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         bot_left_wall.transform.SetParent(map_holder.transform);
                         break;
@@ -145,24 +197,62 @@ public class MapManager : MonoBehaviour
                         GameObject bot_right_wall = new GameObject();
                         bot_right_wall.name = "bot_right_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         bot_right_wall.AddComponent<SpriteRenderer>();
-                        bot_right_wall.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("bottomRightWall");
+                        bot_right_wall.GetComponent<SpriteRenderer>().sprite = BotRightWall;
                         bot_right_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         bot_right_wall.transform.SetParent(map_holder.transform);
                         break;
+                    case (int)TileValues.BOT_BOT_LEFT_WALL:
+                        GameObject botbot_left_wall = new GameObject();
+                        botbot_left_wall.name = "botbot_left_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        botbot_left_wall.AddComponent<SpriteRenderer>();
+                        botbot_left_wall.GetComponent<SpriteRenderer>().sprite = BotBotLeftWall;
+                        botbot_left_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        botbot_left_wall.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.BOT_BOT_RIGHT_WALL:
+                        GameObject botbot_right_wall = new GameObject();
+                        botbot_right_wall.name = "botbot_right_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        botbot_right_wall.AddComponent<SpriteRenderer>();
+                        botbot_right_wall.GetComponent<SpriteRenderer>().sprite = BotBotRightWall;
+                        botbot_right_wall.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        botbot_right_wall.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.TOP_LEFT_WALL:
+                        GameObject top_left = new GameObject();
+                        top_left.name = "top_left_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        top_left.AddComponent<SpriteRenderer>();
+                        top_left.GetComponent<SpriteRenderer>().sprite = TopLeftWall;
+                        top_left.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        top_left.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.TOP_RIGHT_WALL:
+                        GameObject top_right = new GameObject();
+                        top_right.name = "top_right_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        top_right.AddComponent<SpriteRenderer>();
+                        top_right.GetComponent<SpriteRenderer>().sprite = TopRightWall;
+                        top_right.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        top_right.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.BLOCK:
+                        GameObject block = new GameObject();
+                        block.name = "block";
+                        block.AddComponent<SpriteRenderer>().sprite = BlockSprite;
+                        block.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        block.transform.SetParent(map_holder.transform);
+
+                        block.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
+                        block.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
+
+                        break;
                     case (int)TileValues.WEAPON:
                         // First spawn ground
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
 
                         // Spawn weapon object
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "weapon";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = weapon_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = WeaponSprite;
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -173,18 +263,13 @@ public class MapManager : MonoBehaviour
                         break;
                     case (int)TileValues.SHIELD:
                         // First spawn ground
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
 
                         // Spawn shield object
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "shield";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = shield_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = ShieldSprite;
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -194,18 +279,13 @@ public class MapManager : MonoBehaviour
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
                     case (int)TileValues.HEALTH:                        // First spawn ground
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                        createdGround = CreateGround(x, y);
 
                         // Spawn health object
                         createdItemEnemy = new GameObject();
                         createdItemEnemy.name = "health";
                         createdItemEnemy.AddComponent<SpriteRenderer>();
-                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = health_sprite;
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = HealthSprite;
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -214,58 +294,35 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.HEALTH;
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
-                    case (int)TileValues.SKELETON:
-                        createdGround = new GameObject();
-                        createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
-                        // Spawn skeleton
-                        createdItemEnemy = Instantiate(skeleton_prefab);
+                    case (int)TileValues.DESKGOBLIN:
+                        createdGround = CreateGround(x, y);
+
+                        // Spawn enemy
+                        createdItemEnemy = Instantiate(DeskGoblinPrefab);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
                         break;
-                    case (int)TileValues.GOAL:
+                    case (int)TileValues.GOAL1:
                         GameObject go1 = new GameObject();
                         go1.name = "GOAL";
                         go1.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        go1.AddComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("goalInner");
-                        go1.GetComponent<SpriteRenderer>().sortingOrder = y - 1;
-                        GameObject go2 = new GameObject();
-                        go2.name = "GOAL";
-                        go2.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        go2.AddComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("goalOuter");
-                        go2.GetComponent<SpriteRenderer>().sortingOrder = y + 1;
-
+                        go1.AddComponent<SpriteRenderer>().sprite = GoalSprite1;
                         go1.transform.SetParent(map_holder.transform);
-                        go2.transform.SetParent(map_holder.transform);
-
                         break;
                     case (int)TileValues.SPIKE:
                         createdGround = CreateGround(x, y);
                         // Spawn spike
-                        createdItemEnemy = Instantiate(spike_prefab);
+                        createdItemEnemy = Instantiate(spike_prefab_single);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
-                    case (int)TileValues.GATE_LEFT_RED:
+                    case (int)TileValues.GATE_SIDE_RED:
                         createdGround = CreateGround(x, y);
 
-                        createdItemEnemy = Instantiate(gate_left_red);
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
-                        createdItemEnemy.transform.SetParent(map_holder.transform);
-
-                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
-
-                        break;
-                    case (int)TileValues.GATE_RIGHT_RED:
-                        createdGround = CreateGround(x, y);
-
-                        createdItemEnemy = Instantiate(gate_right_red);
+                        createdItemEnemy = Instantiate(gate_side_red);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
@@ -282,15 +339,31 @@ public class MapManager : MonoBehaviour
                         map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
 
                         break;
-                    case (int)TileValues.GATE_UPWARD_RED:
+                    case (int)TileValues.GATE_SIDE_BLUE:
                         createdGround = CreateGround(x, y);
 
-                        createdItemEnemy = Instantiate(gate_upward_red);
+                        createdItemEnemy = Instantiate(gate_side_blue);
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        break;
+                    case (int)TileValues.GATE_FORWARD_BLUE:
+                        createdGround = CreateGround(x, y);
 
+                        createdItemEnemy = Instantiate(gate_forward_blue);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        break;
+                    case (int)TileValues.WOOD_SPIKE:
+                        createdGround = new GameObject();
+                        createdGround.name = "wood_spike(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = WoodSpike;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
                         break;
                 }
 
@@ -325,7 +398,7 @@ public class MapManager : MonoBehaviour
         GameObject createdGround = new GameObject();
         createdGround.name = "ground(" + x.ToString() + ", " + y.ToString() + ")";
         createdGround.AddComponent<SpriteRenderer>();
-        createdGround.GetComponent<SpriteRenderer>().sprite = ground_trigger ? ResourceLoader.GetSprite("floor0") : ResourceLoader.GetSprite("floor1");
+        createdGround.GetComponent<SpriteRenderer>().sprite = Ground;
         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
         createdGround.transform.SetParent(map_holder.transform);
 
@@ -334,6 +407,11 @@ public class MapManager : MonoBehaviour
 
     public static bool IsWalkable(int tile_value)
     {
+        for(int i = (int)TileValues.GROUND_CRACKED1; i <= (int)TileValues.GROUND_CRACKED5; i++)
+        {
+            if (tile_value == i)
+                return true;
+        }
         if(tile_value == (int)TileValues.GROUND)
         {
             return true;
@@ -354,7 +432,7 @@ public class MapManager : MonoBehaviour
 
     public static bool IsEnemy(int tile_value)
     {
-        if (tile_value == (int)TileValues.SKELETON)
+        if (tile_value == (int)TileValues.DESKGOBLIN)
             return true;
         return false;
     }
@@ -365,12 +443,8 @@ public class MapManager : MonoBehaviour
         {
             case (int)TileValues.GATE_FORWARD_BLUE:
             case (int)TileValues.GATE_FORWARD_RED:
-            case (int)TileValues.GATE_LEFT_BLUE:
-            case (int)TileValues.GATE_LEFT_RED:
-            case (int)TileValues.GATE_RIGHT_BLUE:
-            case (int)TileValues.GATE_RIGHT_RED:
-            case (int)TileValues.GATE_UPWARD_BLUE:
-            case (int)TileValues.GATE_UPWARD_RED:
+            case (int)TileValues.GATE_SIDE_BLUE:
+            case (int)TileValues.GATE_SIDE_RED:
                 return true;
 
             default:
@@ -384,7 +458,7 @@ public class MapManager : MonoBehaviour
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
+        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || tile_value2 == (int)TileValues.WOOD_SPIKE || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
                 return true;
         }

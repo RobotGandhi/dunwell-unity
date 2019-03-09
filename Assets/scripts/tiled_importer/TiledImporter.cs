@@ -52,7 +52,7 @@ public class TiledImporter : MonoBehaviour
                                 
                 foreach(int num in intList)
                 {
-                    print(num);
+                    //print(num);
                 }
 
                 for (int j = 0; j < intList.Count; j++)

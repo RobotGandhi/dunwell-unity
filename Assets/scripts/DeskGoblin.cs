@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : Enemy
+public class DeskGoblin : Enemy
 {
 
     public Sprite damaged_sprite, dead_sprite;
@@ -15,13 +15,15 @@ public class Skeleton : Enemy
 
     void Update()
     {
-        
+
     }
 
     public override void TakeDamage()
     {
         HP--;
-        if(HP == 2)
+        // TODO@ Fix this 
+        /*
+        if (HP == 2)
         {
             spre.sprite = damaged_sprite;
         }
@@ -29,5 +31,6 @@ public class Skeleton : Enemy
         {
             spre.sprite = dead_sprite;
         }
+        */
     }
 }
