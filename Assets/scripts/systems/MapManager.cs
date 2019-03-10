@@ -237,7 +237,7 @@ public class MapManager : MonoBehaviour
                         GameObject block = new GameObject();
                         block.name = "block";
                         block.AddComponent<SpriteRenderer>().sprite = BlockSprite;
-                        block.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        block.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.25f, 0);
                         block.transform.SetParent(map_holder.transform);
 
                         block.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";

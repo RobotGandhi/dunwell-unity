@@ -70,9 +70,9 @@ public class Player : TouchListener
         if (player_state == Enums.PlayerStates.MOVING)
         {
             // move towards desired tile position
-            if (transform.position != tile_position * MapManager.GroundTileSize)
+            if (transform.position != (tile_position * MapManager.GroundTileSize))
             {
-                transform.position = Vector3.MoveTowards(transform.position, tile_position * MapManager.GroundTileSize, move_speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, (tile_position * MapManager.GroundTileSize), move_speed * Time.deltaTime);
             }
             else
             {

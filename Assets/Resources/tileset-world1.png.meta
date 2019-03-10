@@ -32,6 +32,9 @@ TextureImporter:
     21300054: tileset-world1_27
     21300056: tileset-world1_28
     21300058: tileset-world1_29
+    21300060: tileset-world1_30
+    21300062: tileset-world1_31
+    21300064: tileset-world1_32
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -742,6 +745,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 93b4e67ce87dac74fbe94e79473aea2e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset-world1_30
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee27a113a0095084cb5a5441227843a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset-world1_31
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d470cbaface6d3a4d81c19686366ba76
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset-world1_32
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 72
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c84c8b05ebbe0c64aac9c9bb8e88a58e
       vertices: []
       indices: 
       edges: []
