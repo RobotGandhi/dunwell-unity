@@ -6,7 +6,7 @@ public class MapManager : MonoBehaviour
 {
     //public Sprite ground_sprite, ground_sprite2, left_wall_sprite, right_wall_sprite, top_wall_sprite, pit_sprite, bot_left_wall_sprite, bot_right_wall_sprite, goal_sprite1, goal_sprite2;
     public Sprite TopLeftWall, TopWall, TopRightWall, Ground, BotBotLeftWall, BotBotRightWall, BotLeftWall, BotRightWall, Pit, RightWall, LeftWall, GroundCracked1, GroundCracked2, GroundCracked3, GroundCracked4, GroundCracked5;
-    public Sprite WoodSpike, BlockSprite;
+    public Sprite WoodSpike, BlockSprite, WoodSpikeStartVertical;
 
     [Header("Item Sprites")]
     public Sprite WeaponSprite;
@@ -64,6 +64,7 @@ public class MapManager : MonoBehaviour
         // MAP ELEMENTS
         GOAL1 = 54,
         WOOD_SPIKE = 33,
+        WOOD_SPIKE_START_VERTICAL = 35,
         SPIKE = 123,
         // GATES
         GATE_FORWARD_RED = 48,
@@ -365,6 +366,15 @@ public class MapManager : MonoBehaviour
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
+                    case (int)TileValues.WOOD_SPIKE_START_VERTICAL:
+                        print("FUCKME");
+                        createdGround = new GameObject();
+                        createdGround.name = "wood_spike_vertical_start";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = WoodSpikeStartVertical;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
                 }
 
                 // Layer the ground
@@ -458,7 +468,7 @@ public class MapManager : MonoBehaviour
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || tile_value2 == (int)TileValues.WOOD_SPIKE || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
+        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || tile_value2 == (int)TileValues.WOOD_SPIKE_START_VERTICAL || tile_value2 == (int)TileValues.WOOD_SPIKE || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
                 return true;
         }

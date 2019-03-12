@@ -450,6 +450,8 @@ MonoBehaviour:
   GroundCracked5: {fileID: 21300054, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   WoodSpike: {fileID: 21300038, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   BlockSprite: {fileID: 21300036, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  WoodSpikeStartVertical: {fileID: 21300062, guid: 5a43ebf7054bcfa4299e62b119d84979,
+    type: 3}
   WeaponSprite: {fileID: 21300026, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   ShieldSprite: {fileID: 21300024, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   HealthSprite: {fileID: 21300022, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
@@ -466,7 +468,7 @@ MonoBehaviour:
     type: 3}
   gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
     type: 3}
-  level_name: W1L1
+  level_name: W1L2
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
