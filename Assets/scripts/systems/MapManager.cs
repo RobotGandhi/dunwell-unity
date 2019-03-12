@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    //public Sprite ground_sprite, ground_sprite2, left_wall_sprite, right_wall_sprite, top_wall_sprite, pit_sprite, bot_left_wall_sprite, bot_right_wall_sprite, goal_sprite1, goal_sprite2;
     public Sprite TopLeftWall, TopWall, TopRightWall, Ground, BotBotLeftWall, BotBotRightWall, BotLeftWall, BotRightWall, Pit, RightWall, LeftWall, GroundCracked1, GroundCracked2, GroundCracked3, GroundCracked4, GroundCracked5;
-    public Sprite WoodSpike, BlockSprite, WoodSpikeStartVertical;
+    public Sprite WoodSpike, BlockSprite, WoodSpikeStartVertical, WoodSpikeConnectorVertical, WoodSpikeEndVertical;
 
     [Header("Item Sprites")]
     public Sprite WeaponSprite;
@@ -63,9 +62,14 @@ public class MapManager : MonoBehaviour
 
         // MAP ELEMENTS
         GOAL1 = 54,
-        WOOD_SPIKE = 33,
-        WOOD_SPIKE_START_VERTICAL = 35,
-        SPIKE = 123,
+
+        SPIKE = 32,
+
+        FALL_SPIKE = 33,
+        FALL_SPIKE_START_VERTICAL = 35,
+        FALL_SPIKE_CONNECTOR_VERTICAL = 36,
+        FALL_SPIKE_ENDER_VERTICAL = 34,
+        
         // GATES
         GATE_FORWARD_RED = 48,
         GATE_FORWARD_BLUE = 46,
@@ -306,17 +310,17 @@ public class MapManager : MonoBehaviour
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
                         break;
                     case (int)TileValues.GOAL1:
-                        GameObject go1 = new GameObject();
-                        go1.name = "GOAL";
-                        go1.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        go1.AddComponent<SpriteRenderer>().sprite = GoalSprite1;
-                        go1.transform.SetParent(map_holder.transform);
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "GOAL";
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.AddComponent<SpriteRenderer>().sprite = GoalSprite1;
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
                         break;
                     case (int)TileValues.SPIKE:
                         createdGround = CreateGround(x, y);
                         // Spawn spike
                         createdItemEnemy = Instantiate(spike_prefab_single);
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;
@@ -358,22 +362,37 @@ public class MapManager : MonoBehaviour
 
                         map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
                         break;
-                    case (int)TileValues.WOOD_SPIKE:
-                        createdGround = new GameObject();
-                        createdGround.name = "wood_spike(" + x.ToString() + ", " + y.ToString() + ")";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = WoodSpike;
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                    case (int)TileValues.FALL_SPIKE:
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "wood_spike(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = WoodSpike;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
                         break;
-                    case (int)TileValues.WOOD_SPIKE_START_VERTICAL:
-                        print("FUCKME");
-                        createdGround = new GameObject();
-                        createdGround.name = "wood_spike_vertical_start";
-                        createdGround.AddComponent<SpriteRenderer>();
-                        createdGround.GetComponent<SpriteRenderer>().sprite = WoodSpikeStartVertical;
-                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdGround.transform.SetParent(map_holder.transform);
+                    case (int)TileValues.FALL_SPIKE_START_VERTICAL:
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "wood_spike_vertical_start";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = WoodSpikeStartVertical;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) - GroundTileSize*0.25f, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.FALL_SPIKE_CONNECTOR_VERTICAL:
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "wood_spike_vertical_connector";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = WoodSpikeConnectorVertical;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) - GroundTileSize*0.25f, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.FALL_SPIKE_ENDER_VERTICAL:
+                        createdItemEnemy = new GameObject();
+                        createdItemEnemy.name = "wood_spike_vertical_ender";
+                        createdItemEnemy.AddComponent<SpriteRenderer>();
+                        createdItemEnemy.GetComponent<SpriteRenderer>().sprite = WoodSpikeEndVertical;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
                         break;
                 }
 
@@ -430,6 +449,20 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+    public static bool IsFallSpike(int tile_value)
+    {
+        switch (tile_value)
+        {
+            case (int)TileValues.FALL_SPIKE_CONNECTOR_VERTICAL:
+            case (int)TileValues.FALL_SPIKE_START_VERTICAL:
+            case (int)TileValues.FALL_SPIKE_ENDER_VERTICAL:
+            case (int)TileValues.FALL_SPIKE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public static bool IsItem(int tile_value)
     {
         if(tile_value == (int)TileValues.WEAPON || tile_value == (int)TileValues.SHIELD || tile_value == (int)TileValues.HEALTH)
@@ -468,7 +501,7 @@ public class MapManager : MonoBehaviour
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || tile_value2 == (int)TileValues.WOOD_SPIKE_START_VERTICAL || tile_value2 == (int)TileValues.WOOD_SPIKE || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
+        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || IsFallSpike(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
                 return true;
         }

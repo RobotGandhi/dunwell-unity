@@ -23,9 +23,10 @@ public class SpikeSystem : MonoBehaviour
 
     public void Step()
     {
+        /*
         spikeLevel++;
         if (spikeLevel == 1)
-        {
+        {                                           
             foreach (var _x in spikeAnimControllers)
             {
                 _x.enabled = false;
@@ -37,10 +38,11 @@ public class SpikeSystem : MonoBehaviour
             spikeLevel = 0;
             foreach (var _x in spikeAnimControllers)
             {
-                _x.enabled = false;
+                _x.enabled = false;                        
                 _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike0");
             }
         }
+        */
     }
 
 }

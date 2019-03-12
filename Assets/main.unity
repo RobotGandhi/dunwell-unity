@@ -452,6 +452,10 @@ MonoBehaviour:
   BlockSprite: {fileID: 21300036, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   WoodSpikeStartVertical: {fileID: 21300062, guid: 5a43ebf7054bcfa4299e62b119d84979,
     type: 3}
+  WoodSpikeConnectorVertical: {fileID: 21300064, guid: 5a43ebf7054bcfa4299e62b119d84979,
+    type: 3}
+  WoodSpikeEndVertical: {fileID: 21300060, guid: 5a43ebf7054bcfa4299e62b119d84979,
+    type: 3}
   WeaponSprite: {fileID: 21300026, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   ShieldSprite: {fileID: 21300024, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   HealthSprite: {fileID: 21300022, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}

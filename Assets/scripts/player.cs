@@ -234,6 +234,11 @@ public class Player : TouchListener
         {
             g_master.current_map.gate_map[new_tile_position].Open();
         }
+        else if (MapManager.IsFallSpike(new_tile_value))
+        {
+            DoMovePlayer(direction, new_tile_position);
+            die_flag = true;
+        }
 
         // Are we on a spike tile now?
         int current_tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
