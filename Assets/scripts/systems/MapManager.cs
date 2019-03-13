@@ -320,7 +320,7 @@ public class MapManager : MonoBehaviour
                         createdGround = CreateGround(x, y);
                         // Spawn spike
                         createdItemEnemy = Instantiate(spike_prefab_single);
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize*0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.spike_map.Add(new Vector2(x, y), createdItemEnemy);
                         break;

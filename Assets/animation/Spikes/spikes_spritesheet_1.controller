@@ -9,7 +9,7 @@ AnimatorController:
   m_Name: spikes_spritesheet_1
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: spike_action
+  - m_Name: action
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -37,7 +37,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: spike_action
+    m_ConditionEvent: action
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102211051848575086}
@@ -110,7 +110,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: spike_action
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101667374684086378}

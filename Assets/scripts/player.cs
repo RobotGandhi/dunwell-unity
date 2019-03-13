@@ -225,10 +225,29 @@ public class Player : TouchListener
         {
             // Trying to walk onto a spike?
             DoMovePlayer(direction, new_tile_position);
-            //if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
-            //{
-            //    die_flag = true;
-            //}
+            if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
+            {
+                bool hadShield = false;
+                // Do we have a shield?
+                if(current_item != null)
+                {
+                    if(current_item.GetComponent<Item>().item_type == Item.ItemType.SHIELD)
+                    {
+                        Animator _spikeAnimator = g_master.current_map.spike_map[new_tile_position].GetComponent<Animator>();
+                        _spikeAnimator.enabled = true;
+                        _spikeAnimator.SetTrigger("action");
+                        player_combat.RemoveShield();
+                        hadShield = true;
+                    }
+                }
+                if (!hadShield)
+                {
+                    Animator _spikeAnimator = g_master.current_map.spike_map[new_tile_position].GetComponent<Animator>();
+                    _spikeAnimator.enabled = true;
+                    _spikeAnimator.SetTrigger("action");
+                    die_flag = true;
+                }
+            }
         }
         else if (MapManager.IsGate(new_tile_value))
         {

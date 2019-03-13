@@ -104,5 +104,12 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
+    public void RemoveShield()
+    {
+        sfx.PlaySFX("armor_break");
+        player.current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
+        player.current_item = null;
+        player.player_animation.ItemChange();
+    }
 
 }

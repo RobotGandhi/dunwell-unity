@@ -7,9 +7,10 @@ public class SpikeSystem : MonoBehaviour
     [System.NonSerialized]
     public int spikeLevel;
     private List<Animator> spikeAnimControllers = new List<Animator>();
-
-    [System.NonSerialized]
     public bool unleashed_spike_trigger = false;
+
+    [SerializeField]
+    public Sprite spike_down, spike_up;
 
     public void NewLevel(Map new_map)
     {
@@ -23,14 +24,13 @@ public class SpikeSystem : MonoBehaviour
 
     public void Step()
     {
-        /*
         spikeLevel++;
         if (spikeLevel == 1)
         {                                           
             foreach (var _x in spikeAnimControllers)
             {
                 _x.enabled = false;
-                _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike1");
+                _x.gameObject.GetComponent<SpriteRenderer>().sprite = spike_up;
             }
         }
         else
@@ -38,11 +38,11 @@ public class SpikeSystem : MonoBehaviour
             spikeLevel = 0;
             foreach (var _x in spikeAnimControllers)
             {
-                _x.enabled = false;                        
-                _x.gameObject.GetComponent<SpriteRenderer>().sprite = ResourceLoader.GetSprite("spike0");
+                _x.enabled = false;
+                _x.gameObject.GetComponent<SpriteRenderer>().sprite = spike_down;
             }
         }
-        */
+        
     }
 
 }
