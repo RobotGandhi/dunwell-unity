@@ -6,9 +6,11 @@ public class Item : MonoBehaviour
 {
     public enum ItemType
     {
-        WEAPON,
-        SHIELD,
-        HEALTH
+        WEAPON = 27,
+        SHIELD = 28,
+        HEALTH = 29,
+        RED_KEY = 30,
+        BLUE_KEY = 31
     }
 
     public enum ItemState
@@ -20,13 +22,10 @@ public class Item : MonoBehaviour
 
     [System.NonSerialized]
     public ItemType item_type;
-    public ItemState item_state = ItemState.ON_MAP;
+    public Vector2 spawn_tile_position;
 
-    public void SetState(ItemState state)
+    public void ResetPosition()
     {
-        item_state = state;
-
-        if(item_state == ItemState.DISCARDED_FROM_MAP)
-            GetComponent<SpriteRenderer>().enabled = false;
+        transform.position = new Vector3(spawn_tile_position.x, spawn_tile_position.y, 0) * MapManager.GroundTileSize;
     }
 }

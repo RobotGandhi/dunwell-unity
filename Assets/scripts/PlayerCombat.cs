@@ -53,8 +53,7 @@ public class PlayerCombat : MonoBehaviour
                 sfx.PlaySFX("enemy_hurt");
                 sfx.PlaySFX("armor_break");
                 // Remove shield
-                player.current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-                player.current_item = null;
+                Destroy(player.current_item);
                 player.player_animation.ItemChange();
                 break;
             default:
@@ -107,8 +106,7 @@ public class PlayerCombat : MonoBehaviour
     public void RemoveShield()
     {
         sfx.PlaySFX("armor_break");
-        player.current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-        player.current_item = null;
+        Destroy(player.current_item);
         player.player_animation.ItemChange();
     }
 

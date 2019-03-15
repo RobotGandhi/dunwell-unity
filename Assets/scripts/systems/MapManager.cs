@@ -6,6 +6,7 @@ public class MapManager : MonoBehaviour
 {
     public Sprite TopLeftWall, TopWall, TopRightWall, Ground, BotBotLeftWall, BotBotRightWall, BotLeftWall, BotRightWall, Pit, RightWall, LeftWall, GroundCracked1, GroundCracked2, GroundCracked3, GroundCracked4, GroundCracked5;
     public Sprite WoodSpike, BlockSprite, WoodSpikeStartVertical, WoodSpikeConnectorVertical, WoodSpikeEndVertical;
+    public Sprite BlueKey, RedKey;
 
     [Header("Item Sprites")]
     public Sprite WeaponSprite;
@@ -57,6 +58,8 @@ public class MapManager : MonoBehaviour
         WEAPON = 27,
         SHIELD = 28,
         HEALTH = 29,
+        BLUE_KEY = 30,
+        RED_KEY = 31,
         // Enemy
         DESKGOBLIN = 58,
 
@@ -394,6 +397,34 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         break;
+                    case (int)TileValues.RED_KEY:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = new GameObject("red key");
+                        createdItemEnemy.AddComponent<SpriteRenderer>().sprite = RedKey;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        createdItemEnemy.AddComponent<Item>();
+                        createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.RED_KEY;
+                        createdItemEnemy.GetComponent<Item>().spawn_tile_position = new Vector2(x, y);
+                        map.item_map.Add(new Vector2(x, y), createdItemEnemy);
+
+                        break;
+                    case (int)TileValues.BLUE_KEY:
+                        createdGround = CreateGround(x, y);
+
+                        createdItemEnemy = new GameObject("blue key");
+                        createdItemEnemy.AddComponent<SpriteRenderer>().sprite = BlueKey;
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        createdItemEnemy.AddComponent<Item>();
+                        createdItemEnemy.GetComponent<Item>().item_type = Item.ItemType.BLUE_KEY;
+                        createdItemEnemy.GetComponent<Item>().spawn_tile_position = new Vector2(x, y);
+                        map.item_map.Add(new Vector2(x, y), createdItemEnemy);
+
+                        break;
                 }
 
                 // Layer the ground
@@ -465,7 +496,7 @@ public class MapManager : MonoBehaviour
 
     public static bool IsItem(int tile_value)
     {
-        if(tile_value == (int)TileValues.WEAPON || tile_value == (int)TileValues.SHIELD || tile_value == (int)TileValues.HEALTH)
+        if(tile_value == (int)TileValues.RED_KEY || tile_value == (int)TileValues.BLUE_KEY || tile_value == (int)TileValues.WEAPON || tile_value == (int)TileValues.SHIELD || tile_value == (int)TileValues.HEALTH)
         {
             return true;
         }

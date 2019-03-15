@@ -456,6 +456,8 @@ MonoBehaviour:
     type: 3}
   WoodSpikeEndVertical: {fileID: 21300060, guid: 5a43ebf7054bcfa4299e62b119d84979,
     type: 3}
+  BlueKey: {fileID: 21300020, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  RedKey: {fileID: 21300018, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   WeaponSprite: {fileID: 21300026, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   ShieldSprite: {fileID: 21300024, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   HealthSprite: {fileID: 21300022, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
@@ -472,7 +474,7 @@ MonoBehaviour:
     type: 3}
   gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
     type: 3}
-  level_name: W1L2
+  level_name: W1L1
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:
@@ -1219,11 +1221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e1ca0bb2a010c49ab3f1dda7858039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
-  shakeAmount: 0
-  shakeDuration: 0
-  smooth: 0
-  smoothAmount: 5
 --- !u!1 &1902177304
 GameObject:
   m_ObjectHideFlags: 0
