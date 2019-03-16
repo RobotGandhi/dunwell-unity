@@ -10,14 +10,15 @@ public class Map
     public Dictionary<Vector2, GameObject> item_map;
     public Dictionary<Vector2, Enemy> enemy_map;
     public Dictionary<Vector2, GameObject> spike_map;
-    public Dictionary<Vector2, KeyGate> gate_map;
+    public Dictionary<Vector2, Gate> gate_map;
+    public GameObject goal;
 
     public Map() 
     {
         item_map = new Dictionary<Vector2, GameObject>();
         enemy_map = new Dictionary<Vector2, Enemy>();
         spike_map = new Dictionary<Vector2, GameObject>();
-        gate_map = new Dictionary<Vector2, KeyGate>();
+        gate_map = new Dictionary<Vector2, Gate>();
     }
 }
 
@@ -119,6 +120,12 @@ public class GameMaster : MonoBehaviour
         step_count++;
         step_count_text.text = step_count.ToString();
 
+        // Message all the enemies
+        foreach(var e in current_map.enemy_map)
+        {
+            e.Value.Step();
+        }
+
         // Message spikes
         spike_system.Step();
 
@@ -156,17 +163,6 @@ public class GameMaster : MonoBehaviour
 
     private IEnumerator FlashStepText()
     {
-        step_count_text.rectTransform.localScale = Vector3.zero;
-        while(step_count_text.rectTransform.localScale.x < 1.0f)
-        {
-            step_count_text.rectTransform.localScale = Vector3.MoveTowards(step_count_text.rectTransform.localScale, Vector3.one, 5.0f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        while(step_count_text.rectTransform.localScale.x > 0.0f)
-        {
-            step_count_text.rectTransform.localScale = Vector3.MoveTowards(step_count_text.rectTransform.localScale, Vector3.zero, 5.0f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        step_count_text.rectTransform.localScale = Vector3.zero;
+        yield return null;
     }
 }

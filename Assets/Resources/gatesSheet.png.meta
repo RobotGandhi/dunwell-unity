@@ -1,40 +1,55 @@
 fileFormatVersion: 2
-guid: 5a43ebf7054bcfa4299e62b119d84979
+guid: 1c21a018e6b652745a9e5e9569c7d98c
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tileset-world1_0
-    21300002: tileset-world1_1
-    21300004: tileset-world1_2
-    21300006: tileset-world1_3
-    21300008: tileset-world1_4
-    21300010: tileset-world1_5
-    21300012: tileset-world1_6
-    21300014: tileset-world1_7
-    21300016: tileset-world1_8
-    21300018: tileset-world1_9
-    21300020: tileset-world1_10
-    21300022: tileset-world1_11
-    21300024: tileset-world1_12
-    21300026: tileset-world1_13
-    21300028: tileset-world1_14
-    21300030: tileset-world1_15
-    21300032: tileset-world1_16
-    21300034: tileset-world1_17
-    21300036: tileset-world1_18
-    21300038: tileset-world1_19
-    21300040: tileset-world1_20
-    21300042: tileset-world1_21
-    21300044: tileset-world1_22
-    21300046: tileset-world1_23
-    21300048: tileset-world1_24
-    21300050: tileset-world1_25
-    21300052: tileset-world1_26
-    21300054: tileset-world1_27
-    21300056: tileset-world1_28
-    21300058: tileset-world1_29
-    21300060: tileset-world1_30
-    21300062: tileset-world1_31
-    21300064: tileset-world1_32
+    21300000: gatesSheet_0
+    21300002: gatesSheet_1
+    21300004: gatesSheet_2
+    21300006: gatesSheet_3
+    21300008: gatesSheet_4
+    21300010: gatesSheet_5
+    21300012: gatesSheet_6
+    21300014: gatesSheet_7
+    21300016: gatesSheet_8
+    21300018: gatesSheet_9
+    21300020: gatesSheet_10
+    21300022: gatesSheet_11
+    21300024: gatesSheet_12
+    21300026: gatesSheet_13
+    21300028: gatesSheet_14
+    21300030: gatesSheet_15
+    21300032: gatesSheet_16
+    21300034: gatesSheet_17
+    21300036: gatesSheet_18
+    21300038: gatesSheet_19
+    21300040: gatesSheet_20
+    21300042: gatesSheet_21
+    21300044: gatesSheet_22
+    21300046: gatesSheet_23
+    21300048: gatesSheet_24
+    21300050: gatesSheet_25
+    21300052: gatesSheet_26
+    21300054: gatesSheet_27
+    21300056: gatesSheet_28
+    21300058: gatesSheet_29
+    21300060: gatesSheet_30
+    21300062: gatesSheet_31
+    21300064: gatesSheet_32
+    21300066: gatesSheet_33
+    21300068: gatesSheet_34
+    21300070: gatesSheet_35
+    21300072: gatesSheet_36
+    21300074: gatesSheet_37
+    21300076: gatesSheet_38
+    21300078: gatesSheet_39
+    21300080: gatesSheet_40
+    21300082: gatesSheet_41
+    21300084: gatesSheet_42
+    21300086: gatesSheet_43
+    21300088: gatesSheet_44
+    21300090: gatesSheet_45
+    21300092: gatesSheet_46
+    21300094: gatesSheet_47
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -96,7 +111,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -107,7 +122,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -140,7 +155,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -150,13 +165,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tileset-world1_0
+      name: gatesSheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 144
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,39 +179,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 651c4bce2286e8d4a99e7ed5a5d39b15
+      spriteID: 16f1f6684a02a8248a118cecdaec2fed
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 981e216d66c79dc42ad04be4004a4f23
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_2
+      name: gatesSheet_1
       rect:
         serializedVersion: 2
         x: 16
-        y: 144
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,19 +199,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb5b18340ad3e6f419cdc38c2713ecd7
+      spriteID: 26b88e238db25a64497d3355e2e28457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_3
+      name: gatesSheet_2
       rect:
         serializedVersion: 2
         x: 32
-        y: 144
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,79 +219,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fe43d9f98047bb4fab28dc6e4eaac07
+      spriteID: 2729987ebd1a6bb44a3ab532fd427fe7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1b1d5f064258ce449593b958b83aba4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_5
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ec8fbb474d6aa74d8cf109562d163c1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_6
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 734cc899e8781e04c9bb626c64832236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_7
+      name: gatesSheet_3
       rect:
         serializedVersion: 2
         x: 48
-        y: 144
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,19 +239,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21c3a317648e5594f9247f7e2d62fea3
+      spriteID: 76793183895624f4a81445da7cbec367
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_8
+      name: gatesSheet_4
       rect:
         serializedVersion: 2
-        x: 112
-        y: 96
+        x: 64
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,39 +259,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 374e0a8ce300a704f8883fbf1878e432
+      spriteID: 2efabacdc866de44999e1cfc26fed72b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_9
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b418ab817eeb9574f9a9288f5b279714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_10
+      name: gatesSheet_5
       rect:
         serializedVersion: 2
         x: 80
-        y: 96
+        y: 160
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,19 +279,299 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 594327c7d36ccef4594ce52ecaec549a
+      spriteID: 9350a813b112d07469a673c990f42926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_11
+      name: gatesSheet_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4912d6e94234eb43be71d9b4c27ce45
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e995e3d38a1743e4db8234b10ce642f0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82e087a137c62904eada27a4f57c92e8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_9
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfbee4d199c39da40a03459c1faf45fd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_10
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4f9e43d829fdbc43be6b7e5c7690527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dc09a3acd2215f4f96db2324ca11e91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeaafd1caebadc749a24bef544aa9814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_13
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271928dd346d0cd4e91305ade54058af
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_14
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a6c452e87bda96458e885acdffd07f1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_15
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10dca1f7538e59045849b5000838109c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 502e73d5502633c47a72b47852ef5ff8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_17
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6c63edb08ca4124492e02fa7ac35734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_18
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd24909141ff234199515f5395593cb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7841948af0afb0d438fb502bddf15d5e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_20
       rect:
         serializedVersion: 2
         x: 64
         y: 96
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -384,19 +579,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 210caf4259bb16945884af317b888d77
+      spriteID: 18a857d25772a3a45b56e4ff3bc308b1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_12
+      name: gatesSheet_21
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 96
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -404,19 +599,99 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fb10c837d9716d4689a7367ad264739
+      spriteID: c32df5811ecd9a74883b33d0c6b2bf81
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_13
+      name: gatesSheet_22
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75b8875bac3c3540ab4e7ed15bd5f33
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_23
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95c353a895bf6974f8b320b9f85b24fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41c2079a24a1f5442a6d49a9ff091cb2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_25
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a4db8eea2c87e74f8bec108a59cf7f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_26
       rect:
         serializedVersion: 2
         x: 32
-        y: 96
+        y: 64
         width: 16
-        height: 16
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -424,13 +699,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c64072f18b5bd784891d8388b50afafb
+      spriteID: 68bb7fb0a5007a743bc8531535e98406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_14
+      name: gatesSheet_27
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa5456a7adaa2c646b9a8d4f8348b9ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_28
       rect:
         serializedVersion: 2
         x: 64
@@ -444,13 +739,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8edb10bc31780fd4287b6c9a1cc77312
+      spriteID: 1f6dc7ac0878ec24999eab24f640609c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_15
+      name: gatesSheet_29
       rect:
         serializedVersion: 2
         x: 80
@@ -464,13 +759,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e726b428149f2794ab6f39608fb90258
+      spriteID: 5d03f0fa82eb1f64e9b064349edae5cc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_16
+      name: gatesSheet_30
       rect:
         serializedVersion: 2
         x: 96
@@ -484,13 +779,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 667de47db1bac2f4faf59170f431329d
+      spriteID: ca970e122b3017846a49d71c980548bc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_17
+      name: gatesSheet_31
       rect:
         serializedVersion: 2
         x: 112
@@ -504,18 +799,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f17d5a7f42f2b341aa82a076677e642
+      spriteID: fa4cc632cf7384b48a8fabd43ef9f400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_18
+      name: gatesSheet_32
       rect:
         serializedVersion: 2
-        x: 112
+        x: 4
         y: 32
-        width: 16
+        width: 7
         height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -524,19 +819,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94022a04e6e6cf9478c7ee356a7d1473
+      spriteID: e4f21220d5290084ca17dfcd42c360a1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_19
+      name: gatesSheet_33
       rect:
         serializedVersion: 2
-        x: 0
-        y: 80
-        width: 16
-        height: 16
+        x: 20
+        y: 32
+        width: 7
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -544,19 +839,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 089d06549da306d4191375f19459afff
+      spriteID: f7babd3c50177174883abf19643d1e8f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_20
+      name: gatesSheet_34
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 16
-        height: 16
+        x: 36
+        y: 32
+        width: 7
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -564,19 +859,139 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b285a61c96758a4d95dc895b06c4a6d
+      spriteID: 34f65c263ba85ac46936f42bf480bedb
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_21
+      name: gatesSheet_35
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 32
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfbd97dc17476674ba38fca9d69f81fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_36
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 32
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ca4d804f0673974d9e65bbde674887c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_37
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 32
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e905fdf9ca5c4c84eaab75b6e4260295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_38
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 32
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd555971a9ddcc84c9de39c0fe21c212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_39
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 32
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d767e069c3874c4b9d53fcb73144a74
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 335b737366c66c14c963e62721b3aefb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gatesSheet_41
       rect:
         serializedVersion: 2
         x: 16
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -584,19 +999,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b75d8f7b5a09f4043b0f2271e62d2dc3
+      spriteID: d034956b4e603e645837bf04bfb7b656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_22
+      name: gatesSheet_42
       rect:
         serializedVersion: 2
         x: 32
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -604,19 +1019,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e8f9379b8fe8f243a8f8877a49d48ed
+      spriteID: 90905b39815198445bffee126bf60674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_23
+      name: gatesSheet_43
       rect:
         serializedVersion: 2
         x: 48
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -624,19 +1039,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d27155eaf4d54d49bd722ccda3badd7
+      spriteID: 5ae63651f70a9134f8577dcd09f8e145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_24
+      name: gatesSheet_44
       rect:
         serializedVersion: 2
         x: 64
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -644,19 +1059,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 937018e0520d89c4aa9224134d63da00
+      spriteID: 606d0ba1fb56fd243ba2b9f7497cf049
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_25
+      name: gatesSheet_45
       rect:
         serializedVersion: 2
         x: 80
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -664,19 +1079,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd724344dd678464eb3aa66d52c02aaf
+      spriteID: 195a34bcbdd82aa4bb94b464094d0d23
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_26
+      name: gatesSheet_46
       rect:
         serializedVersion: 2
         x: 96
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -684,19 +1099,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c506fd54eb438e547848ddb08535c3f3
+      spriteID: d8a0e813ae3bd5c42ac7dae90f9e2f38
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset-world1_27
+      name: gatesSheet_47
       rect:
         serializedVersion: 2
         x: 112
-        y: 128
+        y: 5
         width: 16
-        height: 16
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -704,107 +1119,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7f226c810611c745a1b6fc6bc944fc9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_28
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aefb9cba5d6203444b65384d244c270d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_29
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 36
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 93b4e67ce87dac74fbe94e79473aea2e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_30
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ee27a113a0095084cb5a5441227843a4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_31
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 72
-        width: 16
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d470cbaface6d3a4d81c19686366ba76
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tileset-world1_32
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 72
-        width: 16
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c84c8b05ebbe0c64aac9c9bb8e88a58e
+      spriteID: 31a44164aa4600d4197bfec161bfaec4
       vertices: []
       indices: 
       edges: []
@@ -812,7 +1127,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 135887983c729e045afcd4037753976b
+    spriteID: d7a5b4066db46334e86d335b36db6f8c
     vertices: []
     indices: 
     edges: []

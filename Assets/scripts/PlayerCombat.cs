@@ -8,6 +8,7 @@ public class PlayerCombat : MonoBehaviour
     SoundEffects sfx;
     MapManager map_manager;
     GameMaster game_master;
+    CameraShake cam_shake;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class PlayerCombat : MonoBehaviour
         sfx = FindObjectOfType<SoundEffects>();
         map_manager = FindObjectOfType<MapManager>();
         game_master = FindObjectOfType<GameMaster>();
+        cam_shake = FindObjectOfType<CameraShake>();
     }
 
     public void EngageEnemy(Enemy enemy, Vector2 enemy_tile_position)
@@ -30,6 +32,7 @@ public class PlayerCombat : MonoBehaviour
             case Enums.CombatResult.CLASH:
                 // Play the clash sfx 
                 sfx.PlaySFX("enemy_hurt");
+                cam_shake.DoShake(Constants.LightCamShake);
                 break;
             case Enums.CombatResult.ENEMY_DIED:
                 // Spawn enemy remains?
@@ -44,6 +47,7 @@ public class PlayerCombat : MonoBehaviour
                 game_master.current_map.enemy_map.Remove(enemy_tile_position);
                 // Play SFX
                 sfx.PlaySFX("enemy_dead_bones");
+                cam_shake.DoShake(Constants.MediumCamShake);
                 break;
             case Enums.CombatResult.PLAYER_DIED:
                 player.Die();
@@ -52,6 +56,7 @@ public class PlayerCombat : MonoBehaviour
                 // Play sfx 
                 sfx.PlaySFX("enemy_hurt");
                 sfx.PlaySFX("armor_break");
+                cam_shake.DoShake(Constants.LightCamShake);
                 // Remove shield
                 Destroy(player.current_item);
                 player.player_animation.ItemChange();

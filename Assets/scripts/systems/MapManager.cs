@@ -311,13 +311,16 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = y;
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
+                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
+                        map.enemy_map[new Vector2(x, y)].tile_value = TileValues.DESKGOBLIN;
                         break;
                     case (int)TileValues.GOAL1:
-                        createdItemEnemy = new GameObject();
-                        createdItemEnemy.name = "GOAL";
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
-                        createdItemEnemy.AddComponent<SpriteRenderer>().sprite = GoalSprite1;
-                        createdItemEnemy.transform.SetParent(map_holder.transform);
+                        createdGround = new GameObject();
+                        createdGround.name = "GOAL";
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.AddComponent<SpriteRenderer>().sprite = GoalSprite1;
+                        createdGround.transform.SetParent(map_holder.transform);
+                        map.goal = createdGround;
                         break;
                     case (int)TileValues.SPIKE:
                         createdGround = CreateGround(x, y);
@@ -334,7 +337,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
-                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Gate>());
 
                         break;
                     case (int)TileValues.GATE_FORWARD_RED:
@@ -344,7 +347,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
-                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Gate>());
 
                         break;
                     case (int)TileValues.GATE_SIDE_BLUE:
@@ -354,16 +357,16 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
-                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Gate>());
                         break;
                     case (int)TileValues.GATE_FORWARD_BLUE:
                         createdGround = CreateGround(x, y);
 
                         createdItemEnemy = Instantiate(gate_forward_blue);
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.25f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
-                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<KeyGate>());
+                        map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Gate>());
                         break;
                     case (int)TileValues.FALL_SPIKE:
                         createdItemEnemy = new GameObject();
@@ -436,7 +439,7 @@ public class MapManager : MonoBehaviour
                 if(createdItemEnemy != null)
                 {
                     createdItemEnemy.GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
-                    if (createdItemEnemy.GetComponent<KeyGate>() != null)
+                    if (createdItemEnemy.GetComponent<Gate>() != null)
                     {
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y;
                     }

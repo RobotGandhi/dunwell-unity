@@ -39,13 +39,13 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    public void DoShake(float intensity = 0.12f, float duration = 0.0085f)
+    public void DoShake(CamShakeDto _data)
     {
         OriginalPos = transform.position;
         OriginalRot = transform.rotation;
 
-        ShakeIntensity = 0.12f;
-        ShakeDecay = 0.0085f;
+        ShakeIntensity = _data.intensity;
+        ShakeDecay = _data.length;
         Shaking = true;
     }
 }

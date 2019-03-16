@@ -8,6 +8,7 @@ public class Player : TouchListener
     List<Vector3> direction_to_vector = new List<Vector3>();
 
     public Sprite ground_sprite;
+    public GameObject food_particle_prefab;
 
     SpikeSystem spike_system;
     GameMaster g_master;
@@ -19,7 +20,6 @@ public class Player : TouchListener
     public PlayerAnimation player_animation;
 
     private Vector3 tile_position = new Vector3(1, 1, 0);
-    const float move_speed = 7.5f;
 
     Enums.PlayerStates player_state;
     Enums.PlayerMoveDirection move_direction;
@@ -74,7 +74,7 @@ public class Player : TouchListener
             // move towards desired tile position
             if (transform.position != (tile_position * MapManager.GroundTileSize))
             {
-                transform.position = Vector3.MoveTowards(transform.position, (tile_position * MapManager.GroundTileSize), move_speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, (tile_position * MapManager.GroundTileSize), Constants.ObjectMoveSpeed * Time.deltaTime);
             }
             else
             {
@@ -110,6 +110,11 @@ public class Player : TouchListener
 
         /* HP */
         HPEnableLogic();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ConsumeFood();
+        }
 
         #region WASD
         if (player_state == Enums.PlayerStates.IDLE)
@@ -243,7 +248,7 @@ public class Player : TouchListener
                         _spikeAnimator.enabled = true;
                         _spikeAnimator.SetTrigger("action");
                         player_combat.RemoveShield();
-                        Camera.main.GetComponent<CameraShake>().DoShake(0.1f);
+                        Camera.main.GetComponent<CameraShake>().DoShake(Constants.LightCamShake);
                         hadShield = true;
                     }
                 }
@@ -258,7 +263,27 @@ public class Player : TouchListener
         }
         else if (MapManager.IsGate(new_tile_value))
         {
-            g_master.current_map.gate_map[new_tile_position].Open();
+            Gate _gate = g_master.current_map.gate_map[new_tile_position];
+            // Check if gate is already open
+            if (_gate.IsOpen())
+            {
+                DoMovePlayer(direction, new_tile_position);
+            }
+            else
+            {
+                // Open gate!
+                // Make sure we have correct key item
+                if(current_item != null)
+                {
+                    if ((current_item.GetComponent<Item>().item_type == Item.ItemType.BLUE_KEY && _gate.door_color == "blue") ||
+                        current_item.GetComponent<Item>().item_type == Item.ItemType.RED_KEY && _gate.door_color == "red")
+                    {
+                        _gate.Open();
+                        RemoveCurrentItem(true);
+                    }
+
+                }
+            }
         }
         else if (MapManager.IsFallSpike(new_tile_value))
         {
@@ -343,14 +368,22 @@ public class Player : TouchListener
         {
             if (current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
             {
-                HP++;
-                Destroy(current_item);
-                player_animation.ItemChange();
-                sfx.PlaySFX("eating_health_up");
-
-                g_master.Step();
+                ConsumeFood();
             }
         }
+    }
+
+    public void ConsumeFood()
+    {
+        HP++;
+        sfx.PlaySFX("eating_health_up");
+        
+        GameObject t = Instantiate(food_particle_prefab, transform.position, Quaternion.identity) as GameObject;
+        t.transform.Rotate(new Vector3(-90, 0, 0));
+
+        RemoveCurrentItem();
+
+        g_master.Step();
     }
 
     private void HPEnableLogic()
@@ -373,9 +406,10 @@ public class Player : TouchListener
         SetPlayerState(Enums.PlayerStates.INTRO);
         this.tile_position = tile_position;
         // Position for intro
-        transform.position = new Vector3(tile_position.x, tile_position.y + 6) * ground_sprite.bounds.size.x;
-        GetComponent<SpriteRenderer>().color = Color.white;
-        GetComponent<SpriteRenderer>().sortingOrder = (int)tile_position.y + 6;
+        transform.position = new Vector3(tile_position.x, tile_position.y + 6) * MapManager.GroundTileSize;
+        spre.color = Color.white;
+        spre.sortingLayerName = "player_items_enemies";
+        spre.sortingOrder = (int)tile_position.y + 6;
 
         StartCoroutine("IntroCoroutine");
     }
@@ -389,18 +423,18 @@ public class Player : TouchListener
 
     private IEnumerator IntroCoroutine()
     {
-        Vector2 intro_start = new Vector3(tile_position.x, tile_position.y + 4) * ground_sprite.bounds.size.x;
+        Vector2 intro_start = new Vector3(tile_position.x, tile_position.y + 4) * MapManager.GroundTileSize;
         float intro_distance = Vector3.Distance(intro_start, tile_position * MapManager.GroundTileSize);
 
 
         while (transform.position != tile_position * MapManager.GroundTileSize)
         {
-            transform.position = Vector3.MoveTowards(transform.position, tile_position * ground_sprite.bounds.size.x, fall_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, tile_position * MapManager.GroundTileSize, fall_speed * Time.deltaTime);
             spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * MapManager.GroundTileSize) / intro_distance);
             yield return new WaitForEndOfFrame();
         }
 
-        Camera.main.GetComponent<CameraShake>().DoShake();
+        Camera.main.GetComponent<CameraShake>().DoShake(Constants.HeavyCamShake);
         SetPlayerState(Enums.PlayerStates.IDLE);
     }
 
@@ -412,7 +446,9 @@ public class Player : TouchListener
         }
         player_state = Enums.PlayerStates.OUTRO;
 
-        spre.sortingOrder = -(int)tile_position.y;
+        spre.sortingLayerName = "room_tiles";
+        spre.sortingOrder = -1;
+        g_master.current_map.goal.GetComponent<SpriteRenderer>().sortingOrder = -2;
 
         while (spre.color.a > 0)
         {
@@ -428,11 +464,11 @@ public class Player : TouchListener
 
     }
 
-    public void RemoveCurrentItem()
+    public void RemoveCurrentItem(bool destroy_key = false)
     {
         if(current_item != null)
         {
-            if (current_item.GetComponent<Item>().item_type == Item.ItemType.BLUE_KEY || current_item.GetComponent<Item>().item_type == Item.ItemType.RED_KEY)
+            if ((current_item.GetComponent<Item>().item_type == Item.ItemType.BLUE_KEY || current_item.GetComponent<Item>().item_type == Item.ItemType.RED_KEY) && !destroy_key)
             {
                 Vector2 item_tile_pos = current_item.GetComponent<Item>().spawn_tile_position;
                 int item_value = (int)current_item.GetComponent<Item>().item_type;
@@ -448,6 +484,7 @@ public class Player : TouchListener
             {
                 g_master.current_map.item_map.Remove(current_item.GetComponent<Item>().spawn_tile_position);
                 Destroy(current_item.gameObject);
+                current_item = null;
             }
         }
         player_animation.ItemChange();
