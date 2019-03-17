@@ -41,6 +41,15 @@ public class Player : TouchListener
     bool standing_on_spike = false;
     bool die_flag = false;
 
+    void Awake()
+    {
+        g_master = FindObjectOfType<GameMaster>();
+        sfx = FindObjectOfType<SoundEffects>();
+        spike_system = FindObjectOfType<SpikeSystem>();
+
+        spre = GetComponent<SpriteRenderer>();
+    }
+
     void Start()
     {
         // Direction to vector list
@@ -51,12 +60,6 @@ public class Player : TouchListener
 
         t_system = FindObjectOfType<TouchSystem>();
         t_system.AddTouchListener(this);
-
-        g_master = FindObjectOfType<GameMaster>();
-        sfx = FindObjectOfType<SoundEffects>();
-        spike_system = FindObjectOfType<SpikeSystem>();
-
-        spre = GetComponent<SpriteRenderer>();
 
         // Item
         current_item = null;
@@ -290,6 +293,11 @@ public class Player : TouchListener
             DoMovePlayer(direction, new_tile_position);
             die_flag = true;
         }
+        else if(new_tile_value == (int)MapManager.TileValues.PRESURE_PLATE)
+        {
+            DoMovePlayer(direction, new_tile_position);
+            g_master.current_map.pp_map[new Vector2((int)tile_position.x, (int)tile_position.y)].Enable();
+        }
 
         // Are we on a spike tile now?
         int current_tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
@@ -403,15 +411,14 @@ public class Player : TouchListener
 
     public void PlayIntroAt(Vector2 tile_position)
     {
-        SetPlayerState(Enums.PlayerStates.INTRO);
         this.tile_position = tile_position;
         // Position for intro
-        transform.position = new Vector3(tile_position.x, tile_position.y + 6) * MapManager.GroundTileSize;
+        transform.position = new Vector3(tile_position.x, tile_position.y) * MapManager.GroundTileSize;
         spre.color = Color.white;
         spre.sortingLayerName = "player_items_enemies";
-        spre.sortingOrder = (int)tile_position.y + 6;
+        spre.sortingOrder = (int)tile_position.y;
 
-        StartCoroutine("IntroCoroutine");
+        SetPlayerState(Enums.PlayerStates.IDLE);
     }
 
     private IEnumerator HideSwordForAnimation()
@@ -421,29 +428,14 @@ public class Player : TouchListener
         current_item.gameObject.SetActive(true);
     }
 
-    private IEnumerator IntroCoroutine()
-    {
-        Vector2 intro_start = new Vector3(tile_position.x, tile_position.y + 4) * MapManager.GroundTileSize;
-        float intro_distance = Vector3.Distance(intro_start, tile_position * MapManager.GroundTileSize);
-
-
-        while (transform.position != tile_position * MapManager.GroundTileSize)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, tile_position * MapManager.GroundTileSize, fall_speed * Time.deltaTime);
-            spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * MapManager.GroundTileSize) / intro_distance);
-            yield return new WaitForEndOfFrame();
-        }
-
-        Camera.main.GetComponent<CameraShake>().DoShake(Constants.HeavyCamShake);
-        SetPlayerState(Enums.PlayerStates.IDLE);
-    }
-
     private IEnumerator OutroCoroutine()
     {
         while (player_state != Enums.PlayerStates.IDLE)
         {
             yield return new WaitForEndOfFrame();
         }
+
+        sfx.PlaySFX("falling");
         player_state = Enums.PlayerStates.OUTRO;
 
         spre.sortingLayerName = "room_tiles";

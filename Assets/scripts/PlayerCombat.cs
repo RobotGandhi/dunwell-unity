@@ -58,8 +58,7 @@ public class PlayerCombat : MonoBehaviour
                 sfx.PlaySFX("armor_break");
                 cam_shake.DoShake(Constants.LightCamShake);
                 // Remove shield
-                Destroy(player.current_item);
-                player.player_animation.ItemChange();
+                player.RemoveCurrentItem();
                 break;
             default:
                 break;
@@ -110,9 +109,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void RemoveShield()
     {
-        sfx.PlaySFX("armor_break");
-        Destroy(player.current_item);
-        player.player_animation.ItemChange();
+        player.RemoveCurrentItem();
     }
 
 }

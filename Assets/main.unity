@@ -458,10 +458,26 @@ MonoBehaviour:
     type: 3}
   BlueKey: {fileID: 21300020, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   RedKey: {fileID: 21300018, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundRL: {fileID: 21300066, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundLD: {fileID: 21300068, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundUR: {fileID: 21300070, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundUL: {fileID: 21300072, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundLR: {fileID: 21300074, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PPGroundUD: {fileID: 21300076, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundMossy1: {fileID: 21300078, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundMossy2: {fileID: 21300080, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundMossy3: {fileID: 21300082, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundMossy4: {fileID: 21300084, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  GroundMossy5: {fileID: 21300086, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  LeftWallMossy: {fileID: 21300088, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  RightWallMossy: {fileID: 21300090, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  TopWallMossy: {fileID: 21300092, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   WeaponSprite: {fileID: 21300026, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   ShieldSprite: {fileID: 21300024, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   HealthSprite: {fileID: 21300022, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
   GoalSprite1: {fileID: 21300056, guid: 5a43ebf7054bcfa4299e62b119d84979, type: 3}
+  PresurePlatePrefab: {fileID: 2494615867835484521, guid: bda10bf3158f1eb43b4f83c1f02a8caa,
+    type: 3}
   spike_prefab_single: {fileID: 731976972675676832, guid: c6ba29f37d4db3646be5930d3ea749bc,
     type: 3}
   DeskGoblinPrefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,

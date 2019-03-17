@@ -8,6 +8,17 @@ public class MapManager : MonoBehaviour
     public Sprite WoodSpike, BlockSprite, WoodSpikeStartVertical, WoodSpikeConnectorVertical, WoodSpikeEndVertical;
     public Sprite BlueKey, RedKey;
 
+    public Sprite PPGroundRL;
+    public Sprite PPGroundLD;
+    public Sprite PPGroundUR;
+    public Sprite PPGroundUL;
+    public Sprite PPGroundLR;
+    public Sprite PPGroundUD;
+
+
+    public Sprite GroundMossy1, GroundMossy2, GroundMossy3, GroundMossy4, GroundMossy5;
+    public Sprite LeftWallMossy, RightWallMossy, TopWallMossy;
+
     [Header("Item Sprites")]
     public Sprite WeaponSprite;
     public Sprite ShieldSprite;
@@ -15,6 +26,7 @@ public class MapManager : MonoBehaviour
 
     [Header("Other")]
     public Sprite GoalSprite1;
+    public GameObject PresurePlatePrefab;
 
     [Header("Hazards")]
     public GameObject spike_prefab_single;
@@ -51,6 +63,20 @@ public class MapManager : MonoBehaviour
         GROUND_CRACKED3 = 14,
         GROUND_CRACKED4 = 15,
         GROUND_CRACKED5 = 16,
+        GROUND_MOSSY1 = 20,
+        GROUND_MOSSY2 = 21,
+        GROUND_MOSSY3 = 22,
+        GROUND_MOSSY4 = 23,
+        GROUND_MOSSY5 = 24,
+        TOP_WALL_MOSSY = 18,
+        LEFT_WALL_MOSSY = 17,
+        RIGHT_WALL_MOSSY = 19,
+        PP_GROUND_RL = 67,
+        PP_GROUND_LD = 68,
+        PP_GROUND_UR = 69,
+        PP_GROUND_UL = 70,
+        PP_GROUND_LR = 71,
+        PP_GROUND_UD = 72,
 
         BLOCK = 64,
 
@@ -65,7 +91,7 @@ public class MapManager : MonoBehaviour
 
         // MAP ELEMENTS
         GOAL1 = 54,
-
+        PRESURE_PLATE = 25,
         SPIKE = 32,
 
         FALL_SPIKE = 33,
@@ -161,6 +187,95 @@ public class MapManager : MonoBehaviour
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
+                    case (int)TileValues.PP_GROUND_RL:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundRL;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.PP_GROUND_LD:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundLD;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.PP_GROUND_UR:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundUR;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+
+                    case (int)TileValues.PP_GROUND_UL:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundUL;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.PP_GROUND_LR:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundLR;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.PP_GROUND_UD:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = PPGroundUD;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_MOSSY1:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundMossy1;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_MOSSY2:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundMossy2;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_MOSSY3:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundMossy3;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_MOSSY4:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundMossy4;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.GROUND_MOSSY5:
+                        createdGround = new GameObject();
+
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = GroundMossy5;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
                     case (int)TileValues.LEFT_WALL:
                         createdGround = new GameObject();
                         createdGround.name = "left_wall(" + x.ToString() + ", " + y.ToString() + ")";
@@ -182,6 +297,30 @@ public class MapManager : MonoBehaviour
                         createdGround.name = "top_wall(" + x.ToString() + ", " + y.ToString() + ")";
                         createdGround.AddComponent<SpriteRenderer>();
                         createdGround.GetComponent<SpriteRenderer>().sprite = TopWall;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.LEFT_WALL_MOSSY:
+                        createdGround = new GameObject();
+                        createdGround.name = "right_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = LeftWallMossy;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.RIGHT_WALL_MOSSY:
+                        createdGround = new GameObject();
+                        createdGround.name = "right_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = RightWallMossy;
+                        createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
+                        createdGround.transform.SetParent(map_holder.transform);
+                        break;
+                    case (int)TileValues.TOP_WALL_MOSSY:
+                        createdGround = new GameObject();
+                        createdGround.name = "right_wall(" + x.ToString() + ", " + y.ToString() + ")";
+                        createdGround.AddComponent<SpriteRenderer>();
+                        createdGround.GetComponent<SpriteRenderer>().sprite = TopWallMossy;
                         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
                         createdGround.transform.SetParent(map_holder.transform);
                         break;
@@ -428,6 +567,14 @@ public class MapManager : MonoBehaviour
                         map.item_map.Add(new Vector2(x, y), createdItemEnemy);
 
                         break;
+                    case (int)TileValues.PRESURE_PLATE:
+                        createdGround = CreateGround(x, y);
+                        createdItemEnemy = Instantiate(PresurePlatePrefab, new Vector3(x * GroundTileSize, y * GroundTileSize, 0), Quaternion.identity);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        map.pp_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<PresurePlate>());
+
+                        break;
                 }
 
                 // Layer the ground
@@ -473,6 +620,16 @@ public class MapManager : MonoBehaviour
         for(int i = (int)TileValues.GROUND_CRACKED1; i <= (int)TileValues.GROUND_CRACKED5; i++)
         {
             if (tile_value == i)
+                return true;
+        }
+        for(int i = (int)TileValues.PP_GROUND_RL; i <= (int)TileValues.PP_GROUND_UD; i++)
+        {
+            if (tile_value == i)
+                return true;
+        }
+        for(int i = (int)TileValues.GROUND_MOSSY1; i <= (int)TileValues.GROUND_MOSSY5; i++)
+        {
+            if(tile_value == i)
                 return true;
         }
         if(tile_value == (int)TileValues.GROUND)
@@ -535,7 +692,7 @@ public class MapManager : MonoBehaviour
     public static bool ShouldReplace(int tile_value1, int tile_value2)
     {
         // If tile_value2 is enemy or item and tile_value1 is walkable then replace 
-        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.BLOCK || IsFallSpike(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
+        if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.PRESURE_PLATE || tile_value2 == (int)TileValues.BLOCK || IsFallSpike(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
                 return true;
         }

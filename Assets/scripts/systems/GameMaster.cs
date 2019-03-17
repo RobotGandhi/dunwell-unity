@@ -11,6 +11,7 @@ public class Map
     public Dictionary<Vector2, Enemy> enemy_map;
     public Dictionary<Vector2, GameObject> spike_map;
     public Dictionary<Vector2, Gate> gate_map;
+    public Dictionary<Vector2, PresurePlate> pp_map;
     public GameObject goal;
 
     public Map() 
@@ -19,6 +20,7 @@ public class Map
         enemy_map = new Dictionary<Vector2, Enemy>();
         spike_map = new Dictionary<Vector2, GameObject>();
         gate_map = new Dictionary<Vector2, Gate>();
+        pp_map = new Dictionary<Vector2, PresurePlate>();
     }
 }
 
@@ -86,16 +88,16 @@ public class GameMaster : MonoBehaviour
         Vector3 cameraGoalPos = new Vector3(Constants.CameraX * MapManager.GroundTileSize, (Constants.MapHeight / 2) * MapManager.GroundTileSize, -10);
         Camera.main.transform.position = cameraGoalPos;
 
+        // Play player intro
+        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 1));
+
         // Fade out panel
-        while(fade_panel.color.a >= 0.05f)
+        while (fade_panel.color.a >= 0.05f)
         {
             fade_panel.color = Vector4.MoveTowards(fade_panel.color, Color.clear, 1.5f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         fade_panel.color = Color.clear;
-
-        // Play player intro
-        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 1));
     }
 
     private IEnumerator GameOver()

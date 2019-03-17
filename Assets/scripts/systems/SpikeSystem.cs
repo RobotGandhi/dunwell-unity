@@ -14,6 +14,8 @@ public class SpikeSystem : MonoBehaviour
 
     public void NewLevel(Map new_map)
     {
+        spikeAnimControllers.Clear();
+
         spikeLevel = 0;
         foreach (KeyValuePair<Vector2, GameObject> dicEntry in new_map.spike_map)
         {
