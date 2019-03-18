@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     Player player;
     Animator anim_controller;
 
-    private void Start()
+    private void Awake()
     {
         // Get main player class component
         player = GetComponent<Player>();

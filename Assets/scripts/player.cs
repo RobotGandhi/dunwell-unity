@@ -46,6 +46,7 @@ public class Player : TouchListener
         g_master = FindObjectOfType<GameMaster>();
         sfx = FindObjectOfType<SoundEffects>();
         spike_system = FindObjectOfType<SpikeSystem>();
+        player_animation = GetComponent<PlayerAnimation>();
 
         spre = GetComponent<SpriteRenderer>();
     }
@@ -66,7 +67,7 @@ public class Player : TouchListener
         weapon_offset = MapManager.GroundTileSize * 0.35f;
         shield_offset = MapManager.GroundTileSize * 0.55f;
         health_offset = MapManager.GroundTileSize * 0.5f;
-        key_offset = MapManager.GroundTileSize * 0.5f;
+        key_offset = MapManager.GroundTileSize * 0.3f;
     }
 
     void Update()
