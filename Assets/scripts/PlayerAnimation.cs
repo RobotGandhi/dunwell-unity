@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     Player player;
     Animator anim_controller;
 
-    private void Start()
+    private void Awake()
     {
         // Get main player class component
         player = GetComponent<Player>();
@@ -68,7 +68,7 @@ public class PlayerAnimation : MonoBehaviour
                     player.StartCoroutine("HideSwordForAnimation");
                     anim_controller.SetTrigger("attack_sword");
                 }
-                else if (itemType == Item.ItemType.HEALTH || itemType == Item.ItemType.SHIELD)
+                else if (itemType == Item.ItemType.HEALTH || itemType == Item.ItemType.SHIELD || itemType == Item.ItemType.RED_KEY || itemType == Item.ItemType.BLUE_KEY)
                 {
                     anim_controller.SetTrigger("attack_item");
                 }

@@ -55,4 +55,9 @@ public class ResourceLoader : MonoBehaviour
     {
         return level_text_map[name];
     }
+
+    public static bool HasLevelTextFile(string name)
+    {
+        return level_text_map.ContainsKey(name);
+    }
 }

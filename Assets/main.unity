@@ -155,7 +155,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3aa541a2d1b439b4893cac14dcb7b099, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.744
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -377,6 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2e2c294b2f1ee49b3895f85940840b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  World: 1
+  Level: 1
   step_count_text: {fileID: 1488588972}
   fade_panel: {fileID: 489625021}
   panel: {fileID: 359958254}
@@ -490,7 +492,10 @@ MonoBehaviour:
     type: 3}
   gate_forward_blue: {fileID: 1073445403421458436, guid: 4e0ba7df0e3d9ca478b1087ec0501f49,
     type: 3}
-  level_name: W1L1
+  pp_gate_forward: {fileID: 9213688180900996813, guid: b7c7d57f28e8e0e44ad2f183034f522d,
+    type: 3}
+  pp_gate_side: {fileID: 7071059879471843116, guid: 52fff5783e9dca540832a97e66e8aa3a,
+    type: 3}
   map_holder: {fileID: 238385593}
 --- !u!114 &382935614
 MonoBehaviour:

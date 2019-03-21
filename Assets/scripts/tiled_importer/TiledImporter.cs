@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class TiledImporter : MonoBehaviour
 {
-    
+
+    public static int[,] CurrentGroundLayer = new int[Constants.MapHeight, Constants.MapWidth];
+
     public static int[,] LoadTiledMap(string level_name)
     {
         string fileContent = ResourceLoader.GetLevelTextFile(level_name).text;
@@ -81,6 +83,7 @@ public class TiledImporter : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 final_map[height-1-y, x] = tileDataList[0][height-1-y, x];
+                CurrentGroundLayer[height-1-y, x] = tileDataList[0][height - 1 - y, x];
             }
         }
 
@@ -104,7 +107,6 @@ public class TiledImporter : MonoBehaviour
                 }
             }
         }
-
 
         // Done
         return final_map;

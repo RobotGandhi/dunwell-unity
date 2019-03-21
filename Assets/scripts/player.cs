@@ -66,7 +66,7 @@ public class Player : TouchListener
         weapon_offset = MapManager.GroundTileSize * 0.35f;
         shield_offset = MapManager.GroundTileSize * 0.55f;
         health_offset = MapManager.GroundTileSize * 0.5f;
-        key_offset = MapManager.GroundTileSize * 0.5f;
+        key_offset = MapManager.GroundTileSize * 0.3f;
     }
 
     void Update()
@@ -383,7 +383,10 @@ public class Player : TouchListener
 
     public void ConsumeFood()
     {
-        HP++;
+        if (HP < 3)
+            HP++;
+        else
+            return;
         sfx.PlaySFX("eating_health_up");
         
         GameObject t = Instantiate(food_particle_prefab, transform.position, Quaternion.identity) as GameObject;
@@ -409,14 +412,19 @@ public class Player : TouchListener
         }
     }
 
-    public void PlayIntroAt(Vector2 tile_position)
+    public void NewLevel(Vector2 tile_position)
     {
+        // Set position
         this.tile_position = tile_position;
-        // Position for intro
         transform.position = new Vector3(tile_position.x, tile_position.y) * MapManager.GroundTileSize;
+
+        // Reset some stuff
         spre.color = Color.white;
         spre.sortingLayerName = "player_items_enemies";
         spre.sortingOrder = (int)tile_position.y;
+        if(current_item != null)
+            RemoveCurrentItem();
+        HP = 3;
 
         SetPlayerState(Enums.PlayerStates.IDLE);
     }
@@ -453,7 +461,6 @@ public class Player : TouchListener
         RemoveCurrentItem();
 
         g_master.NewMap();
-
     }
 
     public void RemoveCurrentItem(bool destroy_key = false)

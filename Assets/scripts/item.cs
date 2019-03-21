@@ -27,5 +27,7 @@ public class Item : MonoBehaviour
     public void ResetPosition()
     {
         transform.position = new Vector3(spawn_tile_position.x, spawn_tile_position.y, 0) * MapManager.GroundTileSize;
+        GetComponent<SpriteRenderer>().sortingLayerName = "player_items_enemies";
+        GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - (int)spawn_tile_position.y - 1;
     }
 }

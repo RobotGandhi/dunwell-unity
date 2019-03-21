@@ -26,6 +26,10 @@ public class Map
 
 public class GameMaster : MonoBehaviour
 {
+    [Header("Level")]
+    public int World = 1;
+    public int Level = 1;
+
     SpikeSystem spike_system;
     MapManager m_manager;
     public Map current_map;
@@ -50,7 +54,7 @@ public class GameMaster : MonoBehaviour
 
         // Get map going
         m_manager = GetComponent<MapManager>();
-        current_map = m_manager.SpawnMap();
+        current_map = m_manager.SpawnMap(ConstructLevelName());
         spike_system.NewLevel(current_map);
     }
 
@@ -89,7 +93,7 @@ public class GameMaster : MonoBehaviour
         Camera.main.transform.position = cameraGoalPos;
 
         // Play player intro
-        FindObjectOfType<Player>().PlayIntroAt(new Vector2(1, 1));
+        FindObjectOfType<Player>().NewLevel(new Vector2(1, 1));
 
         // Fade out panel
         while (fade_panel.color.a >= 0.05f)
@@ -137,6 +141,11 @@ public class GameMaster : MonoBehaviour
 
     public void NewMap()
     {
+        // Save the steps
+        SaveSteps(World, Level, step_count);
+
+        step_count = 0;
+        Level++;
         StartCoroutine("LevelEnd");
     }
     
@@ -151,7 +160,7 @@ public class GameMaster : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
-        current_map = GetComponent<MapManager>().SpawnMap();
+        current_map = GetComponent<MapManager>().SpawnMap(ConstructLevelName());
         spike_system.NewLevel(current_map);
         StartCoroutine("GameStart");
 
@@ -166,5 +175,23 @@ public class GameMaster : MonoBehaviour
     private IEnumerator FlashStepText()
     {
         yield return null;
+    }
+
+    public string ConstructLevelName()
+    {
+        return "W" + World.ToString() + "L" + Level.ToString();
+    }
+
+    public void SaveSteps(int w, int l, int c)
+    {
+        string name = "W" + w.ToString() + "L" + l.ToString();
+        if (!PlayerPrefs.HasKey(name))
+        {
+            PlayerPrefs.SetInt(name, c);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(name, PlayerPrefs.GetInt(name) + 1);
+        }
     }
 }
