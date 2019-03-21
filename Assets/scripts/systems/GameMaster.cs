@@ -45,6 +45,8 @@ public class GameMaster : MonoBehaviour
 
     bool game_can_reset;
 
+    static bool first_time_flag = true;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -88,6 +90,12 @@ public class GameMaster : MonoBehaviour
 
     private IEnumerator GameStart()
     {
+        if (first_time_flag)
+        {
+            yield return new WaitForSeconds(2);
+            first_time_flag = false;
+        }
+
         // Center camera
         Vector3 cameraGoalPos = new Vector3(Constants.CameraX * MapManager.GroundTileSize, (Constants.MapHeight / 2) * MapManager.GroundTileSize, -10);
         Camera.main.transform.position = cameraGoalPos;

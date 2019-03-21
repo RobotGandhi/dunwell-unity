@@ -46,6 +46,7 @@ public class Player : TouchListener
         g_master = FindObjectOfType<GameMaster>();
         sfx = FindObjectOfType<SoundEffects>();
         spike_system = FindObjectOfType<SpikeSystem>();
+        player_animation = GetComponent<PlayerAnimation>();
 
         spre = GetComponent<SpriteRenderer>();
     }
