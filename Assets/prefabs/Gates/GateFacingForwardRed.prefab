@@ -112,5 +112,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d41a941699f30a4ea2dbf7d47c4cc9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door_color: blue
+  door_color: red
   open_sprite: {fileID: 21300062, guid: 1c21a018e6b652745a9e5e9569c7d98c, type: 3}

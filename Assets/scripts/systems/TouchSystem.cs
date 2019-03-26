@@ -23,6 +23,13 @@ public class TouchSystem : MonoBehaviour
                     x.DoubleTap();
                 }
             }
+            if(touch.phase == TouchPhase.Began)
+            {
+                foreach(TouchListener x in touchListenerList)
+                {
+                    x.FingerDown(touch.fingerId, touch.position);
+                }
+            }
 
             if (touch.phase == TouchPhase.Moved)
             {
@@ -68,7 +75,7 @@ public class TouchSystem : MonoBehaviour
     IEnumerator DoubleTap()
     {
         listenForDoubleTap = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         listenForDoubleTap = false;
     }
 }

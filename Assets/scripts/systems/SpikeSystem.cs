@@ -6,7 +6,7 @@ public class SpikeSystem : MonoBehaviour
 {
     [System.NonSerialized]
     public int spikeLevel;
-    private List<Animator> spikeAnimControllers = new List<Animator>();
+    public List<Animator> spikeAnimControllers = new List<Animator>();
     public bool unleashed_spike_trigger = false;
 
     [SerializeField]

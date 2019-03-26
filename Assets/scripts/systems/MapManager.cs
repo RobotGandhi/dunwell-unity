@@ -365,7 +365,7 @@ public class MapManager : MonoBehaviour
                         createdGround = CreateGround(x, y);
 
                         createdItemEnemy = Instantiate(gate_forward_red);
-                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.5f);
+                        createdItemEnemy.transform.position = new Vector3(x * GroundTileSize, (y * GroundTileSize) + GroundTileSize * 0.25f);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         map.gate_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Gate>());
