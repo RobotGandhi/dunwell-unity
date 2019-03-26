@@ -53,12 +53,7 @@ public class PlayerCombat : MonoBehaviour
                 player.Die();
                 break;
             case Enums.CombatResult.SHIELD_DEFEND:
-                // Play sfx 
-                sfx.PlaySFX("enemy_hurt");
-                sfx.PlaySFX("armor_break");
-                cam_shake.DoShake(Constants.LightCamShake);
-                // Remove shield
-                player.RemoveCurrentItem();
+                RemoveShield();
                 break;
             default:
                 break;
@@ -109,6 +104,11 @@ public class PlayerCombat : MonoBehaviour
 
     public void RemoveShield()
     {
+        // Play sfx 
+        sfx.PlaySFX("enemy_hurt");
+        sfx.PlaySFX("armor_break");
+        cam_shake.DoShake(Constants.LightCamShake);
+        // Remove shield
         player.RemoveCurrentItem();
     }
 

@@ -41,7 +41,11 @@ public class GameMaster : MonoBehaviour
 
     [Header("Game Over")]
     public Image panel;
-    public Image prompt;
+
+    [Header("Level Won")]
+    public RectTransform level_won;
+    public Text level_won_text, level_won_step_text;
+    public Image[] medals; // 2 - gold, 1 - silver, 0 - bronze
 
     bool game_can_reset;
 
@@ -76,10 +80,6 @@ public class GameMaster : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("menu");
         }
     }
 
@@ -122,9 +122,9 @@ public class GameMaster : MonoBehaviour
 
         game_can_reset = true;
 
-        while(prompt.rectTransform.anchoredPosition != new Vector2(0, 750))
+        while(panel.rectTransform.anchoredPosition != new Vector2(0, 750))
         {
-            prompt.rectTransform.anchoredPosition = Vector2.Lerp(prompt.rectTransform.anchoredPosition, new Vector2(0, 760), 3f * Time.deltaTime);
+            panel.rectTransform.anchoredPosition = Vector2.Lerp(panel.rectTransform.anchoredPosition, new Vector2(0, 760), 3f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
     }
@@ -149,14 +149,70 @@ public class GameMaster : MonoBehaviour
 
     public void NewMap()
     {
+        // Level Won Panel Things
+        level_won_step_text.text = "Score: " + step_count.ToString();
+        level_won_text.text = "World " + World.ToString() + " Level " + Level.ToString();
+
+        StartCoroutine("FadeMedals");
+        StartCoroutine("FadeInLevelWon");
+
         // Save the steps
         SaveSteps(World, Level, step_count);
 
         step_count = 0;
         Level++;
+    }
+
+    public void FinishLevel()
+    {
+        StopCoroutine("FadeInLevelWin");
+        StartCoroutine("FadeOutLevelWon");
         StartCoroutine("LevelEnd");
     }
-    
+
+    private IEnumerator FadeMedals()
+    {
+        // This get reseted! so snapshot it/save it
+        int steps = step_count; 
+        string level_name = ConstructLevelName();
+
+        yield return new WaitForSeconds(2);
+
+        int i;
+        // Check what corresponding medal the player got
+        LevelScoreData score_data = ResourceLoader.GetLevelScoreData(level_name);
+        if (steps <= score_data.gold)
+        {
+            i = 2;
+        }
+        else if (steps <= score_data.silver)
+        {
+            i = 1;
+        }
+        else if (steps <= score_data.bronze)
+        {
+            i = 0;
+        }
+        else
+        {
+            i = -1;
+        }
+
+        print(steps);
+
+        if (i != -1)
+        {
+            while (medals[i].color != Color.white)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    medals[j].color = Vector4.MoveTowards(medals[i].color, Color.white, 2f * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+        }
+    }
+
     private IEnumerator LevelEnd()
     {
         while(fade_panel.color.a <= 0.95f)
@@ -168,6 +224,7 @@ public class GameMaster : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
+
         current_map = GetComponent<MapManager>().SpawnMap(ConstructLevelName());
         spike_system.NewLevel(current_map);
         StartCoroutine("GameStart");
@@ -178,6 +235,24 @@ public class GameMaster : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         fade_panel.color = Color.clear;     
+    }
+
+    private IEnumerator FadeInLevelWon()
+    {
+        while (level_won.anchoredPosition.y < 750)
+        {
+            level_won.anchoredPosition = Vector2.Lerp(level_won.anchoredPosition, new Vector2(0, 760), 2f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator FadeOutLevelWon()
+    {
+        while(level_won.anchoredPosition.y > -220)
+        {
+            level_won.anchoredPosition = Vector2.Lerp(level_won.anchoredPosition, new Vector2(0, -230), 2f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private IEnumerator FlashStepText()
@@ -199,7 +274,8 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt(name, PlayerPrefs.GetInt(name) + 1);
+            if(c < PlayerPrefs.GetInt(name))
+                PlayerPrefs.SetInt(name, PlayerPrefs.GetInt(name) + 1);
         }
     }
 }

@@ -6,7 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    
+
+    public RectTransform won;
+
+    private void Start()
+    {
+        won.position = Camera.main.WorldToViewportPoint(new Vector3(0, Screen.height, 0));
+    }
+
     private void Update()
     {
 #if UNITY_EDITOR

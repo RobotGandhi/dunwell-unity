@@ -40,6 +40,7 @@ public class Player : TouchListener
     bool walk_flag = false;
     bool standing_on_spike = false;
     bool die_flag = false;
+    bool walk_finger_down = false;
 
     void Awake()
     {
@@ -115,6 +116,16 @@ public class Player : TouchListener
         /* HP */
         HPEnableLogic();
 
+        if (Input.touchCount == 0)
+            walk_finger_down = false;
+        if (walk_finger_down)
+        {
+            if(player_state == Enums.PlayerStates.IDLE)
+            {
+                MovePlayer(move_direction);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             ConsumeFood();
@@ -182,6 +193,7 @@ public class Player : TouchListener
         if (MapManager.IsWalkable(new_tile_value))
         {
             DoMovePlayer(direction, new_tile_position);
+            walk_finger_down = true;
         }
         else if (MapManager.IsItem(new_tile_value))
         {
@@ -371,6 +383,11 @@ public class Player : TouchListener
         }
     }
 
+    public override void FingerUp()
+    {
+        walk_finger_down = false;
+    }
+
     public override void DoubleTap()
     {
         if (current_item != null)
@@ -462,6 +479,33 @@ public class Player : TouchListener
         RemoveCurrentItem();
 
         g_master.NewMap();
+    }
+
+    public override void FingerDown(int index, Vector2 pos)
+    {
+        Vector2 rel_pos = new Vector2(pos.x / Screen.width, pos.y / Screen.height);
+        if(rel_pos.y >= 0.6 || rel_pos.y <= 0.4)
+        {
+            if(rel_pos.y >= 0.7)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.UP);
+            }
+            else if(rel_pos.y <= 0.3)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.DOWN);
+            }
+        }
+        else
+        {
+            if(rel_pos.x >= 0.5)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.RIGHT);
+            }
+            else
+            {
+                MovePlayer(Enums.PlayerMoveDirection.LEFT);
+            }
+        }
     }
 
     public void RemoveCurrentItem(bool destroy_key = false)
