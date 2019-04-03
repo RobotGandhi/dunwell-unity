@@ -32,7 +32,9 @@ public class MapManager : MonoBehaviour
 
     public static float GroundTileSize;
 
+    [Header("Enemies")]
     public GameObject DeskGoblinPrefab;
+    public GameObject GuardPrefab;
 
     [Header("Gate Prefabs")]
     public GameObject gate_side_red;
@@ -84,8 +86,11 @@ public class MapManager : MonoBehaviour
         HEALTH = 29,
         BLUE_KEY = 30,
         RED_KEY = 31,
+
         // Enemy
         DESKGOBLIN = 58,
+        GUARD_LEFT = 59,
+        GUARD_UP = 60,
 
         // MAP ELEMENTS
         GOAL1 = 54,
@@ -333,7 +338,7 @@ public class MapManager : MonoBehaviour
                         createdItemEnemy.transform.SetParent(map_holder.transform);
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Enemy>());
                         map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
-                        map.enemy_map[new Vector2(x, y)].tile_value = TileValues.DESKGOBLIN;
+                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
                         break;
                     case (int)TileValues.GOAL1:
                         createdGround = new GameObject();
@@ -469,11 +474,23 @@ public class MapManager : MonoBehaviour
                         break;
                     case (int)TileValues.PRESURE_PLATE:
                         createdGround = CreateGround(x, y);
-                        createdItemEnemy = Instantiate(PresurePlatePrefab, new Vector3(x * GroundTileSize, y * GroundTileSize, 0), Quaternion.identity);
+                        createdItemEnemy = Instantiate(PresurePlatePrefab, new Vector3(x * GroundTileSize, (y * GroundTileSize), 0), Quaternion.identity);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         map.pp_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<PresurePlate>());
 
+                        break;
+                    case (int)TileValues.GUARD_LEFT:
+                    case (int)TileValues.GUARD_UP:
+                        createdGround = CreateGround(x, y);
+                        createdItemEnemy = Instantiate(GuardPrefab, new Vector3(x * GroundTileSize, y * GroundTileSize, 0) + Offsets.GuardEnemyOffset, Quaternion.identity);
+
+                        // Direction!
+                        createdItemEnemy.GetComponent<GuardEnemy>().guardDirection = (GuardEnemy.GuardDirection)tile_value;
+
+                        map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<GuardEnemy>());
+                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
+                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
                         break;
                 }
 
@@ -645,8 +662,13 @@ public class MapManager : MonoBehaviour
 
     public static bool IsEnemy(int tile_value)
     {
-        if (tile_value == (int)TileValues.DESKGOBLIN)
-            return true;
+        switch (tile_value)
+        {
+            case (int)TileValues.GUARD_LEFT:
+            case (int)TileValues.GUARD_UP:
+            case (int)TileValues.DESKGOBLIN:
+                return true;
+        }
         return false;
     }
 

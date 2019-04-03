@@ -54,7 +54,7 @@ public class ResourceLoader : MonoBehaviour
                 int gold, silver, bronze;
                 int.TryParse(split_line[0], out gold);
                 int.TryParse(split_line[1], out silver);
-                int.TryParse(split_line[1], out bronze);
+                int.TryParse(split_line[2], out bronze);
 
                 string name = "W1L" + _level.ToString();
                 _level++;

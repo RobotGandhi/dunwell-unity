@@ -15,6 +15,8 @@ public class CameraShake : MonoBehaviour
     private Vector3 OriginalPos;
     private Quaternion OriginalRot;
 
+    private Transform shakeTransform;
+
     void Start()
     {
         Shaking = false;
@@ -24,25 +26,33 @@ public class CameraShake : MonoBehaviour
     {
         if (ShakeIntensity > 0)
         {
-            transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
-            transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
+            shakeTransform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
+            shakeTransform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
                                             OriginalRot.y + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
                                             OriginalRot.z + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
                                             OriginalRot.w + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f);
 
             ShakeIntensity -= ShakeDecay;
-        }
+        }   
         else if (Shaking)
         {
-            transform.eulerAngles = Vector3.zero;
+            shakeTransform.eulerAngles = Vector3.zero;
             Shaking = false;
         }
     }
 
-    public void DoShake(CamShakeDto _data)
+    public void DoShake(CamShakeDto _data, Transform _shakeTransform = null)
     {
-        OriginalPos = transform.position;
-        OriginalRot = transform.rotation;
+        if(_shakeTransform == null) {
+            shakeTransform = transform;
+        }
+        else
+        {
+            shakeTransform = _shakeTransform;
+        }
+
+        OriginalPos = shakeTransform.position;
+        OriginalRot = shakeTransform.rotation;
 
         ShakeIntensity = _data.intensity;
         ShakeDecay = _data.length;

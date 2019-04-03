@@ -6,22 +6,27 @@ public class Enemy : MonoBehaviour
 {
     public int HP;
     public int damage;
+    public GameObject remainsPrefab;
+
+    [System.NonSerialized]
     public Vector2 tile_position;
+    [System.NonSerialized]
     public MapManager.TileValues tile_value;
 
-    public GameObject remainsPrefab;
 
     protected GameMaster game_master;
     protected SpriteRenderer spre;
+    protected Player player;
 
     public void BaseStart()
     {
         game_master = FindObjectOfType<GameMaster>();
         spre = FindObjectOfType<SpriteRenderer>();
+        player = FindObjectOfType<Player>();
     }
 
     // Called right after taking some damage
     public virtual void TakeDamage() { }
-    // Called right after the player has performed his movement
-    public virtual void Step() { }
+    // Called right after the player has performed his action
+    public virtual void PlayerEvent() { }
 }

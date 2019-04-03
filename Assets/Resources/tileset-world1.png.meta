@@ -51,6 +51,7 @@ TextureImporter:
     21300092: tileset-world1_46
     21300094: tileset-world1_47
     21300096: tileset-world1_48
+    21300098: tileset-world1_49
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -1114,7 +1115,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1134,13 +1135,33 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 3e3401a5e3c5b4444a5d7be8de574bee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset-world1_49
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 36
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94ce17fcf4140a142b54f8b463171990
       vertices: []
       indices: 
       edges: []

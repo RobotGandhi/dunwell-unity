@@ -28,3 +28,8 @@ public class Constants
     public static CamShakeDto HeavyCamShake = new CamShakeDto(0.1f, 0.0025f);
 
 }
+
+public class Offsets
+{
+    public static Vector3 GuardEnemyOffset = new Vector3(0, 0.6f, 0);
+}

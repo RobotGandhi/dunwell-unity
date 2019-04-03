@@ -6,8 +6,8 @@ public class DeskGoblin : Enemy
 {
 
     public Sprite damaged_sprite, dead_sprite;
-    int move_counter = 0;
-    bool toggler = false;
+    Vector2 move_direction = new Vector2(0, 1);
+    int counter = 0;
 
     public void Start() 
     {
@@ -25,42 +25,11 @@ public class DeskGoblin : Enemy
     public override void TakeDamage()
     {
         HP--;
-        // TODO@ Fix this 
-        /*
-        if (HP == 2)
-        {
-            spre.sprite = damaged_sprite;
-        }
-        else
-        {
-            spre.sprite = dead_sprite;
-        }
-        */
     }
 
-    public override void Step()
+    public override void PlayerEvent()
     {
-        /*
-        move_counter++;
-        if (move_counter == 4)
-        {
-            // Move the desk goblin accordingly!
+  
 
-            //game_master.current_map.enemy_map.Remove(tile_position);
-            game_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x] = (int)MapManager.TileValues.GROUND;
-
-            if(toggler)
-                tile_position = new Vector2(tile_position.x, tile_position.y + 1);
-            else
-                tile_position = new Vector2(tile_position.x, tile_position.y - 1);
-            game_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x] = (int)tile_value;
-
-            // Add to the map
-            //game_master.current_map.enemy_map.Add(tile_position, this);
-
-            toggler = !toggler;
-            move_counter = 0;
-        }
-        */
     }
 }

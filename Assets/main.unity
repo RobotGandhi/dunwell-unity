@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 382935613}
   - component: {fileID: 382935614}
   - component: {fileID: 382935615}
+  - component: {fileID: 382935616}
   m_Layer: 0
   m_Name: managers
   m_TagString: Untagged
@@ -507,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   World: 1
-  Level: 1
+  Level: 5
   step_count_text: {fileID: 1488588972}
   fade_panel: {fileID: 489625021}
   panel: {fileID: 1144374205}
@@ -619,6 +620,8 @@ MonoBehaviour:
     type: 3}
   DeskGoblinPrefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
+  GuardPrefab: {fileID: 7845662789366901185, guid: 2d00b6acec1bd6547ba268a75c675cf6,
+    type: 3}
   gate_side_red: {fileID: 5292982462204291846, guid: 2df2e31dd4efb2b4faa61bb270d6d560,
     type: 3}
   gate_forward_red: {fileID: 5292982462204291846, guid: a419d2ee2dccd614fa6c8a5be0de9d65,
@@ -660,6 +663,18 @@ MonoBehaviour:
   unleashed_spike_trigger: 0
   spike_down: {fileID: 21300000, guid: f15fb131358fded41bab946d5e258d79, type: 3}
   spike_up: {fileID: 21300002, guid: f15fb131358fded41bab946d5e258d79, type: 3}
+--- !u!114 &382935616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382935608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4ed909c58f2944b9678caa91595a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &393974293
 GameObject:
   m_ObjectHideFlags: 0

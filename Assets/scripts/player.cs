@@ -19,7 +19,8 @@ public class Player : TouchListener
     [System.NonSerialized]
     public PlayerAnimation player_animation;
 
-    private Vector3 tile_position = new Vector3(1, 1, 0);
+    [System.NonSerialized]
+    public Vector3 tile_position = new Vector3(1, 1, 0); // @ Why tf is this a vector3?
 
     Enums.PlayerStates player_state;
     Enums.PlayerMoveDirection move_direction;
@@ -41,7 +42,7 @@ public class Player : TouchListener
     bool standing_on_spike = false;
     bool die_flag = false;
     bool walk_finger_down = false;
-
+     
     void Awake()
     {
         g_master = FindObjectOfType<GameMaster>();
@@ -235,8 +236,9 @@ public class Player : TouchListener
                 // Call on player_combat to perform the combat for us
                 player_combat.EngageEnemy(g_master.current_map.enemy_map[new_tile_position], new_tile_position);
 
+                FindObjectOfType<EventSystem>().PlayerPerformedEvent();
+
                 player_animation.SetMoveDirection(direction);
-                g_master.Step();
             }
             else
             {
@@ -328,17 +330,20 @@ public class Player : TouchListener
 
     private void DoMovePlayer(Enums.PlayerMoveDirection direction, Vector2 new_tile_position, string walk_sfx = "default")
     {
-        /* Move the player */
-        g_master.Step();
+        
         // Set move direction
         move_direction = direction;
         // Set to move state
         SetPlayerState(Enums.PlayerStates.MOVING);
         // Set players new tile position
         tile_position = new_tile_position;
+        
+        // After the players tile position has been set we message the others
+        FindObjectOfType<EventSystem>().PlayerPerformedEvent();
 
         // Spre
         spre.sortingOrder = (Constants.MapHeight - (int)new_tile_position.y);
+
 
         // SFX
         if (walk_sfx == "default")
@@ -412,7 +417,7 @@ public class Player : TouchListener
 
         RemoveCurrentItem();
 
-        g_master.Step();
+        FindObjectOfType<EventSystem>().PlayerPerformedEvent();
     }
 
     private void HPEnableLogic()

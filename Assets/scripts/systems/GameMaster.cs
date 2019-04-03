@@ -129,16 +129,10 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public void Step()
+    public void PlayerEvent()
     {
         step_count++;
         step_count_text.text = step_count.ToString();
-
-        // Message all the enemies
-        foreach(var e in current_map.enemy_map)
-        {
-            e.Value.Step();
-        }
 
         // Message spikes
         spike_system.Step();
@@ -198,17 +192,15 @@ public class GameMaster : MonoBehaviour
             i = -1;
         }
 
-        print(steps);
-
         if (i != -1)
         {
+            int j = 0;
             while (medals[i].color != Color.white)
             {
-                for (int j = 0; j <= i; j++)
-                {
-                    medals[j].color = Vector4.MoveTowards(medals[i].color, Color.white, 2f * Time.deltaTime);
-                    yield return new WaitForEndOfFrame();
-                }
+                medals[j].color = Color.white;
+                Camera.main.GetComponent<CameraShake>().DoShake(Constants.HeavyCamShake, level_won);
+                yield return new WaitForSeconds(1.0f);
+                j++;
             }
         }
     }
@@ -223,7 +215,6 @@ public class GameMaster : MonoBehaviour
         fade_panel.color = Color.black;
 
         yield return new WaitForSeconds(2.0f);
-
 
         current_map = GetComponent<MapManager>().SpawnMap(ConstructLevelName());
         spike_system.NewLevel(current_map);

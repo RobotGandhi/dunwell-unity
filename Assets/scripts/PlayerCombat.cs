@@ -21,7 +21,7 @@ public class PlayerCombat : MonoBehaviour
         map_manager = FindObjectOfType<MapManager>();
         game_master = FindObjectOfType<GameMaster>();
         cam_shake = FindObjectOfType<CameraShake>();
-    }
+    }        
 
     public void EngageEnemy(Enemy enemy, Vector2 enemy_tile_position)
     {
@@ -35,6 +35,7 @@ public class PlayerCombat : MonoBehaviour
                 cam_shake.DoShake(Constants.LightCamShake);
                 break;
             case Enums.CombatResult.ENEMY_DIED:
+
                 // Spawn enemy remains?
                 if (enemy.remainsPrefab != null)
                 {
@@ -42,6 +43,7 @@ public class PlayerCombat : MonoBehaviour
                     remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
                     remains_object.transform.SetParent(map_manager.map_holder.transform);
                 }
+
                 // Remove enemy from world
                 Destroy(enemy.gameObject);
                 game_master.current_map.enemy_map.Remove(enemy_tile_position);
