@@ -40,7 +40,7 @@ public class Player : TouchListener
 
     bool walk_flag = false;
     bool standing_on_spike = false;
-    bool die_flag = false;
+    public bool die_flag = false;
     bool walk_finger_down = false;
      
     void Awake()
@@ -86,6 +86,15 @@ public class Player : TouchListener
             {
                 // We reached desired tile position
                 ReachedNewTile();
+            }
+        }
+
+        if(player_state == Enums.PlayerStates.IDLE)
+        {
+            if (die_flag)
+            {
+                die_flag = false;
+                Die();
             }
         }
 
@@ -229,6 +238,11 @@ public class Player : TouchListener
             DoMovePlayer(direction, new_tile_position);
 
         }
+        else if (new_tile_value == (int)MapManager.TileValues.GOAL1)
+        {
+            DoMovePlayer(direction, new_tile_position);
+            StartCoroutine("OutroCoroutine");
+        }
         else if (MapManager.IsEnemy(new_tile_value))
         {
             if (g_master.current_map.enemy_map.ContainsKey(new_tile_position))
@@ -244,11 +258,6 @@ public class Player : TouchListener
             {
                 DoMovePlayer(direction, new_tile_position);
             }
-        }
-        else if (new_tile_value == (int)MapManager.TileValues.GOAL1)
-        {
-            DoMovePlayer(direction, new_tile_position);
-            StartCoroutine("OutroCoroutine");
         }
         else if (new_tile_value == (int)MapManager.TileValues.SPIKE)
         {

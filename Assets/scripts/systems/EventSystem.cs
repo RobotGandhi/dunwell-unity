@@ -19,14 +19,26 @@ public class EventSystem : MonoBehaviour
         List<Enemy> enemyList = new List<Enemy>();
         foreach(var x in game_master.current_map.enemy_map)
         {
+            game_master.current_map.tile_map[(int)x.Value.tile_position.y, (int)x.Value.tile_position.x] = (int)MapManager.TileValues.GROUND;
             x.Value.PlayerEvent(); // This updates the position of the enemy! 
             enemyList.Add(x.Value);
         }
         Dictionary<Vector2, Enemy> newEnemyMap = new Dictionary<Vector2, Enemy>();
         foreach(Enemy enemy in enemyList)
         {
-            newEnemyMap.Add(enemy.tile_position, enemy);
+            if (newEnemyMap.ContainsKey(enemy.tile_position))
+            {
+                newEnemyMap.Add(enemy.tile_position + Vector2.up * 100, enemy);
+            }
+            else
+            {
+                newEnemyMap.Add(enemy.tile_position, enemy);
+            }
+
+            game_master.current_map.tile_map[(int)enemy.tile_position.y, (int)enemy.tile_position.x] = (int)enemy.tile_value;
+
         }
+
         game_master.current_map.enemy_map = newEnemyMap;
 
         // Update game master

@@ -27,7 +27,7 @@ public class PlayerCombat : MonoBehaviour
     {
         Enums.CombatResult result = PerformCombat(enemy);
 
-        if (enemy.tile_value == MapManager.TileValues.DESKGOBLIN)
+        if (enemy.GetComponent<DeskGoblin>() != null)
         {
             switch (result)
             {
@@ -63,11 +63,16 @@ public class PlayerCombat : MonoBehaviour
                     break;
             }
         }
-        else if(enemy.tile_value == MapManager.TileValues.GUARD_LEFT || enemy.tile_value == MapManager.TileValues.GUARD_UP)
+        else if(enemy.GetComponent<GuardEnemy>() != null)
         {
 
         }
-        
+        else if(enemy.GetComponent<Batty>() != null)
+        {
+            // Remove enemy from world
+            Destroy(enemy.gameObject);
+            game_master.current_map.enemy_map.Remove(enemy_tile_position);
+        }
 
         // Animation call
         player.player_animation.PerformCombat(result);

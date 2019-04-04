@@ -40,6 +40,9 @@ public class PlayerAnimation : MonoBehaviour
 
     public void Die()
     {
+        anim_controller.SetBool("moving", false);
+        anim_controller.SetBool("holding_item", false);
+        anim_controller.SetBool("idle", false);
         anim_controller.SetTrigger("die");
     }
 
