@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     [System.NonSerialized]
     public MapManager.TileValues tile_value;
 
-
     protected GameMaster game_master;
     protected SpriteRenderer spre;
     protected Player player;
@@ -21,7 +20,7 @@ public class Enemy : MonoBehaviour
     public void BaseStart()
     {
         game_master = FindObjectOfType<GameMaster>();
-        spre = FindObjectOfType<SpriteRenderer>();
+        spre = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Player>();
     }
 

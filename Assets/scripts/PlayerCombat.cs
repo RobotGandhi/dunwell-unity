@@ -27,39 +27,47 @@ public class PlayerCombat : MonoBehaviour
     {
         Enums.CombatResult result = PerformCombat(enemy);
 
-        switch (result)
+        if (enemy.tile_value == MapManager.TileValues.DESKGOBLIN)
         {
-            case Enums.CombatResult.CLASH:
-                // Play the clash sfx 
-                sfx.PlaySFX("enemy_hurt");
-                cam_shake.DoShake(Constants.LightCamShake);
-                break;
-            case Enums.CombatResult.ENEMY_DIED:
+            switch (result)
+            {
+                case Enums.CombatResult.CLASH:
+                    // Play the clash sfx 
+                    sfx.PlaySFX("enemy_hurt");
+                    cam_shake.DoShake(Constants.LightCamShake);
+                    break;
+                case Enums.CombatResult.ENEMY_DIED:
 
-                // Spawn enemy remains?
-                if (enemy.remainsPrefab != null)
-                {
-                    GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
-                    remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
-                    remains_object.transform.SetParent(map_manager.map_holder.transform);
-                }
+                    // Spawn enemy remains?
+                    if (enemy.remainsPrefab != null)
+                    {
+                        GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
+                        remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
+                        remains_object.transform.SetParent(map_manager.map_holder.transform);
+                    }
 
-                // Remove enemy from world
-                Destroy(enemy.gameObject);
-                game_master.current_map.enemy_map.Remove(enemy_tile_position);
-                // Play SFX
-                sfx.PlaySFX("enemy_dead_bones");
-                cam_shake.DoShake(Constants.MediumCamShake);
-                break;
-            case Enums.CombatResult.PLAYER_DIED:
-                player.Die();
-                break;
-            case Enums.CombatResult.SHIELD_DEFEND:
-                RemoveShield();
-                break;
-            default:
-                break;
+                    // Remove enemy from world
+                    Destroy(enemy.gameObject);
+                    game_master.current_map.enemy_map.Remove(enemy_tile_position);
+                    // Play SFX
+                    sfx.PlaySFX("enemy_dead_bones");
+                    cam_shake.DoShake(Constants.MediumCamShake);
+                    break;
+                case Enums.CombatResult.PLAYER_DIED:
+                    player.Die();
+                    break;
+                case Enums.CombatResult.SHIELD_DEFEND:
+                    RemoveShield();
+                    break;
+                default:
+                    break;
+            }
         }
+        else if(enemy.tile_value == MapManager.TileValues.GUARD_LEFT || enemy.tile_value == MapManager.TileValues.GUARD_UP)
+        {
+
+        }
+        
 
         // Animation call
         player.player_animation.PerformCombat(result);

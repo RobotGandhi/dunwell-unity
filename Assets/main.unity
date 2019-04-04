@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   World: 1
-  Level: 5
+  Level: 4
   step_count_text: {fileID: 1488588972}
   fade_panel: {fileID: 489625021}
   panel: {fileID: 1144374205}
@@ -621,6 +621,8 @@ MonoBehaviour:
   DeskGoblinPrefab: {fileID: 7845662789366901185, guid: 6aebf7db5ba1ee24283abecb2aaa1d00,
     type: 3}
   GuardPrefab: {fileID: 7845662789366901185, guid: 2d00b6acec1bd6547ba268a75c675cf6,
+    type: 3}
+  BattyEnemy: {fileID: 7845662789366901185, guid: 042a93a22d1593e42b2420d000cd8be2,
     type: 3}
   gate_side_red: {fileID: 5292982462204291846, guid: 2df2e31dd4efb2b4faa61bb270d6d560,
     type: 3}

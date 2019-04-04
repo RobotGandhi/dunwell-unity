@@ -52,6 +52,7 @@ TextureImporter:
     21300094: tileset-world1_47
     21300096: tileset-world1_48
     21300098: tileset-world1_49
+    21300100: tileset-world1_50
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -1162,6 +1163,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 94ce17fcf4140a142b54f8b463171990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tileset-world1_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 69
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a8c54bf9944bc4ca250f68471b14a6
       vertices: []
       indices: 
       edges: []

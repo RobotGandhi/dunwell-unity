@@ -29,7 +29,6 @@ public class DeskGoblin : Enemy
 
     public override void PlayerEvent()
     {
-  
-
+          
     }
 }

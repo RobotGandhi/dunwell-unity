@@ -35,6 +35,7 @@ public class MapManager : MonoBehaviour
     [Header("Enemies")]
     public GameObject DeskGoblinPrefab;
     public GameObject GuardPrefab;
+    public GameObject BattyEnemy;
 
     [Header("Gate Prefabs")]
     public GameObject gate_side_red;
@@ -91,6 +92,8 @@ public class MapManager : MonoBehaviour
         DESKGOBLIN = 58,
         GUARD_LEFT = 59,
         GUARD_UP = 60,
+        BATTY1 = 41,
+        BATTY2 = 42,
 
         // MAP ELEMENTS
         GOAL1 = 54,
@@ -492,6 +495,20 @@ public class MapManager : MonoBehaviour
                         map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
                         map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
                         break;
+                    case (int)TileValues.BATTY1:
+                    case (int)TileValues.BATTY2:
+                        createdGround = CreateGround(x, y);
+                        createdItemEnemy = Instantiate(BattyEnemy, new Vector3(x * GroundTileSize, y * GroundTileSize, 0) + Offsets.BatEnemyOffset, Quaternion.identity);
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
+
+                        createdItemEnemy.GetComponent<Batty>().batType = (Batty.BattyType)tile_value;
+
+                        map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Batty>());
+                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
+                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
+                        map.enemy_map[new Vector2(x, y)].GetComponent<Batty>().start_tile_pos = new Vector2(x, y);
+
+                        break;
                 }
 
                 // Layer the ground
@@ -664,6 +681,8 @@ public class MapManager : MonoBehaviour
     {
         switch (tile_value)
         {
+            case (int)TileValues.BATTY1:
+            case (int)TileValues.BATTY2:
             case (int)TileValues.GUARD_LEFT:
             case (int)TileValues.GUARD_UP:
             case (int)TileValues.DESKGOBLIN:
