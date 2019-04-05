@@ -29,6 +29,9 @@ public class Batty : Enemy
     [System.NonSerialized]
     public Vector2 start_tile_pos;
 
+    private Sprite regularSprite;
+    public Sprite screechReadySprite;
+
     private void Start()
     {
         #region DIRECTION LIST CREATION
@@ -53,7 +56,12 @@ public class Batty : Enemy
 
         CurrentCircle = null;
 
+
+        // Base start to get components
         BaseStart();
+
+        // Get the regular sprite
+        regularSprite = spre.sprite;
     }
 
     private void Update()
@@ -69,7 +77,7 @@ public class Batty : Enemy
             if(Mathf.Abs(CurrentCircle.transform.localScale.magnitude - GoalScale.magnitude) > 0.1f)
             {
                 CurrentCircle.transform.localScale = Vector3.Slerp(CurrentCircle.transform.localScale, GoalScale, 10f * Time.deltaTime);
-                CurrentCircleSpre.color = Color.Lerp(CurrentCircleSpre.color, Color.red, 1.5f * Time.deltaTime);
+                CurrentCircleSpre.color = Color.Lerp(CurrentCircleSpre.color, Color.red, 1.2f * Time.deltaTime);
             }
             else
             {
@@ -103,24 +111,29 @@ public class Batty : Enemy
             CurrentCircle.transform.localScale = new Vector3(0, 0, 0);
             CurrentCircleSpre = CurrentCircle.GetComponent<SpriteRenderer>();
 
+            // Stop the flashing!
+            StopCoroutine("FlashingRed");
+            spre.color = Color.white;
+
             // Check to see if the player is within the screech range
             for(int x = -2; x <= 2; x++)
             {
                 for(int y = -2; y <= 2; y++)
                 {
-                    //if(x != 0 && y != 0)
+                    if((x == -2 && (y == -2 || y == 2)) || (x == 2 && (y == -2 || y == 2)))
                     {
-                        if((x == -2 && (y == -2 || y == 2)) || (x == 2 && (y == -2 || y == 2)))
-                        {
                             
-                        }
-                        else 
+                    }
+                    else 
+                    {
+                        Vector2 rel = tile_position + new Vector2(x, y);
+                        if (rel == (Vector2)player.tile_position)
                         {
-                            Vector2 rel = tile_position + new Vector2(x, y);
-                            if (rel == (Vector2)player.tile_position)
+                            // Unaffected if the player is on the same tile!
+                            if ((Vector2)player.tile_position != tile_position)
                             {
                                 // Stun the player
-                                print("Wtf!");
+                                screech_counter = 0;
                                 player.player_combat.StunnedByBatty();
                             }
                         }
@@ -133,6 +146,13 @@ public class Batty : Enemy
         {
             // Increment screechers
             screech_counter++;
+            if (screech_counter == 3)
+                StartCoroutine("FlashingRed");
+            else
+            {
+                StopCoroutine("FlashingRed");
+                spre.color = Color.white;
+            }
 
             // Step counter
             if (counter == 7)
@@ -155,6 +175,23 @@ public class Batty : Enemy
             }
 
             spre.sortingOrder = Constants.MapHeight - (int)tile_position.y + 10;
+        }
+    }
+
+    private IEnumerator FlashingRed()
+    {
+        while (true)
+        {
+            while(spre.color != Color.red)
+            {
+                spre.color = Vector4.MoveTowards(spre.color, Color.red, 2f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            while(spre.color != Color.white)
+            {
+                spre.color = Vector4.MoveTowards(spre.color, Color.white, 2f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 

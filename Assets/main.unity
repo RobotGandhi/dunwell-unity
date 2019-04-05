@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   World: 1
-  Level: 4
+  Level: 5
   step_count_text: {fileID: 1488588972}
   fade_panel: {fileID: 489625021}
   panel: {fileID: 1144374205}
@@ -1712,6 +1712,7 @@ MonoBehaviour:
   - {fileID: 1824283296}
   - {fileID: 465296619}
   - {fileID: 930343137}
+  die_flag: 0
 --- !u!212 &1902177306
 SpriteRenderer:
   m_ObjectHideFlags: 0

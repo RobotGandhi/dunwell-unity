@@ -27,7 +27,7 @@ public class PlayerCombat : MonoBehaviour
     {
         Enums.CombatResult result = PerformCombat(enemy);
 
-        if (enemy.GetComponent<DeskGoblin>() != null)
+        if (enemy.GetComponent<DeskGoblin>() != null || enemy.GetComponent<Batty>() != null)
         {
             switch (result)
             {
@@ -42,7 +42,7 @@ public class PlayerCombat : MonoBehaviour
                     if (enemy.remainsPrefab != null)
                     {
                         GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
-                        remains_object.GetComponent<SpriteRenderer>().sortingOrder = enemy.GetComponent<SpriteRenderer>().sortingOrder;
+                        remains_object.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - (int)enemy.tile_position.y-1;
                         remains_object.transform.SetParent(map_manager.map_holder.transform);
                     }
 
@@ -57,7 +57,8 @@ public class PlayerCombat : MonoBehaviour
                     player.Die();
                     break;
                 case Enums.CombatResult.SHIELD_DEFEND:
-                    RemoveShield();
+                    if(enemy.damage != 0)
+                        RemoveShield();
                     break;
                 default:
                     break;
@@ -66,12 +67,6 @@ public class PlayerCombat : MonoBehaviour
         else if(enemy.GetComponent<GuardEnemy>() != null)
         {
 
-        }
-        else if(enemy.GetComponent<Batty>() != null)
-        {
-            // Remove enemy from world
-            Destroy(enemy.gameObject);
-            game_master.current_map.enemy_map.Remove(enemy_tile_position);
         }
 
         // Animation call
@@ -150,8 +145,6 @@ public class PlayerCombat : MonoBehaviour
         player.BlockInput();
 
         yield return new WaitForSeconds(Constants.StunTime);
-
-        print("Unblock movement!");
 
         player.UnblockInput();
     }

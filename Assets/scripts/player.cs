@@ -144,6 +144,8 @@ public class Player : TouchListener
         }
 
         #region WASD
+        if (block_input)
+            return;
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (Input.GetKeyDown(KeyCode.D))
