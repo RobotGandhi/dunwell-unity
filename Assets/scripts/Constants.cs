@@ -23,6 +23,8 @@ public class Constants
     public static float BattyMoveSpeed = 15f;
     public static float ObjectMoveSpeed = 7.5f;
 
+    public static float StunTime = 4; // In seconds
+
     public static CamShakeDto LightCamShake = new CamShakeDto(0.035f, 0.004f);
     public static CamShakeDto LightCamShakeLong = new CamShakeDto(0.03f, 0.002f);
     public static CamShakeDto MediumCamShake = new CamShakeDto(0.045f, 0.0035f);

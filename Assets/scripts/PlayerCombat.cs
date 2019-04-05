@@ -114,7 +114,25 @@ public class PlayerCombat : MonoBehaviour
         if (hasShield)
             return Enums.CombatResult.SHIELD_DEFEND;
         return Enums.CombatResult.CLASH;
+    }
 
+    public void StunnedByBatty()
+    {
+        player.HP -= 2;
+        if (player.HP <= 0)
+        {
+            player.die_flag = true;
+            return;
+        }
+
+        // Stunend for one turn
+        FindObjectOfType<EventSystem>().PlayerPerformedEvent();
+
+        // Cam shake
+        FindObjectOfType<CameraShake>().DoShake(Constants.MediumCamShake);
+
+        // Start the stun coroutine
+        StartCoroutine("StunCoroutine");
     }
 
     public void RemoveShield()
@@ -125,6 +143,17 @@ public class PlayerCombat : MonoBehaviour
         cam_shake.DoShake(Constants.LightCamShake);
         // Remove shield
         player.RemoveCurrentItem();
+    }
+
+    private IEnumerator StunCoroutine()
+    {
+        player.BlockInput();
+
+        yield return new WaitForSeconds(Constants.StunTime);
+
+        print("Unblock movement!");
+
+        player.UnblockInput();
     }
 
 }

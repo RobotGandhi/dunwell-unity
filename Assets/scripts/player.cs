@@ -42,7 +42,9 @@ public class Player : TouchListener
     bool standing_on_spike = false;
     public bool die_flag = false;
     bool walk_finger_down = false;
-     
+
+    bool block_input = false; // If true no input should be taken for the player to perform actions!
+
     void Awake()
     {
         g_master = FindObjectOfType<GameMaster>();
@@ -369,6 +371,9 @@ public class Player : TouchListener
 
     public override void HorizontalSwipe(int direction)
     {
+        if (block_input)
+            return;
+
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (direction > 0)
@@ -384,6 +389,9 @@ public class Player : TouchListener
 
     public override void VerticalSwipe(int direction)
     {
+        if (block_input)
+            return;
+
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (direction > 0)
@@ -404,6 +412,9 @@ public class Player : TouchListener
 
     public override void DoubleTap()
     {
+        if (block_input)
+            return;
+
         if (current_item != null)
         {
             if (current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
@@ -497,6 +508,9 @@ public class Player : TouchListener
 
     public override void FingerDown(int index, Vector2 pos)
     {
+        if (block_input)
+            return;
+
         Vector2 rel_pos = new Vector2(pos.x / Screen.width, pos.y / Screen.height);
         if(rel_pos.y >= 0.6 || rel_pos.y <= 0.4)
         {
@@ -547,4 +561,16 @@ public class Player : TouchListener
         }
         player_animation.ItemChange();
     }
+
+    public void BlockInput()
+    {
+        block_input = true;
+    }
+
+
+    public void UnblockInput()
+    {
+        block_input = false;
+    }
+
 }

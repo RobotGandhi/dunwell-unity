@@ -108,23 +108,20 @@ public class Batty : Enemy
             {
                 for(int y = -2; y <= 2; y++)
                 {
-                    if(x != 0 && y != 0)
+                    //if(x != 0 && y != 0)
                     {
                         if((x == -2 && (y == -2 || y == 2)) || (x == 2 && (y == -2 || y == 2)))
                         {
-
+                            
                         }
                         else 
                         {
                             Vector2 rel = tile_position + new Vector2(x, y);
-                            if (rel.x >= 0 && rel.x < Constants.MapWidth
-                                && rel.y >= 0 && rel.x < Constants.MapHeight)
+                            if (rel == (Vector2)player.tile_position)
                             {
-                                if (rel == (Vector2)player.tile_position)
-                                {
-                                    player.die_flag = true;
-                                    print("DIE FROM SCREECH");
-                                }
+                                // Stun the player
+                                print("Wtf!");
+                                player.player_combat.StunnedByBatty();
                             }
                         }
                     }
