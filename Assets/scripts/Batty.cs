@@ -29,9 +29,6 @@ public class Batty : Enemy
     [System.NonSerialized]
     public Vector2 start_tile_pos;
 
-    private Sprite regularSprite;
-    public Sprite screechReadySprite;
-
     private void Start()
     {
         #region DIRECTION LIST CREATION
@@ -56,12 +53,8 @@ public class Batty : Enemy
 
         CurrentCircle = null;
 
-
         // Base start to get components
         BaseStart();
-
-        // Get the regular sprite
-        regularSprite = spre.sprite;
     }
 
     private void Update()

@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     public Vector2 tile_position;
     [System.NonSerialized]
     public MapManager.TileValues tile_value;
+    [System.NonSerialized]
+    public MapManager.TileValues tile_value_under;
 
     protected GameMaster game_master;
     protected SpriteRenderer spre;

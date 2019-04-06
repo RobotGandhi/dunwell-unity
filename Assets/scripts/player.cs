@@ -10,7 +10,6 @@ public class Player : TouchListener
     public Sprite ground_sprite;
     public GameObject food_particle_prefab;
 
-    SpikeSystem spike_system;
     GameMaster g_master;
     TouchSystem t_system;
     SoundEffects sfx;
@@ -39,7 +38,6 @@ public class Player : TouchListener
     public static float fall_speed = 25;
 
     bool walk_flag = false;
-    bool standing_on_spike = false;
     public bool die_flag = false;
     bool walk_finger_down = false;
 
@@ -49,7 +47,6 @@ public class Player : TouchListener
     {
         g_master = FindObjectOfType<GameMaster>();
         sfx = FindObjectOfType<SoundEffects>();
-        spike_system = FindObjectOfType<SpikeSystem>();
         player_animation = GetComponent<PlayerAnimation>();
 
         spre = GetComponent<SpriteRenderer>();
@@ -265,32 +262,7 @@ public class Player : TouchListener
         }
         else if (new_tile_value == (int)MapManager.TileValues.SPIKE)
         {
-            // Trying to walk onto a spike?
             DoMovePlayer(direction, new_tile_position);
-            if (FindObjectOfType<SpikeSystem>().spikeLevel == 0)
-            {
-                bool hadShield = false;
-                // Do we have a shield?
-                if (current_item != null)
-                {
-                    if (current_item.GetComponent<Item>().item_type == Item.ItemType.SHIELD)
-                    {
-                        Animator _spikeAnimator = g_master.current_map.spike_map[new_tile_position].GetComponent<Animator>();
-                        _spikeAnimator.enabled = true;
-                        _spikeAnimator.SetTrigger("action");
-                        player_combat.RemoveShield();
-                        Camera.main.GetComponent<CameraShake>().DoShake(Constants.LightCamShake);
-                        hadShield = true;
-                    }
-                }
-                if (!hadShield)
-                {
-                    Animator _spikeAnimator = g_master.current_map.spike_map[new_tile_position].GetComponent<Animator>();
-                    _spikeAnimator.enabled = true;
-                    _spikeAnimator.SetTrigger("action");
-                    die_flag = true;
-                }
-            }
         }
         else if (MapManager.IsGate(new_tile_value))
         {
@@ -326,10 +298,6 @@ public class Player : TouchListener
             DoMovePlayer(direction, new_tile_position);
             g_master.current_map.pp_map[new Vector2((int)tile_position.x, (int)tile_position.y)].Enable();
         }
-
-        // Are we on a spike tile now?
-        int current_tile_value = g_master.current_map.tile_map[(int)tile_position.y, (int)tile_position.x];
-        standing_on_spike = (current_tile_value == (int)MapManager.TileValues.SPIKE);
     }
 
     public void Die()
@@ -564,11 +532,35 @@ public class Player : TouchListener
         player_animation.ItemChange();
     }
 
+    public void TakeSpikeHit()
+    {
+        bool hadShield = false;
+        // Do we have a shield?
+        if (current_item != null)
+        {
+            if (current_item.GetComponent<Item>().item_type == Item.ItemType.SHIELD)
+            {
+                Animator _spikeAnimator = g_master.current_map.spike_map[tile_position].GetComponent<Animator>();
+                _spikeAnimator.enabled = true;
+                _spikeAnimator.SetTrigger("action");
+                player_combat.RemoveShield();
+                Camera.main.GetComponent<CameraShake>().DoShake(Constants.LightCamShake);
+                hadShield = true;
+            }
+        }
+        if (!hadShield)
+        {
+            Animator _spikeAnimator = g_master.current_map.spike_map[tile_position].GetComponent<Animator>();
+            _spikeAnimator.enabled = true;
+            _spikeAnimator.SetTrigger("action");
+            die_flag = true;
+        }
+    }
+
     public void BlockInput()
     {
         block_input = true;
     }
-
 
     public void UnblockInput()
     {

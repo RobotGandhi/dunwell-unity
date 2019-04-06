@@ -44,7 +44,6 @@ public class SpikeSystem : MonoBehaviour
                 _x.gameObject.GetComponent<SpriteRenderer>().sprite = spike_down;
             }
         }
-        
     }
 
 }

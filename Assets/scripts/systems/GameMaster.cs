@@ -101,7 +101,7 @@ public class GameMaster : MonoBehaviour
         Camera.main.transform.position = cameraGoalPos;
 
         // Play player intro
-        FindObjectOfType<Player>().NewLevel(new Vector2(1, 1));
+        FindObjectOfType<Player>().NewLevel(new Vector2(3, 1));
 
         // Fade out panel
         while (fade_panel.color.a >= 0.05f)
@@ -131,14 +131,9 @@ public class GameMaster : MonoBehaviour
 
     public void PlayerEvent()
     {
+        // Update step counter
         step_count++;
         step_count_text.text = step_count.ToString();
-
-        // Message spikes
-        spike_system.Step();
-
-        StopCoroutine("FlashStepText");
-        StartCoroutine("FlashStepText");
     }
 
     public void NewMap()
@@ -244,11 +239,6 @@ public class GameMaster : MonoBehaviour
             level_won.anchoredPosition = Vector2.Lerp(level_won.anchoredPosition, new Vector2(0, -230), 2f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-    }
-
-    private IEnumerator FlashStepText()
-    {
-        yield return null;
     }
 
     public string ConstructLevelName()

@@ -6,8 +6,6 @@ public class DeskGoblin : Enemy
 {
 
     public Sprite damaged_sprite, dead_sprite;
-    Vector2 move_direction = new Vector2(0, 1);
-    int counter = 0;
 
     public void Start() 
     {

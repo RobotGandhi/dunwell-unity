@@ -92,6 +92,8 @@ public class MapManager : MonoBehaviour
         DESKGOBLIN = 58,
         GUARD_LEFT = 59,
         GUARD_UP = 60,
+        GUARD_RIGHT = 83,
+        GUARD_DOWN = 84,
         BATTY1 = 41,
         BATTY2 = 42,
 
@@ -483,29 +485,28 @@ public class MapManager : MonoBehaviour
                         map.pp_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<PresurePlate>());
 
                         break;
+                    case (int)TileValues.GUARD_DOWN:
+                    case (int)TileValues.GUARD_RIGHT:
                     case (int)TileValues.GUARD_LEFT:
                     case (int)TileValues.GUARD_UP:
                         createdGround = CreateGround(x, y);
                         createdItemEnemy = Instantiate(GuardPrefab, new Vector3(x * GroundTileSize, y * GroundTileSize, 0) + Offsets.GuardEnemyOffset, Quaternion.identity);
-
-                        // Direction!
-                        createdItemEnemy.GetComponent<GuardEnemy>().guardDirection = (GuardEnemy.GuardDirection)tile_value;
+                        createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<GuardEnemy>());
-                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
-                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
+                        
+                        createdItemEnemy.GetComponent<GuardEnemy>().guardDirection = (GuardEnemy.GuardDirection)tile_value;
+
                         break;
                     case (int)TileValues.BATTY1:
                     case (int)TileValues.BATTY2:
-                        createdGround = CreateGround(x, y);
+                        createdGround = CreateGround(x, y, map);
                         createdItemEnemy = Instantiate(BattyEnemy, new Vector3(x * GroundTileSize, y * GroundTileSize, 0) + Offsets.BatEnemyOffset, Quaternion.identity);
                         createdItemEnemy.transform.SetParent(map_holder.transform);
 
                         createdItemEnemy.GetComponent<Batty>().batType = (Batty.BattyType)tile_value;
 
                         map.enemy_map.Add(new Vector2(x, y), createdItemEnemy.GetComponent<Batty>());
-                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
-                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
                         map.enemy_map[new Vector2(x, y)].GetComponent<Batty>().start_tile_pos = new Vector2(x, y);
 
                         break;
@@ -527,6 +528,14 @@ public class MapManager : MonoBehaviour
                     else
                     {
                         createdItemEnemy.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - y-1;
+                    }
+
+                    // Enemy?
+                    if(createdItemEnemy.GetComponent<Enemy>() != null)
+                    {
+                        map.enemy_map[new Vector2(x, y)].tile_position = new Vector2(x, y);
+                        map.enemy_map[new Vector2(x, y)].tile_value = (TileValues)tile_value;
+                        map.enemy_map[new Vector2(x, y)].tile_value_under = (TileValues)TiledImporter.CurrentGroundLayer[y, x]; // Grab whatever is under the enemy
                     }
                 }
 
@@ -559,7 +568,7 @@ public class MapManager : MonoBehaviour
         return map;
     }
 
-    private GameObject CreateGround(int x, int y)
+    private GameObject CreateGround(int x, int y, Map map = null)
     {
         Sprite sprite = Ground;
         int value = TiledImporter.CurrentGroundLayer[y, x];
@@ -616,6 +625,9 @@ public class MapManager : MonoBehaviour
             case (int)TileValues.PP_GROUND_UD:
                 sprite = PPGroundUD;
                 break;
+            case (int)TileValues.GOAL1:
+                sprite = GoalSprite1;
+                break;
         }
 
         GameObject createdGround = new GameObject();
@@ -624,6 +636,18 @@ public class MapManager : MonoBehaviour
         createdGround.GetComponent<SpriteRenderer>().sprite = sprite;
         createdGround.transform.position = new Vector3(x * GroundTileSize, y * GroundTileSize, 0);
         createdGround.transform.SetParent(map_holder.transform);
+
+        if(value == (int)TileValues.GOAL1)
+        {
+            try
+            {
+                map.goal = createdGround;
+            }
+            catch
+            {
+                print("Need to supply map to createGround method!");
+            }
+        }
 
         return createdGround;
     }
@@ -685,6 +709,8 @@ public class MapManager : MonoBehaviour
             case (int)TileValues.BATTY2:
             case (int)TileValues.GUARD_LEFT:
             case (int)TileValues.GUARD_UP:
+            case (int)TileValues.GUARD_RIGHT:
+            case (int)TileValues.GUARD_DOWN:
             case (int)TileValues.DESKGOBLIN:
                 return true;
         }
@@ -717,6 +743,10 @@ public class MapManager : MonoBehaviour
         if (IsWalkable(tile_value1) && (IsEnemy(tile_value2) || IsItem(tile_value2) || tile_value2 == (int)TileValues.PRESURE_PLATE || tile_value2 == (int)TileValues.BLOCK || IsFallSpike(tile_value2) || tile_value2 == (int)TileValues.SPIKE || IsGate(tile_value2)))
         {
                 return true;
+        }
+        if(tile_value1 == (int)TileValues.GOAL1 && IsEnemy(tile_value2))
+        {
+            return true;
         }
         return false;
     }

@@ -9,12 +9,14 @@ public class PlayerCombat : MonoBehaviour
     MapManager map_manager;
     GameMaster game_master;
     CameraShake cam_shake;
+    SpriteRenderer spre;
 
     private void Start()
     {
         // Get the main player class component
         player = GetComponent<Player>();
         player.player_combat = this;
+        spre = GetComponent<SpriteRenderer>();
 
         // Get other useful objects around the scene
         sfx = FindObjectOfType<SoundEffects>();
@@ -42,7 +44,7 @@ public class PlayerCombat : MonoBehaviour
                     if (enemy.remainsPrefab != null)
                     {
                         GameObject remains_object = Instantiate(enemy.remainsPrefab, enemy.transform.position, Quaternion.identity) as GameObject;
-                        remains_object.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - (int)enemy.tile_position.y-1;
+                        remains_object.GetComponent<SpriteRenderer>().sortingOrder = Constants.MapHeight - (int)enemy.tile_position.y-2;
                         remains_object.transform.SetParent(map_manager.map_holder.transform);
                     }
 
@@ -143,9 +145,12 @@ public class PlayerCombat : MonoBehaviour
     private IEnumerator StunCoroutine()
     {
         player.BlockInput();
+        spre.color = Color.red;
 
         yield return new WaitForSeconds(Constants.StunTime);
 
+
+        spre.color = Color.white;
         player.UnblockInput();
     }
 
