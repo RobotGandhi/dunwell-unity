@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour
 {
-    
+
     private void Update()
     {
 #if UNITY_EDITOR

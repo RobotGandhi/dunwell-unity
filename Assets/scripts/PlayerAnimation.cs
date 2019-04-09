@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     Player player;
     Animator anim_controller;
 
-    private void Start()
+    private void Awake()
     {
         // Get main player class component
         player = GetComponent<Player>();
@@ -40,6 +40,9 @@ public class PlayerAnimation : MonoBehaviour
 
     public void Die()
     {
+        anim_controller.SetBool("moving", false);
+        anim_controller.SetBool("holding_item", false);
+        anim_controller.SetBool("idle", false);
         anim_controller.SetTrigger("die");
     }
 
@@ -62,18 +65,15 @@ public class PlayerAnimation : MonoBehaviour
         {
             if (player.current_item != null)
             {
-                if (player.current_item.GetComponent<Item>().item_type == Item.ItemType.WEAPON)
+                Item.ItemType itemType = player.current_item.GetComponent<Item>().item_type;
+                if (itemType == Item.ItemType.WEAPON)
                 {
                     player.StartCoroutine("HideSwordForAnimation");
                     anim_controller.SetTrigger("attack_sword");
                 }
-                else if (player.current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
+                else if (itemType == Item.ItemType.HEALTH || itemType == Item.ItemType.SHIELD || itemType == Item.ItemType.RED_KEY || itemType == Item.ItemType.BLUE_KEY)
                 {
                     anim_controller.SetTrigger("attack_item");
-                }
-                else
-                {
-                    anim_controller.SetTrigger("attack");
                 }
             }
             else

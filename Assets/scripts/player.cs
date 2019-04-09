@@ -8,8 +8,8 @@ public class Player : TouchListener
     List<Vector3> direction_to_vector = new List<Vector3>();
 
     public Sprite ground_sprite;
+    public GameObject food_particle_prefab;
 
-    MapManager m_manager;
     GameMaster g_master;
     TouchSystem t_system;
     SoundEffects sfx;
@@ -18,20 +18,19 @@ public class Player : TouchListener
     [System.NonSerialized]
     public PlayerAnimation player_animation;
 
-    private Vector3 tile_position = new Vector3(1, 1, 0);
-    const float move_speed = 7.5f;
+    [System.NonSerialized]
+    public Vector3 tile_position = new Vector3(1, 1, 0); // @ Why tf is this a vector3?
 
     Enums.PlayerStates player_state;
     Enums.PlayerMoveDirection move_direction;
 
     SpriteRenderer spre;
 
-    bool move_finger_down = false;
-
     public Transform current_item;
     private float weapon_offset;
     private float shield_offset;
     private float health_offset;
+    private float key_offset;
 
     public int HP = 3;
     public Image[] hp_objects;
@@ -39,6 +38,19 @@ public class Player : TouchListener
     public static float fall_speed = 25;
 
     bool walk_flag = false;
+    public bool die_flag = false;
+    bool walk_finger_down = false;
+
+    bool block_input = false; // If true no input should be taken for the player to perform actions!
+
+    void Awake()
+    {
+        g_master = FindObjectOfType<GameMaster>();
+        sfx = FindObjectOfType<SoundEffects>();
+        player_animation = GetComponent<PlayerAnimation>();
+
+        spre = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
@@ -48,22 +60,15 @@ public class Player : TouchListener
         direction_to_vector.Add(new Vector3(0, -1)); // down
         direction_to_vector.Add(new Vector3(-1, 0)); // left
 
-        t_system = FindObjectOfType<TouchSystem>(); 
+        t_system = FindObjectOfType<TouchSystem>();
         t_system.AddTouchListener(this);
-
-        g_master = FindObjectOfType<GameMaster>();
-
-        m_manager = FindObjectOfType<MapManager>();
-
-        sfx = FindObjectOfType<SoundEffects>();
-
-        spre = GetComponent<SpriteRenderer>();
 
         // Item
         current_item = null;
         weapon_offset = MapManager.GroundTileSize * 0.35f;
         shield_offset = MapManager.GroundTileSize * 0.55f;
         health_offset = MapManager.GroundTileSize * 0.5f;
+        key_offset = MapManager.GroundTileSize * 0.3f;
     }
 
     void Update()
@@ -72,9 +77,9 @@ public class Player : TouchListener
         if (player_state == Enums.PlayerStates.MOVING)
         {
             // move towards desired tile position
-            if (transform.position != tile_position * MapManager.GroundTileSize)
+            if (transform.position != (tile_position * MapManager.GroundTileSize))
             {
-                transform.position = Vector3.MoveTowards(transform.position, tile_position * MapManager.GroundTileSize, move_speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, (tile_position * MapManager.GroundTileSize), Constants.ObjectMoveSpeed * Time.deltaTime);
             }
             else
             {
@@ -83,8 +88,17 @@ public class Player : TouchListener
             }
         }
 
+        if(player_state == Enums.PlayerStates.IDLE)
+        {
+            if (die_flag)
+            {
+                die_flag = false;
+                Die();
+            }
+        }
+
         /* Item */
-        if(current_item != null)
+        if (current_item != null)
         {
             // Layer
             current_item.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
@@ -101,13 +115,34 @@ public class Player : TouchListener
                 case Item.ItemType.HEALTH:
                     current_item.position = transform.position + Vector3.up * health_offset;
                     break;
+                case Item.ItemType.BLUE_KEY:
+                case Item.ItemType.RED_KEY:
+                    current_item.position = transform.position + Vector3.up * key_offset;
+                    break;
             }
         }
 
         /* HP */
         HPEnableLogic();
 
+        if (Input.touchCount == 0)
+            walk_finger_down = false;
+        if (walk_finger_down)
+        {
+            if(player_state == Enums.PlayerStates.IDLE)
+            {
+                MovePlayer(move_direction);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ConsumeFood();
+        }
+
         #region WASD
+        if (block_input)
+            return;
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (Input.GetKeyDown(KeyCode.D))
@@ -133,8 +168,12 @@ public class Player : TouchListener
     // Called from update when player reaches desired transform position
     private void ReachedNewTile()
     {
-        // If we're on ice we dont want to simply go to back to idle, we want to slip n' slide
-        if (player_state == Enums.PlayerStates.MOVING)
+        if (die_flag)
+        {
+            die_flag = false;
+            Die();
+        }
+        else if (player_state == Enums.PlayerStates.MOVING)
         {
             SetPlayerState(Enums.PlayerStates.IDLE);
         }
@@ -144,12 +183,12 @@ public class Player : TouchListener
     {
         player_state = state;
 
-        if(player_state == Enums.PlayerStates.IDLE)
+        if (player_state == Enums.PlayerStates.IDLE)
         {
             // Do idle stuff
             player_animation.StartIdle();
         }
-        else if(player_state == Enums.PlayerStates.MOVING)
+        else if (player_state == Enums.PlayerStates.MOVING)
         {
             // Do move stuff
             player_animation.StartMoving(move_direction);
@@ -165,39 +204,45 @@ public class Player : TouchListener
         if (MapManager.IsWalkable(new_tile_value))
         {
             DoMovePlayer(direction, new_tile_position);
+            walk_finger_down = true;
         }
         else if (MapManager.IsItem(new_tile_value))
         {
-            GameObject temp = g_master.current_map.item_map[new Vector2(new_tile_position.x, new_tile_position.y)];
+            GameObject temp_item = g_master.current_map.item_map[new Vector2(new_tile_position.x, new_tile_position.y)];
 
-            if (temp.GetComponent<Item>().item_state == Item.ItemState.ON_MAP)
+            // Remove item from tile map and make it into a ground tile
+            g_master.current_map.tile_map[(int)new_tile_position.y, (int)new_tile_position.x] = (int)MapManager.TileValues.GROUND;
+
+            // Destroy current item
+            RemoveCurrentItem();
+            current_item = temp_item.transform;
+            player_animation.ItemChange();
+            // SFX
+            switch (current_item.GetComponent<Item>().item_type)
             {
-                // Destroy current item
-                if (current_item != null)
-                {
-                    current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-                }
-                current_item = temp.transform;
-                current_item.GetComponent<Item>().SetState(Item.ItemState.PICKED_UP);
-                player_animation.ItemChange();
-                // SFX
-                switch (current_item.GetComponent<Item>().item_type)
-                {
-                    case Item.ItemType.HEALTH:
-                        sfx.PlaySFX("food_pickup");
-                        break;
-                    case Item.ItemType.WEAPON:
-                        sfx.PlaySFX("sword_pickup");
-                        break;
-                    case Item.ItemType.SHIELD:
-                        sfx.PlaySFX("armor_pickup");
-                        break;
-                }
+                case Item.ItemType.HEALTH:
+                    sfx.PlaySFX("food_pickup");
+                    break;
+                case Item.ItemType.WEAPON:
+                    sfx.PlaySFX("sword_pickup");
+                    break;
+                case Item.ItemType.SHIELD:
+                    sfx.PlaySFX("armor_pickup");
+                    break;
+                case Item.ItemType.BLUE_KEY:
+                case Item.ItemType.RED_KEY:
+                    sfx.PlaySFX("key_pickup");
+                    break;
             }
 
             /* Move the player */
             DoMovePlayer(direction, new_tile_position);
-            
+
+        }
+        else if (new_tile_value == (int)MapManager.TileValues.GOAL1)
+        {
+            DoMovePlayer(direction, new_tile_position);
+            StartCoroutine("OutroCoroutine");
         }
         else if (MapManager.IsEnemy(new_tile_value))
         {
@@ -206,28 +251,58 @@ public class Player : TouchListener
                 // Call on player_combat to perform the combat for us
                 player_combat.EngageEnemy(g_master.current_map.enemy_map[new_tile_position], new_tile_position);
 
+                FindObjectOfType<EventSystem>().PlayerPerformedEvent();
+
                 player_animation.SetMoveDirection(direction);
-                g_master.Step();
             }
             else
             {
                 DoMovePlayer(direction, new_tile_position);
             }
         }
-        else if(new_tile_value == (int)MapManager.TileValues.GOAL)
+        else if (new_tile_value == (int)MapManager.TileValues.SPIKE)
         {
             DoMovePlayer(direction, new_tile_position);
-            StartCoroutine("OutroCoroutine");
+        }
+        else if (MapManager.IsGate(new_tile_value))
+        {
+            Gate _gate = g_master.current_map.gate_map[new_tile_position];
+            // Check if gate is already open
+            if (_gate.IsOpen())
+            {
+                DoMovePlayer(direction, new_tile_position);
+            }
+            else
+            {
+                // Open gate!
+                // Make sure we have correct key item
+                if(current_item != null)
+                {
+                    if ((current_item.GetComponent<Item>().item_type == Item.ItemType.BLUE_KEY && _gate.door_color == "blue") ||
+                        current_item.GetComponent<Item>().item_type == Item.ItemType.RED_KEY && _gate.door_color == "red")
+                    {
+                        _gate.Open();
+                        RemoveCurrentItem(true);
+                    }
+
+                }
+            }
+        }
+        else if (MapManager.IsFallSpike(new_tile_value))
+        {
+            DoMovePlayer(direction, new_tile_position);
+            die_flag = true;
+        }
+        else if(new_tile_value == (int)MapManager.TileValues.PRESURE_PLATE)
+        {
+            DoMovePlayer(direction, new_tile_position);
+            g_master.current_map.pp_map[new Vector2((int)tile_position.x, (int)tile_position.y)].Enable();
         }
     }
 
     public void Die()
     {
-        if(current_item != null)
-        {
-            current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-            current_item = null;
-        }
+        RemoveCurrentItem();
         sfx.PlaySFX("player_die");
         player_animation.Die();
         SetPlayerState(Enums.PlayerStates.DEAD);
@@ -236,25 +311,28 @@ public class Player : TouchListener
 
     private void DoMovePlayer(Enums.PlayerMoveDirection direction, Vector2 new_tile_position, string walk_sfx = "default")
     {
-        /* Move the player */
-        g_master.Step();
+        
         // Set move direction
         move_direction = direction;
         // Set to move state
         SetPlayerState(Enums.PlayerStates.MOVING);
         // Set players new tile position
         tile_position = new_tile_position;
-        // Assume the movefinger down
-        move_finger_down = true;
+        
+        // After the players tile position has been set we message the others
+        FindObjectOfType<EventSystem>().PlayerPerformedEvent();
+
         // Spre
-        spre.sortingOrder = (int)new_tile_position.y+2;
+        spre.sortingOrder = (Constants.MapHeight - (int)new_tile_position.y);
+
+
         // SFX
         if (walk_sfx == "default")
         {
             if (walk_flag) sfx.PlaySFX("footstep1");
             if (!walk_flag) sfx.PlaySFX("footstep2");
         }
-        else if(walk_sfx != "none")
+        else if (walk_sfx != "none")
         {
             sfx.PlaySFX(walk_sfx);
         }
@@ -263,6 +341,9 @@ public class Player : TouchListener
 
     public override void HorizontalSwipe(int direction)
     {
+        if (block_input)
+            return;
+
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (direction > 0)
@@ -278,6 +359,9 @@ public class Player : TouchListener
 
     public override void VerticalSwipe(int direction)
     {
+        if (block_input)
+            return;
+
         if (player_state == Enums.PlayerStates.IDLE)
         {
             if (direction > 0)
@@ -293,34 +377,44 @@ public class Player : TouchListener
 
     public override void FingerUp()
     {
-        if(player_state == Enums.PlayerStates.MOVING)
-        {
-            move_finger_down = false;
-        }
+        walk_finger_down = false;
     }
 
     public override void DoubleTap()
     {
-        if(current_item != null)
-        {
-            if(current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
-            {
-                HP++;
-                current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-                current_item = null;
-                player_animation.ItemChange();
-                sfx.PlaySFX("eating_health_up");
+        if (block_input)
+            return;
 
-                g_master.Step();
+        if (current_item != null)
+        {
+            if (current_item.GetComponent<Item>().item_type == Item.ItemType.HEALTH)
+            {
+                ConsumeFood();
             }
         }
     }
 
+    public void ConsumeFood()
+    {
+        if (HP < 3)
+            HP++;
+        else
+            return;
+        sfx.PlaySFX("eating_health_up");
+        
+        GameObject t = Instantiate(food_particle_prefab, transform.position, Quaternion.identity) as GameObject;
+        t.transform.Rotate(new Vector3(-90, 0, 0));
+
+        RemoveCurrentItem();
+
+        FindObjectOfType<EventSystem>().PlayerPerformedEvent();
+    }
+
     private void HPEnableLogic()
     {
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            if(i >= HP)
+            if (i >= HP)
             {
                 hp_objects[i].color = new Color(1, 1, 1, 0.2f);
             }
@@ -331,68 +425,146 @@ public class Player : TouchListener
         }
     }
 
-    public void PlayIntroAt(Vector2 tile_position)
+    public void NewLevel(Vector2 tile_position)
     {
-        SetPlayerState(Enums.PlayerStates.INTRO);
+        // Set position
         this.tile_position = tile_position;
-        // Position for intro
-        transform.position = new Vector3(tile_position.x, tile_position.y + 6) * ground_sprite.bounds.size.x;
-        GetComponent<SpriteRenderer>().color = Color.white;
-        GetComponent<SpriteRenderer>().sortingOrder = (int)tile_position.y+6;
+        transform.position = new Vector3(tile_position.x, tile_position.y) * MapManager.GroundTileSize;
 
-        StartCoroutine("IntroCoroutine");
+        // Reset some stuff
+        spre.color = Color.white;
+        spre.sortingLayerName = "player_items_enemies";
+        spre.sortingOrder = (int)tile_position.y;
+        if(current_item != null)
+            RemoveCurrentItem();
+        HP = 3;
+
+        SetPlayerState(Enums.PlayerStates.IDLE);
     }
 
     private IEnumerator HideSwordForAnimation()
     {
         current_item.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1.333f/2.0f);
+        yield return new WaitForSeconds(1.333f / 2.0f);
         current_item.gameObject.SetActive(true);
     }
 
-    private IEnumerator IntroCoroutine()
-    {
-        Vector2 intro_start = new Vector3(tile_position.x, tile_position.y + 4) * ground_sprite.bounds.size.x;
-        float intro_distance = Vector3.Distance(intro_start, tile_position * MapManager.GroundTileSize);
-
-
-        while (transform.position != tile_position * MapManager.GroundTileSize)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, tile_position * ground_sprite.bounds.size.x, fall_speed * Time.deltaTime);
-            spre.color = new Color(1, 1, 1, 1 - Vector2.Distance(transform.position, tile_position * MapManager.GroundTileSize) / intro_distance);
-            yield return new WaitForEndOfFrame();
-        }
-
-        Camera.main.GetComponent<CameraShake>().ShakeCamera(2.0f, 0.1f);
-        SetPlayerState(Enums.PlayerStates.IDLE);
-    }
-
     private IEnumerator OutroCoroutine()
-    {   
-        while(player_state != Enums.PlayerStates.IDLE)
+    {
+        while (player_state != Enums.PlayerStates.IDLE)
         {
             yield return new WaitForEndOfFrame();
         }
+
+        sfx.PlaySFX("falling");
         player_state = Enums.PlayerStates.OUTRO;
 
-        spre.sortingOrder = -(int)tile_position.y;
-        
-        while(spre.color.a > 0)
-        {   
+        spre.sortingLayerName = "room_tiles";
+        spre.sortingOrder = -1;
+        g_master.current_map.goal.GetComponent<SpriteRenderer>().sortingOrder = -2;
+
+        while (spre.color.a > 0)
+        {
             spre.color = Vector4.MoveTowards(spre.color, new Vector4(1, 1, 1, 0), 1.0f * Time.deltaTime);
             transform.position += Vector3.down * fall_speed * Time.deltaTime;
             if (current_item != null) current_item.GetComponent<SpriteRenderer>().color = spre.color;
             yield return new WaitForEndOfFrame();
         }
 
-        if (current_item != null)
-        {
-            current_item.GetComponent<Item>().SetState(Item.ItemState.DISCARDED_FROM_MAP);
-            current_item = null;
-            player_animation.ItemChange();
-        }
+        RemoveCurrentItem();
 
         g_master.NewMap();
-
     }
+
+    public override void FingerDown(int index, Vector2 pos)
+    {
+        if (block_input)
+            return;
+
+        Vector2 rel_pos = new Vector2(pos.x / Screen.width, pos.y / Screen.height);
+        if(rel_pos.y >= 0.6 || rel_pos.y <= 0.4)
+        {
+            if(rel_pos.y >= 0.7)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.UP);
+            }
+            else if(rel_pos.y <= 0.3)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.DOWN);
+            }
+        }
+        else
+        {
+            if(rel_pos.x >= 0.5)
+            {
+                MovePlayer(Enums.PlayerMoveDirection.RIGHT);
+            }
+            else
+            {
+                MovePlayer(Enums.PlayerMoveDirection.LEFT);
+            }
+        }
+    }
+
+    public void RemoveCurrentItem(bool destroy_key = false)
+    {
+        if(current_item != null)
+        {
+            if ((current_item.GetComponent<Item>().item_type == Item.ItemType.BLUE_KEY || current_item.GetComponent<Item>().item_type == Item.ItemType.RED_KEY) && !destroy_key)
+            {
+                Vector2 item_tile_pos = current_item.GetComponent<Item>().spawn_tile_position;
+                int item_value = (int)current_item.GetComponent<Item>().item_type;
+
+                GameObject last_item = current_item.gameObject;
+                current_item = null;
+                
+                g_master.current_map.tile_map[(int)item_tile_pos.y, (int)item_tile_pos.x] = item_value;
+                last_item.GetComponent<Item>().ResetPosition();
+
+            }
+            else
+            {
+                g_master.current_map.item_map.Remove(current_item.GetComponent<Item>().spawn_tile_position);
+                Destroy(current_item.gameObject);
+                current_item = null;
+            }
+        }
+        player_animation.ItemChange();
+    }
+
+    public void TakeSpikeHit()
+    {
+        bool hadShield = false;
+        // Do we have a shield?
+        if (current_item != null)
+        {
+            if (current_item.GetComponent<Item>().item_type == Item.ItemType.SHIELD)
+            {
+                Animator _spikeAnimator = g_master.current_map.spike_map[tile_position].GetComponent<Animator>();
+                _spikeAnimator.enabled = true;
+                _spikeAnimator.SetTrigger("action");
+                player_combat.RemoveShield();
+                Camera.main.GetComponent<CameraShake>().DoShake(Constants.LightCamShake);
+                hadShield = true;
+            }
+        }
+        if (!hadShield)
+        {
+            Animator _spikeAnimator = g_master.current_map.spike_map[tile_position].GetComponent<Animator>();
+            _spikeAnimator.enabled = true;
+            _spikeAnimator.SetTrigger("action");
+            die_flag = true;
+        }
+    }
+
+    public void BlockInput()
+    {
+        block_input = true;
+    }
+
+    public void UnblockInput()
+    {
+        block_input = false;
+    }
+
 }

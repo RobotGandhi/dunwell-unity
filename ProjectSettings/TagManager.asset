@@ -42,18 +42,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
-  - name: layer0
+  - name: room_tiles
     uniqueID: 1226246607
     locked: 0
-  - name: layer1
+  - name: player_items_enemies
     uniqueID: 1379705063
     locked: 0
-  - name: layer2
+  - name: layer3
     uniqueID: 2144388425
     locked: 0
-  - name: layer3
-    uniqueID: 2847285657
+  - name: Default
+    uniqueID: 0
     locked: 0
