@@ -10,8 +10,8 @@ public class MenuCameraMovement : TouchListener
     public GameObject listOfCameraPoints;
 
     bool moving = false;
-    bool topOfLevel = false;
-    bool inWorld = true;
+    bool topOfLevel = true;
+    bool inWorld = false;
     int currentWorld = 0;
     static int maxWorlds = 4;
 
